@@ -1,6 +1,6 @@
 import type { FunnelColumn, FunnelStatus } from '@/pulse/types'
 import { IconInfo } from '@/pulse/components/icons'
-import { standardFilters } from '@/pulse/constants/filters'
+import { usePulseFilters } from '@/pulse/context/PulseFiltersContext'
 import { cn } from '@/lib/cn'
 
 type FunnelPerformanceSectionProps = {
@@ -8,13 +8,15 @@ type FunnelPerformanceSectionProps = {
 }
 
 export function FunnelPerformanceSection({ columns }: FunnelPerformanceSectionProps) {
+  const { datePeriodLabel } = usePulseFilters()
+
   return (
     <section>
       <div className="mb-4">
         <h2 className="text-lg font-semibold text-neutral-900">Overall Funnel Performance</h2>
-        <p className="text-sm text-neutral-600">{standardFilters.datePeriod}</p>
+        <p className="text-sm text-neutral-600">{datePeriodLabel}</p>
       </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
         {columns.map((col) => (
           <FunnelColumn key={col.id} column={col} />
         ))}

@@ -36,10 +36,15 @@ export type DivisionCommunityRow = {
 export type DivisionKpi = {
   id: string
   title: string
-  headline: string
+  headlineValue: string
+  /** e.g. "sales" or "YTD sales" — same color as value/pct */
+  headlineUnit: string
+  headlinePct: string
   headlineTone: 'negative' | 'positive'
-  subline: string
-  sublineTone: 'negative' | 'positive' | 'muted'
+  footerLead: string
+  footerMid: string
+  footerTarget: string
+  footerEnd: string
 }
 
 export type FunnelStatus = 'behind' | 'ahead' | 'onPace'

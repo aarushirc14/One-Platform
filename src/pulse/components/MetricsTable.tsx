@@ -8,43 +8,48 @@ type MetricsTableProps = {
 
 export function MetricsTable({ section }: MetricsTableProps) {
   return (
-    <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
+    <div
+      className={cn(
+        'overflow-hidden rounded-xl border border-neutral-200/90 bg-white',
+        'shadow-[0_1px_2px_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.04)]',
+      )}
+    >
       {section.title ? (
-        <div className="border-b border-neutral-200 px-4 py-3 sm:px-5">
-          <h3 className="text-sm font-semibold text-neutral-900">{section.title}</h3>
+        <div className="border-b border-neutral-200/90 px-4 py-3 sm:px-5">
+          <h3 className="text-sm font-semibold leading-snug text-neutral-950">{section.title}</h3>
         </div>
       ) : null}
-      <div className="overflow-x-auto">
-        <table className="min-w-[1100px] w-full border-collapse text-sm">
+      <div className="-mx-1 overflow-x-auto overscroll-x-contain px-1 sm:mx-0 sm:px-0 sm:overscroll-auto">
+        <table className="min-w-[1100px] w-full border-collapse text-[13px] sm:text-sm">
           <thead>
-            <tr className="border-b border-neutral-200 bg-neutral-50/90 text-left text-xs font-semibold uppercase tracking-wide text-neutral-500">
-              <th className="px-4 py-3 font-semibold normal-case">Metric</th>
-              <th className="px-4 py-3 text-center font-semibold normal-case">
+            <tr className="border-b border-neutral-200 bg-neutral-50/90 text-left text-sm font-medium text-neutral-600">
+              <th className="px-4 py-3">Metric</th>
+              <th className="px-4 py-3 text-center">
                 <span className="inline-flex items-center justify-center gap-1">
                   Community Counts
                   <IconInfo className="text-neutral-400" />
                 </span>
               </th>
-              <th className="px-4 py-3 text-center font-semibold normal-case">
+              <th className="px-4 py-3 text-center">
                 <span className="inline-flex items-center justify-center gap-1">
                   Community Rate
                   <IconInfo className="text-neutral-400" />
                 </span>
               </th>
-              <th className="px-4 py-3 text-center font-semibold normal-case">
+              <th className="px-4 py-3 text-center">
                 <span className="inline-flex items-center justify-center gap-1">
                   Benchmark Rate
                   <IconInfo className="text-neutral-400" />
                 </span>
               </th>
-              <th className="px-4 py-3 text-center font-semibold normal-case">Performance</th>
-              <th className="px-4 py-3 text-center font-semibold normal-case">
+              <th className="px-4 py-3 text-center">Performance</th>
+              <th className="px-4 py-3 text-center">
                 <span className="inline-flex items-center justify-center gap-1">
                   % Change
                   <IconInfo className="text-neutral-400" />
                 </span>
               </th>
-              <th className="px-4 py-3 font-semibold normal-case" aria-hidden />
+              <th className="px-4 py-3" aria-hidden />
             </tr>
           </thead>
           <tbody>
@@ -63,7 +68,7 @@ export function MetricsTable({ section }: MetricsTableProps) {
                     idx % 2 === 1 && 'bg-neutral-50/40',
                   )}
                 >
-                  <td className="px-4 py-3 font-medium text-neutral-900">{row.metric}</td>
+                  <td className="px-4 py-3 font-semibold text-neutral-950">{row.metric}</td>
                   <td className="px-4 py-3 text-center text-neutral-900">
                     <div className="flex flex-col items-center gap-1 text-xs">
                       <span className="text-neutral-500">{row.countsLabel}</span>

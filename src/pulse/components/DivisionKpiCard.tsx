@@ -2,45 +2,52 @@ import type { DivisionKpi } from '@/pulse/types'
 import { IconInfo } from '@/pulse/components/icons'
 import { cn } from '@/lib/cn'
 
+/** Screenshot: dark red primary metrics (~#b30000) */
+const metricRed = 'text-[#B30000]'
+const titleMuted = 'text-neutral-600'
+const footerMuted = 'text-neutral-600'
+
 type DivisionKpiCardProps = {
   kpi: DivisionKpi
 }
 
 export function DivisionKpiCard({ kpi }: DivisionKpiCardProps) {
-  const headlineNeg = kpi.headlineTone === 'negative'
-  const subNeg = kpi.sublineTone === 'negative'
-  const subMuted = kpi.sublineTone === 'muted'
+  const neg = kpi.headlineTone === 'negative'
+  const pos = kpi.headlineTone === 'positive'
+  const mainCls = neg ? metricRed : 'text-emerald-700'
+  const footerLeadCls = neg ? metricRed : pos ? 'text-emerald-700' : 'text-neutral-900'
 
   return (
-    <div className="relative rounded-lg border border-neutral-200 bg-white p-5 shadow-sm">
+    <div className="flex h-full min-h-[11rem] flex-col rounded-lg border border-neutral-200 bg-white p-5 sm:min-h-[12rem] sm:p-6">
       <div className="flex items-start justify-between gap-3">
-        <h3 className="pr-6 text-sm font-semibold text-neutral-900">{kpi.title}</h3>
+        <h3 className={cn('min-w-0 flex-1 text-sm font-normal leading-snug', titleMuted)}>
+          {kpi.title}
+        </h3>
         <button
           type="button"
-          className="absolute right-4 top-4 inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
+          className="shrink-0 text-neutral-400 transition-colors hover:text-neutral-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400"
           aria-label="KPI details"
         >
-          <IconInfo />
+          <IconInfo className="h-4 w-4" />
         </button>
       </div>
-      <p
-        className={cn(
-          'mt-4 text-2xl font-bold tracking-tight sm:text-[28px] sm:leading-tight',
-          headlineNeg ? 'text-red-600' : 'text-emerald-600',
-        )}
-      >
-        {kpi.headline}
-      </p>
-      <p
-        className={cn(
-          'mt-2 text-sm font-medium',
-          subNeg && 'text-red-600',
-          subMuted && 'text-neutral-500',
-          !subNeg && !subMuted && 'text-emerald-600',
-        )}
-      >
-        {kpi.subline}
-      </p>
+
+      <div className="mt-4 flex min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+        <span className={cn('text-4xl font-bold tabular-nums tracking-tight', mainCls)}>
+          {kpi.headlineValue}
+        </span>
+        <span className={cn('text-sm font-normal tabular-nums', mainCls)}>{kpi.headlineUnit}</span>
+        <span className={cn('text-sm font-normal tabular-nums', mainCls)}>{kpi.headlinePct}</span>
+      </div>
+
+      <div className="mt-auto border-t border-neutral-200 pt-4">
+        <p className="text-sm leading-normal">
+          <span className={cn('font-bold tabular-nums', footerLeadCls)}>{kpi.footerLead}</span>
+          <span className={footerMuted}>{kpi.footerMid}</span>
+          <span className="font-bold tabular-nums text-neutral-900">{kpi.footerTarget}</span>
+          <span className={footerMuted}>{kpi.footerEnd}</span>
+        </p>
+      </div>
     </div>
   )
 }

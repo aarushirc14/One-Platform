@@ -12,7 +12,7 @@ export function DashboardPage() {
         title="Overview"
         description="Snapshot of how work is moving — all numbers are static mock data for storytelling."
         actions={
-          <ButtonLink to="/items" variant="secondary">
+          <ButtonLink to="/items" variant="secondary" className="w-full justify-center sm:w-auto">
             View all items
           </ButtonLink>
         }

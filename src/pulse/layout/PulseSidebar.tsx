@@ -1,14 +1,37 @@
 import { NavLink } from 'react-router-dom'
-import { IconChevronDown, IconChevronUp } from '@/pulse/components/icons'
+import { IconChevronDown, IconClose } from '@/pulse/components/icons'
 import { divisionName } from '@/pulse/mock/division'
 import { cn } from '@/lib/cn'
 
 const otherDivisions = ['Chandler', 'Scottsdale']
 
-export function PulseSidebar() {
+export type PulseSidebarProps = {
+  id?: string
+  className?: string
+  onNavigate?: () => void
+}
+
+export function PulseSidebar({ id, className, onNavigate }: PulseSidebarProps) {
   return (
-    <aside className="flex h-full w-[240px] shrink-0 flex-col border-r border-neutral-200 bg-white">
-      <div className="px-4 pt-4">
+    <aside
+      id={id}
+      className={cn(
+        'relative flex h-full min-h-screen flex-col overflow-y-auto border-r border-neutral-200 bg-neutral-50 lg:min-h-0 lg:w-[240px] lg:shrink-0',
+        className,
+      )}
+    >
+      {onNavigate ? (
+        <button
+          type="button"
+          className="absolute right-3 top-[max(0.75rem,env(safe-area-inset-top,0px))] z-10 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-700 shadow-sm lg:top-3 lg:hidden"
+          aria-label="Close navigation"
+          onClick={onNavigate}
+        >
+          <IconClose className="h-4 w-4" />
+        </button>
+      ) : null}
+
+      <div className="px-4 pt-5 max-lg:pt-[max(1rem,calc(env(safe-area-inset-top,0px)+0.5rem))] lg:pt-5">
         <label className="sr-only" htmlFor="open-homes">
           Open Homes
         </label>
@@ -24,10 +47,11 @@ export function PulseSidebar() {
         </div>
       </div>
 
-      <nav className="mt-5 flex flex-col gap-1 px-3 text-sm" aria-label="Community Pulse">
+      <nav className="mt-5 flex flex-col gap-1 px-3 pb-6 text-sm" aria-label="Community Pulse">
         <button
           type="button"
           className="rounded-md px-3 py-2 text-left font-medium text-neutral-800 hover:bg-neutral-100"
+          onClick={() => onNavigate?.()}
         >
           Latest Downloads
         </button>
@@ -42,6 +66,7 @@ export function PulseSidebar() {
               isActive ? 'bg-black text-white' : 'text-neutral-800 hover:bg-neutral-100',
             )
           }
+          onClick={() => onNavigate?.()}
         >
           {divisionName}
         </NavLink>
@@ -61,11 +86,12 @@ export function PulseSidebar() {
         <button
           type="button"
           className="flex w-full items-center justify-between gap-2 text-left text-xs text-neutral-600"
+          onClick={() => onNavigate?.()}
         >
           <span className="leading-snug">
             Signed in as <span className="font-medium text-neutral-900">aarushirc@openho…</span>
           </span>
-          <IconChevronUp className="shrink-0 text-neutral-500" />
+          <IconChevronDown className="shrink-0 text-neutral-500" />
         </button>
       </div>
     </aside>

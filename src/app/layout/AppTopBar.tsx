@@ -14,8 +14,8 @@ export function AppTopBar() {
     (pathname.startsWith('/items/') ? 'Item details' : 'Workspace')
 
   return (
-    <header className="sticky top-0 z-10 border-b border-slate-200/80 bg-white/80 backdrop-blur-md">
-      <div className="flex h-16 items-center justify-between gap-4 px-4 sm:px-8 lg:px-10">
+    <header className="sticky top-0 z-10 border-b border-slate-200/80 bg-white/80 pt-[env(safe-area-inset-top,0px)] backdrop-blur-md">
+      <div className="flex h-16 items-center justify-between gap-3 px-3 sm:gap-4 sm:px-4">
         <div className="flex min-w-0 items-center gap-2">
           <Link
             to="/prototype"
@@ -57,7 +57,7 @@ function MobileNav() {
   ]
   return (
     <nav
-      className="flex gap-1 border-t border-slate-100 px-2 py-2 lg:hidden"
+      className="flex gap-1 border-t border-slate-100 px-2 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden"
       aria-label="Mobile sections"
     >
       {links.map((link) => {
@@ -68,7 +68,7 @@ function MobileNav() {
             key={link.to}
             to={link.to}
             className={cn(
-              'flex-1 rounded-lg py-2 text-center text-xs font-medium',
+              'flex min-h-11 flex-1 items-center justify-center rounded-lg px-1 py-2 text-center text-xs font-medium',
               active ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100',
             )}
           >

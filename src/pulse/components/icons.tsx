@@ -89,3 +89,29 @@ export function IconMoreVertical({ className }: { className?: string }) {
     </svg>
   )
 }
+
+export function IconMenu({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d="M3.5 5h13M3.5 10h13M3.5 15h13"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+export function IconClose({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d="m5.5 5.5 9 9m0-9-9 9"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}

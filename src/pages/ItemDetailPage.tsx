@@ -26,7 +26,7 @@ export function ItemDetailPage() {
               with new entries.
             </CardDescription>
           </CardHeader>
-          <ButtonLink to="/items" variant="secondary">
+          <ButtonLink to="/items" variant="secondary" className="w-full justify-center sm:w-auto">
             Back to items
           </ButtonLink>
         </Card>
@@ -40,7 +40,7 @@ export function ItemDetailPage() {
         title={item.title}
         description={item.summary}
         actions={
-          <ButtonLink to="/items" variant="secondary">
+          <ButtonLink to="/items" variant="secondary" className="w-full justify-center sm:w-auto">
             ← All items
           </ButtonLink>
         }
