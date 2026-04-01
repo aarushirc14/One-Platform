@@ -31,7 +31,10 @@ export function HomePage() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <ButtonLink to="/items" variant="ghost" className="hidden sm:inline-flex">
+            <ButtonLink to="/pulse" variant="ghost" className="hidden sm:inline-flex">
+              Community Pulse
+            </ButtonLink>
+            <ButtonLink to="/items" variant="ghost" className="hidden md:inline-flex">
               View items
             </ButtonLink>
             <ButtonLink to="/dashboard" className="px-5">
@@ -52,7 +55,10 @@ export function HomePage() {
             layer, and colocated mock data so you can iterate on UX before wiring services.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink to="/dashboard" className="px-6 py-2.5 text-base">
+            <ButtonLink to="/pulse" className="px-6 py-2.5 text-base">
+              Open Community Pulse
+            </ButtonLink>
+            <ButtonLink to="/dashboard" variant="secondary" className="px-6 py-2.5 text-base">
               Go to dashboard
             </ButtonLink>
             <ButtonLink to="/items" variant="secondary" className="px-6 py-2.5 text-base">

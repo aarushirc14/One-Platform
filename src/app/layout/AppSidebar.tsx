@@ -39,7 +39,7 @@ export function AppSidebar() {
       </nav>
       <div className="border-t border-slate-800 p-4">
         <NavLink
-          to="/"
+          to="/prototype"
           className="text-xs font-medium text-slate-400 underline-offset-4 hover:text-white hover:underline"
         >
           ← Back to landing

@@ -12,7 +12,8 @@ import { SettingsPage } from '@/pages/SettingsPage'
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<Navigate to="/pulse" replace />} />
+      <Route path="/prototype" element={<HomePage />} />
       <Route path="/pulse" element={<PulseLayout />}>
         <Route index element={<DivisionPulsePage />} />
         <Route path="community/:communityId" element={<CommunityPulsePage />} />
@@ -23,7 +24,7 @@ export function AppRoutes() {
         <Route path="/items/:id" element={<ItemDetailPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/pulse" replace />} />
     </Routes>
   )
 }
