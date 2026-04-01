@@ -1,9 +1,19 @@
 import { NavLink } from 'react-router-dom'
 import { IconChevronDown, IconClose } from '@/pulse/components/icons'
+import { COMMUNITY_TRIAGE_BASE } from '@/pulse/constants/routes'
 import { divisionName } from '@/pulse/mock/division'
 import { cn } from '@/lib/cn'
 
-const otherDivisions = ['Chandler', 'Scottsdale']
+type DivisionNavGroup = {
+  name: string
+  triageTo: string | null
+}
+
+const divisionNavGroups: DivisionNavGroup[] = [
+  { name: divisionName, triageTo: COMMUNITY_TRIAGE_BASE },
+  { name: 'Chandler', triageTo: null },
+  { name: 'Scottsdale', triageTo: null },
+]
 
 export type PulseSidebarProps = {
   id?: string
@@ -32,18 +42,35 @@ export function PulseSidebar({ id, className, onNavigate }: PulseSidebarProps) {
       ) : null}
 
       <div className="px-4 pt-5 max-lg:pt-[max(1rem,calc(env(safe-area-inset-top,0px)+0.5rem))] lg:pt-5">
-        <label className="sr-only" htmlFor="open-homes">
-          Open Homes
-        </label>
-        <div className="relative">
-          <select
-            id="open-homes"
-            className="h-10 w-full cursor-pointer appearance-none rounded-lg border border-neutral-300 bg-white py-2 pl-3 pr-9 text-sm font-semibold text-neutral-900 shadow-sm transition-[border-color,box-shadow,background-color] duration-200 hover:border-neutral-500 hover:bg-neutral-50 hover:shadow-md"
-            defaultValue="open-homes"
+        <div
+          className="flex items-center gap-2.5 rounded-xl border border-neutral-200/90 bg-white px-2.5 py-2 shadow-sm ring-1 ring-black/[0.04]"
+          aria-label="Open Homes"
+        >
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-neutral-100 ring-1 ring-neutral-200/80">
+            <img
+              src="/openhouse-logo.png"
+              alt=""
+              width={44}
+              height={44}
+              className="h-full w-full object-contain p-1"
+              decoding="async"
+            />
+          </div>
+          <div
+            className="min-w-0 leading-none"
+            style={{ fontFamily: '"Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif' }}
           >
-            <option value="open-homes">Open Homes</option>
-          </select>
-          <IconChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500" />
+            <span className="block text-[15px] font-bold tracking-tight">
+              <span className="text-neutral-500">O</span>
+              <span className="text-[#e57b30]">p</span>
+              <span className="text-neutral-500">en</span>
+            </span>
+            <span className="mt-0.5 block text-[15px] font-bold tracking-tight">
+              <span className="text-neutral-500">H</span>
+              <span className="text-[#139a9a]">o</span>
+              <span className="text-neutral-500">mes</span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -56,30 +83,46 @@ export function PulseSidebar({ id, className, onNavigate }: PulseSidebarProps) {
           Latest Downloads
         </button>
 
-        <p className="mt-4 px-3 text-[11px] font-bold uppercase tracking-wide text-neutral-500">Divisions</p>
-
-        <NavLink
-          to="/pulse"
-          className={({ isActive }) =>
-            cn(
-              'rounded-md px-3 py-2 font-semibold transition-colors',
-              isActive ? 'bg-black text-white' : 'text-neutral-800 hover:bg-neutral-100',
-            )
-          }
-          onClick={() => onNavigate?.()}
-        >
-          {divisionName}
-        </NavLink>
-
-        {otherDivisions.map((d) => (
-          <span
-            key={d}
-            className="cursor-default rounded-md px-3 py-2 font-medium text-neutral-400"
-            aria-disabled
-          >
-            {d}
-          </span>
-        ))}
+        <ul className="mt-4 list-none space-y-5 p-0" role="list">
+          {divisionNavGroups.map((group) => (
+            <li key={group.name}>
+              <p className="px-3 text-sm font-semibold text-neutral-900">{group.name}</p>
+              <ul className="mt-1.5 list-none space-y-0.5 p-0 pl-3" role="list">
+                <li>
+                  {group.triageTo ? (
+                    <NavLink
+                      to={group.triageTo}
+                      className={({ isActive }) =>
+                        cn(
+                          'block rounded-md px-3 py-2 font-medium transition-colors',
+                          isActive ? 'bg-black text-white' : 'text-neutral-800 hover:bg-neutral-100',
+                        )
+                      }
+                      onClick={() => onNavigate?.()}
+                    >
+                      Triage Communities
+                    </NavLink>
+                  ) : (
+                    <span
+                      className="block cursor-default rounded-md px-3 py-2 font-medium text-neutral-400"
+                      aria-disabled
+                    >
+                      Triage Communities
+                    </span>
+                  )}
+                </li>
+                <li>
+                  <span
+                    className="block cursor-default rounded-md px-3 py-2 font-medium text-neutral-400"
+                    aria-disabled
+                  >
+                    Forecast Drivers
+                  </span>
+                </li>
+              </ul>
+            </li>
+          ))}
+        </ul>
       </nav>
 
       <div className="mt-auto border-t border-neutral-200 px-4 py-4">

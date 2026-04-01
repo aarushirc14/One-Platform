@@ -3,6 +3,7 @@ import type { CommunitiesMetricsMode, DivisionCommunityRow } from '@/pulse/types
 import { ImpactPill } from '@/pulse/components/ImpactPill'
 import { PerformanceLegend } from '@/pulse/components/PerformanceLegend'
 import { impactCellForMode } from '@/pulse/lib/communitiesMetricsDisplay'
+import { COMMUNITY_TRIAGE_BASE } from '@/pulse/constants/routes'
 import { divisionName } from '@/pulse/mock/division'
 
 type CommunitiesTableProps = {
@@ -36,7 +37,7 @@ export function CommunitiesTable({ rows, metricsMode }: CommunitiesTableProps) {
               <tr key={row.id} className="border-b border-neutral-100 last:border-b-0">
                 <td className="px-4 py-2.5 text-left sm:px-5">
                   <Link
-                    to={`/pulse/community/${row.id}`}
+                    to={`${COMMUNITY_TRIAGE_BASE}/community/${row.id}`}
                     className="font-semibold text-blue-700 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800 hover:decoration-blue-500"
                   >
                     {row.name}

@@ -1,4 +1,5 @@
 import { ButtonLink } from '@/components/ui/Button'
+import { COMMUNITY_TRIAGE_BASE } from '@/pulse/constants/routes'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 
 const highlights = [
@@ -32,7 +33,7 @@ export function HomePage() {
           </div>
           <div className="flex w-full min-w-0 flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             <div className="flex flex-wrap items-center gap-2">
-              <ButtonLink to="/pulse" variant="ghost" className="px-3 sm:px-4">
+              <ButtonLink to={COMMUNITY_TRIAGE_BASE} variant="ghost" className="px-3 sm:px-4">
                 <span className="sm:hidden">Pulse</span>
                 <span className="hidden sm:inline">Community Pulse</span>
               </ButtonLink>
@@ -58,7 +59,7 @@ export function HomePage() {
             layer, and colocated mock data so you can iterate on UX before wiring services.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <ButtonLink to="/pulse" className="w-full justify-center px-6 py-2.5 text-base sm:w-auto">
+            <ButtonLink to={COMMUNITY_TRIAGE_BASE} className="w-full justify-center px-6 py-2.5 text-base sm:w-auto">
               Open Community Pulse
             </ButtonLink>
             <ButtonLink
