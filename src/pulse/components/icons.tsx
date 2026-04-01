@@ -64,6 +64,21 @@ export function IconLineChart({ className }: { className?: string }) {
   )
 }
 
+/** Filled circle + exclamation for Sales Forecast / alert strips. */
+export function IconAlertCircleSolid({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+      <circle cx="10" cy="10" r="9" fill="currentColor" />
+      <path
+        d="M10 5.5V11M10 13.25v.01"
+        stroke="white"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 export function IconShare({ className }: { className?: string }) {
   return (
     <svg className={className} width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>

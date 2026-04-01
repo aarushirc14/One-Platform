@@ -13,9 +13,11 @@ import {
   reportFootnotes,
   rollupKpiCards,
   salesForecastIntro,
+  salesForecastSummaryCards,
 } from '@/pulse/mock/divisionPerformanceReport'
 import { DivisionPerformanceRollupKpiCard } from '@/pulse/components/division-performance/DivisionPerformanceRollupKpiCard'
-import { IconDownload } from '@/pulse/components/icons'
+import { SalesForecastSummaryCard } from '@/pulse/components/division-performance/SalesForecastSummaryCard'
+import { IconAlertCircleSolid, IconDownload, IconLineChart } from '@/pulse/components/icons'
 import { cn } from '@/lib/cn'
 
 function AlertBanner({ children }: { children: ReactNode }) {
@@ -86,24 +88,48 @@ export function DivisionPerformanceReport() {
         ))}
       </section>
 
-      <section className="space-y-3" aria-labelledby="sales-forecast-heading">
-        <div>
-          <h2 id="sales-forecast-heading" className="text-lg font-semibold text-neutral-900">
-            {salesForecastIntro.headline}
-          </h2>
-          <p className="mt-0.5 text-sm text-neutral-600">{salesForecastIntro.subline}</p>
+      <section
+        className="rounded-xl border border-neutral-200 bg-white p-5 shadow-sm sm:p-6"
+        aria-labelledby="sales-forecast-heading"
+      >
+        <div className="flex gap-3 sm:gap-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-teal-500 text-white shadow-sm">
+            <IconLineChart className="h-5 w-5" aria-hidden />
+          </div>
+          <div className="min-w-0 pt-0.5">
+            <h2
+              id="sales-forecast-heading"
+              className="text-base font-bold uppercase tracking-wide text-neutral-800"
+            >
+              {salesForecastIntro.headline}
+            </h2>
+            <p className="mt-1 text-sm leading-relaxed text-neutral-500">{salesForecastIntro.subline}</p>
+          </div>
         </div>
-        <AlertBanner>{salesForecastIntro.alert}</AlertBanner>
 
-        <div>
-          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-neutral-500">
+        <div className="mt-5 flex overflow-hidden rounded-lg border border-red-100 bg-red-50/95">
+          <div className="w-1 shrink-0 bg-red-500" aria-hidden />
+          <div className="flex min-w-0 flex-1 items-start gap-3 px-4 py-3.5 sm:px-5">
+            <IconAlertCircleSolid className="mt-0.5 h-5 w-5 shrink-0 text-red-500" aria-hidden />
+            <p className="text-sm font-medium leading-relaxed text-red-700">{salesForecastIntro.alert}</p>
+          </div>
+        </div>
+
+        <div className="mt-5 grid gap-4 lg:grid-cols-3 lg:items-stretch">
+          {salesForecastSummaryCards.map((card) => (
+            <SalesForecastSummaryCard key={card.id} {...card} />
+          ))}
+        </div>
+
+        <div className="mt-8 border-t border-neutral-200 pt-6">
+          <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-neutral-600">
             Forecast by period
           </h3>
           <div className="grid gap-3 sm:grid-cols-3">
             {forecastByPeriod.map((row) => (
               <div
                 key={row.id}
-                className="rounded-lg border border-neutral-200 bg-white p-4 shadow-sm"
+                className="rounded-lg border border-neutral-200 bg-neutral-50/50 p-4 shadow-sm"
               >
                 <p className="text-xs font-semibold text-neutral-500">{row.label}</p>
                 <p className="mt-2 text-2xl font-bold tabular-nums text-neutral-900">{row.sales}</p>
@@ -119,7 +145,7 @@ export function DivisionPerformanceReport() {
           </div>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {chartPlaceholders.map((c) => (
             <ChartPlaceholder key={c.id} label={c.label} />
           ))}

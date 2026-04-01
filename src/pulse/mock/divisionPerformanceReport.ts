@@ -11,9 +11,63 @@ export const DIVISION_PERFORMANCE_DATA_UNTIL_NOTE = 'Data Until: March 31 2026'
 export const salesForecastIntro = {
   headline: 'SALES FORECAST',
   subline: 'Forward-looking sales projection vs target',
+  /** Shorter copy matches dashboard screenshot (red alert strip). */
   alert:
-    'Forecast averaging 4 sales/mo below target. Ytd pacing behind target. Next 90 days require 2.5 sales/mo above current pace to close gap.',
+    'Forecast averaging 4 sales/mo below target. Ytd pacing behind target.',
 }
+
+export type SalesForecastSummaryCardModel = {
+  id: string
+  edgeTone: 'positive' | 'negative'
+  label: string
+  primaryStat: string
+  primaryStatTone: 'positive' | 'negative'
+  detailLine: string
+  footerSmall?: string | null
+  presoldValue: string
+  specValue: string
+  specRatioLabel: string
+}
+
+/** Split summary / breakdown cards inside the Sales Forecast panel (screenshot). */
+export const salesForecastSummaryCards: SalesForecastSummaryCardModel[] = [
+  {
+    id: 'sf-march-mtd',
+    edgeTone: 'positive',
+    label: 'MARCH MTD SALES',
+    primaryStat: '5 sales to target',
+    primaryStatTone: 'positive',
+    detailLine: '8 sales vs 13 target',
+    footerSmall: null,
+    presoldValue: '8 sales',
+    specValue: '0 sales',
+    specRatioLabel: 'Spec Ratio: 0%',
+  },
+  {
+    id: 'sf-ytd',
+    edgeTone: 'negative',
+    label: '2026 YTD SALES',
+    primaryStat: '19 sales to target',
+    primaryStatTone: 'negative',
+    detailLine: '20 sales vs 39 target',
+    footerSmall: '(incl. full Mar)',
+    presoldValue: '16 sales',
+    specValue: '4 sales',
+    specRatioLabel: 'Spec Ratio: 20%',
+  },
+  {
+    id: 'sf-90',
+    edgeTone: 'negative',
+    label: '90-DAY FORECAST',
+    primaryStat: '4 sales/mo behind',
+    primaryStatTone: 'negative',
+    detailLine: '11 sales/mo vs 15 target',
+    footerSmall: null,
+    presoldValue: '9 sales/mo',
+    specValue: '2 sales/mo',
+    specRatioLabel: 'Spec Ratio: 18%',
+  },
+]
 
 export type ForecastPeriodRow = {
   id: string
