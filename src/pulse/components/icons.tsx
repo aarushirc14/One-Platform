@@ -115,3 +115,37 @@ export function IconClose({ className }: { className?: string }) {
     </svg>
   )
 }
+
+export function IconSpreadsheet({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
+      <path
+        d="M5.5 2.5h7l3 3v10a1.5 1.5 0 0 1-1.5 1.5h-8.5a1.5 1.5 0 0 1-1.5-1.5v-12a1.5 1.5 0 0 1 1.5-1.5Z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <path d="M5.5 7.5h7M5.5 10.5h7M9 5.5v8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function IconPdfDoc({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
+      <path
+        d="M5.5 2.5h5.5L14 5.5v10a1.5 1.5 0 0 1-1.5 1.5h-7a1.5 1.5 0 0 1-1.5-1.5v-12a1.5 1.5 0 0 1 1.5-1.5Z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6.75 12.25v-3h.6c.55 0 1 .45 1 1s-.45 1-1 1h-.6M9.5 12.25V9.25M9.5 9.25h1.25M9.5 11h1M11.25 12.25V9.25"
+        stroke="currentColor"
+        strokeWidth="1.05"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}

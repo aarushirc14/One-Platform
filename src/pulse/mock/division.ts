@@ -1,7 +1,7 @@
 import { INFO_KPI_SALES_VS_TARGET, INFO_KPI_SALES_VS_TARGET_YTD } from '@/pulse/constants/infoTooltips'
 import type { DivisionCommunityRow, DivisionKpi, ImpactBand } from '@/pulse/types'
 
-export const divisionName = 'Tuscon'
+export const divisionName = 'Tucson'
 
 function parseSalesGap(value: string): number {
   return parseFloat(value)

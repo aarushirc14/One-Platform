@@ -8,7 +8,7 @@ import {
   metricSections,
   webTrafficLeadTable,
 } from '@/pulse/mock/community'
-import { COMMUNITY_TRIAGE_BASE } from '@/pulse/constants/routes'
+import { OPENHOMES_COMMUNITY_TRIAGE } from '@/pulse/constants/routes'
 import { divisionName } from '@/pulse/mock/division'
 import { CommunityKpiCard } from '@/pulse/components/CommunityKpiCard'
 import { FunnelPerformanceSection } from '@/pulse/components/FunnelPerformanceSection'
@@ -21,7 +21,7 @@ export function CommunityPulsePage() {
   const dataValidUntilLabel = usePulseDataValidUntilLabel()
 
   if (communityId !== communitySlug) {
-    return <Navigate to={COMMUNITY_TRIAGE_BASE} replace />
+    return <Navigate to={OPENHOMES_COMMUNITY_TRIAGE} replace />
   }
 
   return (
@@ -30,7 +30,7 @@ export function CommunityPulsePage() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
           <div className="min-w-0 space-y-1">
             <Link
-              to={COMMUNITY_TRIAGE_BASE}
+              to={OPENHOMES_COMMUNITY_TRIAGE}
               className="inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition-colors hover:text-neutral-950"
             >
               <span aria-hidden>&lt;</span> {divisionName}
