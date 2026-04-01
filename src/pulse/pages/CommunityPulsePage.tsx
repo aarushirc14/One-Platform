@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { usePulseDataValidUntilLabel } from '@/pulse/hooks/usePulseDataValidUntilLabel'
 import {
   communityDisplayName,
   communityKpis,
@@ -16,15 +17,16 @@ import { PulseToolbarFilters } from '@/pulse/components/PulseToolbarFilters'
 
 export function CommunityPulsePage() {
   const { communityId } = useParams<{ communityId: string }>()
+  const dataValidUntilLabel = usePulseDataValidUntilLabel()
 
   if (communityId !== communitySlug) {
     return <Navigate to="/pulse" replace />
   }
 
   return (
-    <div className="min-h-full w-full px-3 py-6 sm:px-4 sm:py-10">
-      <header className="border-b border-neutral-200/90 pb-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+    <div className="min-h-full w-full px-3 py-5 sm:px-4 sm:py-7">
+      <header className="border-b border-neutral-200/90 pb-5 sm:pb-6">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
           <div className="min-w-0 space-y-1">
             <Link
               to="/pulse"
@@ -36,7 +38,7 @@ export function CommunityPulsePage() {
               {communityDisplayName}
             </h1>
             <p className="pt-2 text-sm italic leading-relaxed text-neutral-600">
-              Data Valid Until: January 31, 2026
+              Data Valid Until: {dataValidUntilLabel}
             </p>
           </div>
 
@@ -64,8 +66,8 @@ export function CommunityPulsePage() {
         </div>
       </header>
 
-      <section className="mt-10" aria-label="Community sales KPIs">
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+      <section className="mt-6 sm:mt-7" aria-label="Community sales KPIs">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {communityKpis.map((kpi) => (
             <CommunityKpiCard
               key={kpi.id}
@@ -74,12 +76,13 @@ export function CommunityPulsePage() {
               pct={kpi.pct}
               pctTone={kpi.pctTone}
               subline={kpi.subline}
+              infoTooltip={kpi.infoTooltip}
             />
           ))}
         </div>
       </section>
 
-      <div className="mt-10 space-y-6 pb-8 sm:space-y-8 sm:pb-10">
+      <div className="mt-6 space-y-4 pb-6 sm:mt-7 sm:space-y-5 sm:pb-8">
         <FunnelPerformanceSection columns={funnelColumns} />
         <MetricsTable section={webTrafficLeadTable} />
         {metricSections.map((section, idx) => (

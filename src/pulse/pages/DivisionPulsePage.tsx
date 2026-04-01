@@ -1,21 +1,34 @@
-import { divisionCommunities, divisionKpis, divisionName } from '@/pulse/mock/division'
+import { useState } from 'react'
+import {
+  divisionCommunities,
+  divisionCommunitiesSummary,
+  divisionKpis,
+  divisionName,
+} from '@/pulse/mock/division'
+import { usePulseDataValidUntilLabel } from '@/pulse/hooks/usePulseDataValidUntilLabel'
 import { CommunitiesTable } from '@/pulse/components/CommunitiesTable'
+import { DivisionCommunitiesSummaryTable } from '@/pulse/components/DivisionCommunitiesSummaryTable'
 import { DivisionKpiCard } from '@/pulse/components/DivisionKpiCard'
+import { SalesModeToggle } from '@/pulse/components/SalesModeToggle'
 import { IconDownload } from '@/pulse/components/icons'
 import { PulseToolbarFilters } from '@/pulse/components/PulseToolbarFilters'
+import type { CommunitiesMetricsMode } from '@/pulse/types'
 
 export function DivisionPulsePage() {
+  const [metricsMode, setMetricsMode] = useState<CommunitiesMetricsMode>('conversion')
+  const dataValidUntilLabel = usePulseDataValidUntilLabel()
+
   return (
-    <div className="min-h-full w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-10">
+    <div className="min-h-full w-full px-4 py-5 sm:px-6 sm:py-7 lg:px-10">
       <div className="mx-auto w-full max-w-[1180px]">
-        <header className="border-b border-neutral-200 pb-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
+        <header className="border-b border-neutral-200 pb-5 sm:pb-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
             <div className="min-w-0">
               <h1 className="text-4xl font-bold tracking-tight text-neutral-950 sm:text-[2.5rem] sm:leading-tight">
                 {divisionName}
               </h1>
               <p className="mt-2 text-sm italic text-neutral-600">
-                Data Valid Until: January 31, 2026
+                Data Valid Until: {dataValidUntilLabel}
               </p>
             </div>
 
@@ -39,19 +52,26 @@ export function DivisionPulsePage() {
           </div>
         </header>
 
-        <section className="mt-8" aria-label="Division KPIs">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+        <section className="mt-5 sm:mt-6" aria-label="Division KPIs">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
             {divisionKpis.map((kpi) => (
               <DivisionKpiCard key={kpi.id} kpi={kpi} />
             ))}
           </div>
         </section>
 
-        <section className="mt-10 pb-10 sm:pb-12" aria-labelledby="division-communities-heading">
+        <section className="mt-5 space-y-3 sm:mt-6" aria-label="Division community metrics">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+            <SalesModeToggle mode={metricsMode} onModeChange={setMetricsMode} className="w-full sm:w-auto" />
+          </div>
+          <DivisionCommunitiesSummaryTable row={divisionCommunitiesSummary} metricsMode={metricsMode} />
+        </section>
+
+        <section className="mt-5 pb-6 sm:mt-6 sm:pb-8" aria-labelledby="division-communities-heading">
           <h2 id="division-communities-heading" className="sr-only">
             Communities
           </h2>
-          <CommunitiesTable rows={divisionCommunities} />
+          <CommunitiesTable rows={divisionCommunities} metricsMode={metricsMode} />
         </section>
       </div>
     </div>

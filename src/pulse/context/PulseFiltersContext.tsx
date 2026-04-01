@@ -1,12 +1,21 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react'
 import {
   type AggregationId,
   type TargetId,
-  DATE_PERIOD_OPTIONS,
   DEFAULT_AGGREGATION_ID,
   DEFAULT_TARGET_ID,
   defaultDatePeriodId,
 } from '@/pulse/constants/filters'
+import { useLocalCalendarDayKey } from '@/pulse/hooks/useLocalCalendarDayKey'
+import { buildDatePeriodOptions } from '@/pulse/lib/pulseDatePeriods'
 
 type PulseFiltersContextValue = {
   aggregationId: AggregationId
@@ -15,6 +24,8 @@ type PulseFiltersContextValue = {
   setDatePeriodId: (id: string) => void
   targetId: TargetId
   setTargetId: (id: TargetId) => void
+  /** Options for the Date Period dropdown (labels follow the current calendar). */
+  datePeriodOptions: { id: string; label: string }[]
   /** Selected date range label for copy elsewhere (e.g. funnel subtitle). */
   datePeriodLabel: string
 }
@@ -22,14 +33,26 @@ type PulseFiltersContextValue = {
 const PulseFiltersContext = createContext<PulseFiltersContextValue | null>(null)
 
 export function PulseFiltersProvider({ children }: { children: ReactNode }) {
+  const calendarDayKey = useLocalCalendarDayKey()
   const [aggregationId, setAggregationIdState] = useState<AggregationId>(DEFAULT_AGGREGATION_ID)
   const [datePeriodId, setDatePeriodIdState] = useState(() => defaultDatePeriodId(DEFAULT_AGGREGATION_ID))
   const [targetId, setTargetIdState] = useState<TargetId>(DEFAULT_TARGET_ID)
 
+  const datePeriodOptions = useMemo(
+    () => buildDatePeriodOptions(aggregationId, new Date()),
+    [aggregationId, calendarDayKey],
+  )
+
+  useEffect(() => {
+    setDatePeriodIdState((prev) =>
+      datePeriodOptions.some((o) => o.id === prev) ? prev : datePeriodOptions[0].id,
+    )
+  }, [datePeriodOptions])
+
   const setAggregationId = useCallback((id: AggregationId) => {
     setAggregationIdState(id)
     setDatePeriodIdState((prev) => {
-      const opts = DATE_PERIOD_OPTIONS[id]
+      const opts = buildDatePeriodOptions(id, new Date())
       return opts.some((o) => o.id === prev) ? prev : opts[0].id
     })
   }, [])
@@ -43,9 +66,8 @@ export function PulseFiltersProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const datePeriodLabel = useMemo(() => {
-    const opts = DATE_PERIOD_OPTIONS[aggregationId]
-    return opts.find((o) => o.id === datePeriodId)?.label ?? opts[0].label
-  }, [aggregationId, datePeriodId])
+    return datePeriodOptions.find((o) => o.id === datePeriodId)?.label ?? datePeriodOptions[0].label
+  }, [datePeriodOptions, datePeriodId])
 
   const value = useMemo(
     () => ({
@@ -55,6 +77,7 @@ export function PulseFiltersProvider({ children }: { children: ReactNode }) {
       setDatePeriodId,
       targetId,
       setTargetId,
+      datePeriodOptions,
       datePeriodLabel,
     }),
     [
@@ -64,6 +87,7 @@ export function PulseFiltersProvider({ children }: { children: ReactNode }) {
       setDatePeriodId,
       targetId,
       setTargetId,
+      datePeriodOptions,
       datePeriodLabel,
     ],
   )

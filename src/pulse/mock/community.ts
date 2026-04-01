@@ -1,3 +1,4 @@
+import { INFO_KPI_SALES_VS_TARGET, INFO_KPI_SALES_VS_TARGET_YTD } from '@/pulse/constants/infoTooltips'
 import type { FunnelColumn, MetricTableSection } from '@/pulse/types'
 
 export const communitySlug = 'catalina-foothills'
@@ -12,6 +13,7 @@ export const communityKpis = [
     pctTone: 'negative' as const,
     subline: '16.0 sales vs 17.0 target',
     sublineTone: 'muted' as const,
+    infoTooltip: INFO_KPI_SALES_VS_TARGET,
   },
   {
     id: 'ck2',
@@ -21,6 +23,7 @@ export const communityKpis = [
     pctTone: 'positive' as const,
     subline: '5.0 sales vs 3.0 target',
     sublineTone: 'muted' as const,
+    infoTooltip: INFO_KPI_SALES_VS_TARGET_YTD,
   },
 ]
 

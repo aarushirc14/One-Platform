@@ -38,7 +38,7 @@ export function PulseSidebar({ id, className, onNavigate }: PulseSidebarProps) {
         <div className="relative">
           <select
             id="open-homes"
-            className="h-10 w-full cursor-pointer appearance-none rounded-lg border border-neutral-300 bg-white py-2 pl-3 pr-9 text-sm font-semibold text-neutral-900 shadow-sm"
+            className="h-10 w-full cursor-pointer appearance-none rounded-lg border border-neutral-300 bg-white py-2 pl-3 pr-9 text-sm font-semibold text-neutral-900 shadow-sm transition-[border-color,box-shadow,background-color] duration-200 hover:border-neutral-500 hover:bg-neutral-50 hover:shadow-md"
             defaultValue="open-homes"
           >
             <option value="open-homes">Open Homes</option>

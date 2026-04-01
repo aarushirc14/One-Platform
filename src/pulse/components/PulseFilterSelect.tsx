@@ -19,8 +19,18 @@ export function PulseFilterSelect({ label, value, options, onChange, className }
   const triggerId = `${uid}-trigger`
   const rootRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)
+  /** Pointer hover (works even when CSS @media (hover:hover) is false, e.g. hybrid devices). */
+  const [pointerOver, setPointerOver] = useState(false)
+  const [triggerFocused, setTriggerFocused] = useState(false)
+  /** Which list option the pointer is over (CSS :hover is unreliable on some hybrid devices). */
+  const [optionHoverValue, setOptionHoverValue] = useState<string | null>(null)
 
   const selected = options.find((o) => o.value === value) ?? options[0]
+  const showTriggerLift = !open && (pointerOver || triggerFocused)
+
+  useEffect(() => {
+    if (!open) setOptionHoverValue(null)
+  }, [open])
 
   useEffect(() => {
     if (!open) return
@@ -48,36 +58,48 @@ export function PulseFilterSelect({ label, value, options, onChange, className }
       <label htmlFor={triggerId} className="sr-only">
         {label}
       </label>
-      <div
+      <button
+        id={triggerId}
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listboxId}
+        onClick={() => setOpen((v) => !v)}
+        onPointerEnter={() => setPointerOver(true)}
+        onPointerLeave={() => setPointerOver(false)}
+        onFocus={() => setTriggerFocused(true)}
+        onBlur={() => setTriggerFocused(false)}
         className={cn(
-          'relative rounded-xl border bg-white shadow-sm transition-[border-color,box-shadow]',
+          'group relative flex w-full min-h-9 cursor-pointer flex-col justify-center gap-0.5 rounded-xl border bg-white py-1.5 pl-3 pr-10 text-left',
+          'transition-[border-color,box-shadow,background-color,transform,color] duration-200 ease-out',
+          'outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/20 focus-visible:ring-offset-2',
           open
-            ? 'border-neutral-400 shadow-md ring-2 ring-neutral-950/10'
-            : 'border-neutral-200/90 hover:border-neutral-300',
+            ? 'z-[1] border-neutral-500 shadow-lg ring-2 ring-neutral-900/10 ring-offset-0'
+            : 'border-neutral-300 shadow-sm active:translate-y-0 active:bg-neutral-200/80',
+          showTriggerLift &&
+            'z-[1] -translate-y-px border-neutral-600 bg-neutral-100 shadow-md motion-reduce:translate-y-0',
         )}
       >
-        <button
-          id={triggerId}
-          type="button"
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          aria-controls={listboxId}
-          onClick={() => setOpen((v) => !v)}
-          className="flex w-full min-h-10 flex-col justify-center gap-0.5 py-2 pl-3 pr-10 text-left outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-neutral-900/15 rounded-xl"
+        <span
+          className={cn(
+            'text-[10px] font-medium leading-none text-neutral-500 transition-colors',
+            showTriggerLift && 'text-neutral-700',
+          )}
         >
-          <span className="text-[10px] font-medium leading-none text-neutral-500">{label}</span>
-          <span className="min-w-0 truncate text-sm font-semibold leading-tight tracking-tight text-neutral-950">
-            {selected.label}
-          </span>
-        </button>
+          {label}
+        </span>
+        <span className="min-w-0 truncate text-sm font-semibold leading-tight tracking-tight text-neutral-950">
+          {selected.label}
+        </span>
         <IconChevronDown
           className={cn(
-            'pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500 transition-transform duration-200',
-            open && 'rotate-180',
+            'pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500 transition-[transform,color] duration-200',
+            showTriggerLift && 'text-neutral-900',
+            open && 'rotate-180 text-neutral-900',
           )}
           aria-hidden
         />
-      </div>
+      </button>
 
       {open ? (
         <ul
@@ -93,6 +115,7 @@ export function PulseFilterSelect({ label, value, options, onChange, className }
         >
           {options.map((o) => {
             const isSelected = o.value === value
+            const optionHot = optionHoverValue === o.value
             return (
               <li key={o.value} role="presentation" className="px-1.5">
                 <button
@@ -103,11 +126,25 @@ export function PulseFilterSelect({ label, value, options, onChange, className }
                     onChange(o.value)
                     setOpen(false)
                   }}
+                  onPointerEnter={() => setOptionHoverValue(o.value)}
+                  onPointerLeave={() =>
+                    setOptionHoverValue((cur) => (cur === o.value ? null : cur))
+                  }
                   className={cn(
-                    'flex w-full rounded-lg px-2.5 py-2 text-left text-sm leading-snug transition-colors',
+                    'flex w-full cursor-pointer rounded-lg px-2.5 py-2.5 text-left text-sm leading-snug',
+                    'transition-[background-color,color,box-shadow] duration-150 ease-out',
+                    'outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-neutral-400',
                     isSelected
-                      ? 'bg-neutral-900 text-white font-medium'
-                      : 'text-neutral-800 hover:bg-neutral-100 active:bg-neutral-200/80',
+                      ? cn(
+                          'bg-neutral-900 font-medium text-white',
+                          optionHot && 'bg-neutral-800 shadow-inner',
+                        )
+                      : cn(
+                          'text-neutral-800',
+                          optionHot
+                            ? 'bg-neutral-200 font-semibold text-neutral-950 shadow-sm'
+                            : 'bg-white hover:bg-neutral-100 active:bg-neutral-200',
+                        ),
                   )}
                 >
                   {o.label}

@@ -16,9 +16,15 @@ export type ImpactBand =
   | 'u7'
 
 export type CommunityImpactCell = {
+  /** Sales-impact view, e.g. "+7.7 sales" */
   label: string
   band: ImpactBand
+  /** Conversion view, e.g. "161 (1.5%)" — same band colors as sales impact */
+  conversionLabel?: string
 }
+
+/** Division communities table: funnel columns show conversion % or sales impact */
+export type CommunitiesMetricsMode = 'conversion' | 'salesImpact'
 
 export type DivisionCommunityRow = {
   id: string
@@ -45,6 +51,7 @@ export type DivisionKpi = {
   footerMid: string
   footerTarget: string
   footerEnd: string
+  infoTooltip: string
 }
 
 export type FunnelStatus = 'behind' | 'ahead' | 'onPace'

@@ -11,11 +11,11 @@ export function PerformanceLegend({ embedded }: PerformanceLegendProps) {
     <div
       className={cn(
         embedded
-          ? 'border-t border-neutral-200 bg-white px-4 py-5 sm:px-6'
-          : 'rounded-xl border border-neutral-200 bg-white px-4 py-5 shadow-sm sm:px-6',
+          ? 'border-t border-neutral-200 bg-white px-4 py-3 sm:px-5 sm:py-3.5'
+          : 'rounded-xl border border-neutral-200 bg-white px-4 py-3 shadow-sm sm:px-5 sm:py-3.5',
       )}
     >
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         {legendItems.map((item) => (
           <div key={item.label} className="flex items-center gap-2 text-xs text-neutral-600">
             <span className={cnSquare(item.className)} aria-hidden />
@@ -23,9 +23,9 @@ export function PerformanceLegend({ embedded }: PerformanceLegendProps) {
           </div>
         ))}
       </div>
-      <p className="mt-4 text-xs italic leading-relaxed text-neutral-500">
+      <p className="mt-3 text-xs italic leading-relaxed text-neutral-500">
         Colors are calculated based on the percent difference between the community stage performance and the
-        selected benchmarks.
+        selected targets.
       </p>
     </div>
   )

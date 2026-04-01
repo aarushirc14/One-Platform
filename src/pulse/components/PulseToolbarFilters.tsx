@@ -1,10 +1,4 @@
-import {
-  AGGREGATION_OPTIONS,
-  DATE_PERIOD_OPTIONS,
-  TARGET_OPTIONS,
-  type AggregationId,
-  type TargetId,
-} from '@/pulse/constants/filters'
+import { AGGREGATION_OPTIONS, TARGET_OPTIONS, type AggregationId, type TargetId } from '@/pulse/constants/filters'
 import { PulseFilterSelect } from '@/pulse/components/PulseFilterSelect'
 import { usePulseFilters } from '@/pulse/context/PulseFiltersContext'
 import { cn } from '@/lib/cn'
@@ -15,11 +9,10 @@ export function PulseToolbarFilters({ className }: { className?: string }) {
     setAggregationId,
     datePeriodId,
     setDatePeriodId,
+    datePeriodOptions,
     targetId,
     setTargetId,
   } = usePulseFilters()
-
-  const dateOptions = DATE_PERIOD_OPTIONS[aggregationId]
 
   return (
     <div
@@ -37,7 +30,7 @@ export function PulseToolbarFilters({ className }: { className?: string }) {
       <PulseFilterSelect
         label="Date Period"
         value={datePeriodId}
-        options={dateOptions.map((o) => ({ value: o.id, label: o.label }))}
+        options={datePeriodOptions.map((o) => ({ value: o.id, label: o.label }))}
         onChange={setDatePeriodId}
       />
       <PulseFilterSelect

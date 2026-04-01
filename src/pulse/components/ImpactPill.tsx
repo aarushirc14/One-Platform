@@ -11,9 +11,8 @@ export function ImpactPill({ cell, className }: ImpactPillProps) {
   return (
     <div
       className={cn(
-        'flex min-h-[40px] w-full items-center justify-center rounded-md px-2 py-2 text-center text-sm font-medium',
+        'flex min-h-[34px] w-full items-center justify-center rounded-md px-2 py-1.5 text-center text-sm font-medium tabular-nums',
         impactPillClass(cell),
-        cell.band === 'n' && 'border border-neutral-200 bg-white',
         className,
       )}
     >
