@@ -1,3 +1,5 @@
+import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
+
 /**
  * 90-day sales forecast reference chart (static PNG in /public).
  */
@@ -5,11 +7,9 @@ export function NinetyDaySalesForecastChart() {
   return (
     <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
       <div className="border-b border-neutral-100 px-4 py-3 sm:px-5 sm:py-4">
-        <h3 className="text-sm font-bold uppercase tracking-wide text-neutral-800">
-          90-Day Sales Forecast
-        </h3>
-        <p className="mt-1 text-xs text-neutral-500 sm:text-sm">
-          Rolling 90-day actuals vs forecast with confidence interval
+        <h3 className={pulseChartTitle}>90-Day Sales Forecast</h3>
+        <p className={pulseChartSubtitle}>
+          Rolling 90-day actuals vs forecast with confidence interval.
         </p>
       </div>
 

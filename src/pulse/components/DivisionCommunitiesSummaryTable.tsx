@@ -22,7 +22,7 @@ export function DivisionCommunitiesSummaryTable({ row, metricsMode }: DivisionCo
       <div className="overflow-x-auto">
         <table className="min-w-[920px] w-full border-collapse text-sm">
           <thead>
-            <tr className="border-b border-neutral-200 bg-neutral-50 text-center text-sm font-medium text-neutral-600">
+            <tr className="border-b border-neutral-200 bg-neutral-50 text-center text-xs font-semibold text-neutral-700">
               <th className="whitespace-nowrap px-4 py-2.5 text-left sm:px-5">Community</th>
               <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Sales Gap</th>
               <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Sales</th>

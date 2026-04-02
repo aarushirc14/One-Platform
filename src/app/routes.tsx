@@ -26,7 +26,7 @@ export function AppRoutes() {
         <Route path="division-performance" element={<DivisionPerformancePage />} />
         <Route path="forecast-drivers" element={<ForecastDriversPage />} />
         <Route path="community-triage" element={<DivisionPulsePage />} />
-        <Route path="community-triage/community/:communityId" element={<CommunityPulsePage />} />
+        <Route path="community-triage/:communityId" element={<CommunityPulsePage />} />
         <Route path="downloads" element={<LatestDownloadsPage />} />
       </Route>
       <Route element={<AppLayout />}>

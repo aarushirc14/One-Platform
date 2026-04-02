@@ -9,12 +9,14 @@ import {
   webTrafficLeadTable,
 } from '@/pulse/mock/community'
 import { OPENHOMES_COMMUNITY_TRIAGE } from '@/pulse/constants/routes'
-import { divisionName } from '@/pulse/mock/division'
 import { CommunityKpiCard } from '@/pulse/components/CommunityKpiCard'
+import { PulsePageHeading } from '@/pulse/components/PulsePageHeading'
 import { FunnelPerformanceSection } from '@/pulse/components/FunnelPerformanceSection'
 import { IconMoreVertical, IconShare } from '@/pulse/components/icons'
 import { MetricsTable } from '@/pulse/components/MetricsTable'
 import { PulseToolbarFilters } from '@/pulse/components/PulseToolbarFilters'
+import { pulseDataValidUntil } from '@/pulse/ui/pulseTypography'
+import { cn } from '@/lib/cn'
 
 export function CommunityPulsePage() {
   const { communityId } = useParams<{ communityId: string }>()
@@ -28,18 +30,16 @@ export function CommunityPulsePage() {
     <div className="min-h-full w-full px-3 py-5 sm:px-4 sm:py-7">
       <header className="border-b border-neutral-200/90 pb-5 sm:pb-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
-          <div className="min-w-0 space-y-1">
+          <div className="min-w-0">
+            <PulsePageHeading title={communityDisplayName} />
             <Link
               to={OPENHOMES_COMMUNITY_TRIAGE}
-              className="inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition-colors hover:text-neutral-950"
+              className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-neutral-600 transition-colors hover:text-neutral-950"
             >
-              <span aria-hidden>&lt;</span> {divisionName}
+              <span aria-hidden>&lt;</span> Community Triage
             </Link>
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl sm:leading-tight lg:text-[2rem]">
-              {communityDisplayName}
-            </h1>
-            <p className="pt-2 text-sm italic leading-relaxed text-neutral-600">
-              Data Valid Until: {dataValidUntilLabel}
+            <p className={cn('mt-2', pulseDataValidUntil)}>
+              Data Up To: {dataValidUntilLabel}
             </p>
           </div>
 

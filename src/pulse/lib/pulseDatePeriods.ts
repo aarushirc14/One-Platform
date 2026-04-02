@@ -87,7 +87,7 @@ export function pulseDataValidUntilDate(ref: Date = new Date()): Date {
   return lastCompleteWeekRange(startOfLocalDay(ref)).sun
 }
 
-/** e.g. "March 29, 2026" — for “Data valid until” copy. */
+/** e.g. "March 29, 2026" — for “Data Up To” copy. */
 export function formatPulseDataValidUntil(ref: Date = new Date()): string {
   return pulseDataValidUntilDate(ref).toLocaleDateString('en-US', {
     month: 'long',

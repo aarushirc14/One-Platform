@@ -145,6 +145,21 @@ export function IconSpreadsheet({ className }: { className?: string }) {
   )
 }
 
+/** Square with arrow — “open / external” affordance (e.g. triage deep link). */
+export function IconExternalLink({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M9 2.5h4.5V7M14 2.5 8.2 8.3M6.5 3.5h-3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-3"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export function IconPdfDoc({ className }: { className?: string }) {
   return (
     <svg className={className} width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>

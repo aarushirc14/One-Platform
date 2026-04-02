@@ -1,4 +1,5 @@
 import { cn } from '@/lib/cn'
+import { pulseKpiCardOverline, pulseMarkerLabel, pulseStatusBadge } from '@/pulse/ui/pulseTypography'
 
 export type RollupKpiTone = 'on_track' | 'needs_attention'
 
@@ -39,10 +40,11 @@ export function DivisionPerformanceRollupKpiCard({
       <div className="flex flex-1 flex-col p-6">
         <div>
           <div className="flex items-start justify-between gap-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-neutral-500">{title}</h3>
+            <h3 className={pulseKpiCardOverline}>{title}</h3>
             <span
               className={cn(
-                'shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide',
+                pulseStatusBadge,
+                'shrink-0 rounded-full px-2.5 py-0.5',
                 onTrack ? 'bg-emerald-500/15 text-emerald-700' : 'bg-red-500/15 text-red-600',
               )}
             >
@@ -80,7 +82,7 @@ export function DivisionPerformanceRollupKpiCard({
           </div>
           <div className="relative mt-2 h-4">
             <span
-              className="absolute top-0 whitespace-nowrap text-center text-[10px] font-semibold uppercase tracking-wide text-neutral-500"
+              className={pulseMarkerLabel}
               style={{ left: `${markerPct}%`, transform: 'translateX(-50%)' }}
             >
               {markerLabel}

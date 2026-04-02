@@ -1,5 +1,6 @@
 import type { SalesForecastSummaryCardModel } from '@/pulse/mock/divisionPerformanceReport'
 import { cn } from '@/lib/cn'
+import { pulseKpiCardOverline } from '@/pulse/ui/pulseTypography'
 
 export function SalesForecastSummaryCard({
   edgeTone,
@@ -27,7 +28,7 @@ export function SalesForecastSummaryCard({
       />
       <div className="flex min-w-0 flex-1 flex-col sm:flex-row">
         <div className="min-w-0 flex-1 border-b border-neutral-100 p-4 sm:border-b-0 sm:border-r sm:p-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-500">{label}</p>
+          <p className={pulseKpiCardOverline}>{label}</p>
           <p
             className={cn(
               'mt-3 text-xl font-bold leading-snug tracking-tight sm:text-2xl',

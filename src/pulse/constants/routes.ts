@@ -10,7 +10,7 @@ export const OPENHOMES_COMMUNITY_TRIAGE = `${OPENHOMES_DIVISION_BASE}/community-
 
 /** Community detail under triage. */
 export function openhomesCommunityPath(communityId: string) {
-  return `${OPENHOMES_DIVISION_BASE}/community-triage/community/${communityId}`
+  return `${OPENHOMES_DIVISION_BASE}/community-triage/${communityId}`
 }
 
 export const OPENHOMES_DOWNLOADS = `${OPENHOMES_DIVISION_BASE}/downloads`

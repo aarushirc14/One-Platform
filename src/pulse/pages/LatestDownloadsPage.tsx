@@ -1,6 +1,9 @@
 import { divisionName } from '@/pulse/mock/division'
 import { usePulseDataValidUntilLabel } from '@/pulse/hooks/usePulseDataValidUntilLabel'
+import { PulsePageHeading } from '@/pulse/components/PulsePageHeading'
 import { IconDownload, IconPdfDoc, IconSpreadsheet } from '@/pulse/components/icons'
+import { pulseDataValidUntil } from '@/pulse/ui/pulseTypography'
+import { cn } from '@/lib/cn'
 
 const downloadBtnClass =
   'inline-flex h-11 w-44 shrink-0 items-center justify-center gap-2 rounded-lg bg-neutral-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900'
@@ -18,13 +21,13 @@ export function LatestDownloadsPage() {
     <div className="min-h-full w-full px-4 py-5 sm:px-6 sm:py-7 lg:px-10">
       <div className="mx-auto w-full max-w-[720px]">
         <header className="border-b border-neutral-200 pb-5 sm:pb-6">
-          <h1 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-[2rem] sm:leading-tight">
-            Latest Downloads
-          </h1>
+          <PulsePageHeading title="Latest Downloads" />
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-neutral-600">
             Export community triage workbooks and division performance reports.
           </p>
-          <p className="mt-2 text-sm italic text-neutral-600">Data snapshot: {dataValidUntilLabel}</p>
+          <p className={cn('mt-2', pulseDataValidUntil)}>
+            Data Up To: {dataValidUntilLabel}
+          </p>
         </header>
 
         <ul className="mt-6 list-none space-y-4 p-0" role="list">

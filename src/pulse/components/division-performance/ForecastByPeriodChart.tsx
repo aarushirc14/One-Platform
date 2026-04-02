@@ -1,4 +1,5 @@
 import type { ForecastByPeriodRow } from '@/pulse/mock/divisionPerformanceReport'
+import { pulseChartTitle } from '@/pulse/ui/pulseTypography'
 
 type ForecastByPeriodChartProps = {
   rows: ForecastByPeriodRow[]
@@ -66,7 +67,7 @@ function Legend() {
 export function ForecastByPeriodChart({ rows }: ForecastByPeriodChartProps) {
   return (
     <div className="rounded-lg border border-neutral-200 bg-white p-4 shadow-sm sm:p-5">
-      <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-700">Forecast by period</h3>
+      <h3 className={pulseChartTitle}>Forecast by Period</h3>
 
       <div className="mt-5 space-y-5">
         {rows.map((row) => (
@@ -74,9 +75,7 @@ export function ForecastByPeriodChart({ rows }: ForecastByPeriodChartProps) {
             key={row.id}
             className="grid gap-3 border-b border-neutral-100 pb-5 last:border-b-0 last:pb-0 sm:gap-4 lg:grid-cols-[10rem_minmax(0,1fr)_minmax(7rem,9rem)_minmax(7rem,9rem)] lg:items-center lg:gap-5 lg:pb-6"
           >
-            <div className="text-[10px] font-semibold uppercase leading-snug tracking-wide text-neutral-500">
-              {row.label}
-            </div>
+            <div className="text-xs font-semibold leading-snug text-neutral-600">{row.label}</div>
 
             <div className="min-w-0 lg:min-w-[140px]">
               <ForecastTrack

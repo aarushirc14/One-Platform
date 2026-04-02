@@ -1,18 +1,16 @@
 import { useState } from 'react'
-import {
-  divisionCommunities,
-  divisionCommunitiesSummary,
-  divisionKpis,
-  divisionName,
-} from '@/pulse/mock/division'
+import { divisionCommunities, divisionCommunitiesSummary, divisionKpis } from '@/pulse/mock/division'
 import { usePulseDataValidUntilLabel } from '@/pulse/hooks/usePulseDataValidUntilLabel'
 import { CommunitiesTable } from '@/pulse/components/CommunitiesTable'
 import { DivisionCommunitiesSummaryTable } from '@/pulse/components/DivisionCommunitiesSummaryTable'
 import { DivisionKpiCard } from '@/pulse/components/DivisionKpiCard'
 import { SalesModeToggle } from '@/pulse/components/SalesModeToggle'
 import { IconDownload } from '@/pulse/components/icons'
+import { PulsePageHeading } from '@/pulse/components/PulsePageHeading'
 import { PulseToolbarFilters } from '@/pulse/components/PulseToolbarFilters'
 import type { CommunitiesMetricsMode } from '@/pulse/types'
+import { pulseDataValidUntil } from '@/pulse/ui/pulseTypography'
+import { cn } from '@/lib/cn'
 
 export function DivisionPulsePage() {
   const [metricsMode, setMetricsMode] = useState<CommunitiesMetricsMode>('conversion')
@@ -24,11 +22,9 @@ export function DivisionPulsePage() {
         <header className="border-b border-neutral-200 pb-5 sm:pb-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
             <div className="min-w-0">
-              <h1 className="text-4xl font-bold tracking-tight text-neutral-950 sm:text-[2.5rem] sm:leading-tight">
-                {divisionName}
-              </h1>
-              <p className="mt-2 text-sm italic text-neutral-600">
-                Data Valid Until: {dataValidUntilLabel}
+              <PulsePageHeading title="Community Triage" />
+              <p className={cn('mt-2', pulseDataValidUntil)}>
+                Data Up To: {dataValidUntilLabel}
               </p>
             </div>
 

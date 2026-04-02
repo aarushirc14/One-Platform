@@ -1,19 +1,124 @@
+import {
+  OPENHOMES_COMMUNITY_TRIAGE,
+  OPENHOMES_DOWNLOADS,
+  OPENHOMES_FORECAST_DRIVERS,
+} from '@/pulse/constants/routes'
+
 /** Static copy and figures for the Division Performance report (PDF-aligned, Open Homes Tucson). */
 
-export const DIVISION_PERFORMANCE_REPORT_TITLE = 'Tucson Division Performance'
+/** Main heading on Division Performance (division name is the page sub-heading). */
+export const DIVISION_PERFORMANCE_PAGE_TITLE = 'Division Performance'
 
 /** Fixed reporting boundary for the monthly Division Performance snapshot (no live filters). */
 export const DIVISION_PERFORMANCE_DATA_FRESHNESS_NOTE =
   'Division performance is updated monthly and shows only the most recent completed month.'
 
-export const DIVISION_PERFORMANCE_DATA_UNTIL_NOTE = 'Data Until: March 31 2026'
+export const DIVISION_PERFORMANCE_DATA_UNTIL_NOTE = 'Data Up To: March 31, 2026'
+
+/** Framing for the report hero — decision platform, not a static PDF. */
+export const DIVISION_PERFORMANCE_PAGE_THESIS =
+  'Executive overview: actuals, target, pace, and forecast in one place. Everything below connects to where you should drill next — triage, drivers, or export.'
+
+export type ExecutiveDecisionQa = {
+  id: string
+  question: string
+  answer: string
+  tone: 'default' | 'attention' | 'positive'
+}
+
+/** Answers the four decision questions in under a minute (mock narrative). */
+export const divisionPerformanceExecutiveOverview = {
+  headlineStatus: 'Behind on YTD and 90-day pace; March month-to-date still on track.',
+  qa: [
+    {
+      id: 'on-track',
+      question: 'Are we on track?',
+      answer:
+        'Partially. YTD sales and the rolling 90-day forecast sit under target; March MTD is meeting its prorated goal.',
+      tone: 'attention',
+    },
+    {
+      id: 'focus',
+      question: 'Where should I focus?',
+      answer:
+        'Prioritize communities that are off-track or at-risk on the next 90-day outlook, using primary drivers as the first hypothesis.',
+      tone: 'default',
+    },
+    {
+      id: 'why',
+      question: 'Why is this happening?',
+      answer:
+        'Options uptake has cooled vs the prior 180 days; funnel-stage detail lives in Community Pulse. Forecast Drivers will add the business-readable explanation layer.',
+      tone: 'default',
+    },
+    {
+      id: 'next',
+      question: 'What should I do next?',
+      answer:
+        'Run triage on the ranked communities, review suggested discussion prompts at the bottom, then export the same snapshot for stakeholders who want paper.',
+      tone: 'default',
+    },
+  ] as ExecutiveDecisionQa[],
+  riskLabel: 'Largest risk to target',
+  risk: 'Q2 catch-up stalls if off-track communities do not recover visit-to-sale conversion within the next reporting window.',
+  opportunityLabel: 'Largest upside',
+  opportunity:
+    'On-track communities with spare capacity can absorb incremental demand without crowding presale inventory.',
+}
+
+export type ReportNextStepLink = {
+  id: string
+  label: string
+  hint: string
+  to: string
+}
+
+/** Action layer — links into the rest of the unified platform. */
+export const divisionPerformanceNextSteps = {
+  title: 'Turn this into a decision',
+  subtitle: 'Suggested moves — same truth as the live product; PDF is an output, not a separate story.',
+  links: [
+    {
+      id: 'triage',
+      label: 'Open Community Triage',
+      hint: 'Priorities view — ranked communities, funnel impact, operational drilldown',
+      to: OPENHOMES_COMMUNITY_TRIAGE,
+    },
+    {
+      id: 'drivers',
+      label: 'Forecast & Drivers',
+      hint: 'Explanation layer — what changed, confidence, narrative (prototype)',
+      to: OPENHOMES_FORECAST_DRIVERS,
+    },
+    {
+      id: 'downloads',
+      label: 'Exports & handoffs',
+      hint: 'Spreadsheets and PDFs generated from this snapshot',
+      to: OPENHOMES_DOWNLOADS,
+    },
+  ] as ReportNextStepLink[],
+  discussionPrompts: [
+    'Which two communities get executive attention this week?',
+    'Where does the funnel disagree with the forecast story?',
+    'What one operational change is we testing before the next monthly close?',
+  ],
+}
+
+export const divisionPerformanceSectionNav = [
+  { href: '#executive-overview', label: 'At a Glance' },
+  { href: '#rollup-kpis', label: 'Actuals & Pace' },
+  { href: '#sales-forecast', label: 'Forecast & Context' },
+  { href: '#community-priorities', label: 'Community Priorities' },
+  { href: '#margin-drivers', label: 'Margin / Options' },
+  { href: '#next-steps', label: 'Next Steps' },
+] as const
 
 export const salesForecastIntro = {
-  headline: 'SALES FORECAST',
+  headline: 'Sales Forecast',
   subline: 'Forward-looking sales projection vs target',
   /** Shorter copy matches dashboard screenshot (red alert strip). */
   alert:
-    'Forecast averaging 4 sales/mo below target. Ytd pacing behind target.',
+    'Forecast averaging 4 sales/mo below target. YTD pacing behind target.',
 }
 
 export type SalesForecastSummaryCardModel = {
@@ -34,7 +139,7 @@ export const salesForecastSummaryCards: SalesForecastSummaryCardModel[] = [
   {
     id: 'sf-march-mtd',
     edgeTone: 'positive',
-    label: 'MARCH MTD SALES',
+    label: 'March MTD Sales',
     primaryStat: '5 sales to target',
     primaryStatTone: 'positive',
     detailLine: '8 sales vs 13 target',
@@ -46,7 +151,7 @@ export const salesForecastSummaryCards: SalesForecastSummaryCardModel[] = [
   {
     id: 'sf-ytd',
     edgeTone: 'negative',
-    label: '2026 YTD SALES',
+    label: '2026 YTD Sales',
     primaryStat: '19 sales to target',
     primaryStatTone: 'negative',
     detailLine: '20 sales vs 39 target',
@@ -58,7 +163,7 @@ export const salesForecastSummaryCards: SalesForecastSummaryCardModel[] = [
   {
     id: 'sf-90',
     edgeTone: 'negative',
-    label: '90-DAY FORECAST',
+    label: '90-Day Forecast',
     primaryStat: '4 sales/mo behind',
     primaryStatTone: 'negative',
     detailLine: '11 sales/mo vs 15 target',
@@ -87,7 +192,7 @@ export type ForecastByPeriodRow = {
 export const forecastByPeriod: ForecastByPeriodRow[] = [
   {
     id: '30',
-    label: 'NEXT 30 DAYS',
+    label: 'Next 30 Days',
     forecastSales: 8,
     rangeLow: 7,
     rangeHigh: 9,
@@ -100,7 +205,7 @@ export const forecastByPeriod: ForecastByPeriodRow[] = [
   },
   {
     id: '3060',
-    label: '30-60 DAYS',
+    label: '30–60 Days',
     forecastSales: 11,
     rangeLow: 9,
     rangeHigh: 13,
@@ -113,7 +218,7 @@ export const forecastByPeriod: ForecastByPeriodRow[] = [
   },
   {
     id: '6090',
-    label: '60-90 DAYS',
+    label: '60–90 Days',
     forecastSales: 13,
     rangeLow: 11,
     rangeHigh: 15,
@@ -265,6 +370,8 @@ export const cumulativeSalesComparison: CumulativeSalesComparisonPoint[] = [
   },
 ]
 
+export type Next90Outlook = 'strong' | 'on-track' | 'at-risk' | 'off-track'
+
 export type CommunityPerformanceRow = {
   id: string
   name: string
@@ -276,10 +383,23 @@ export type CommunityPerformanceRow = {
   next90Plan: number
   next90CatchUp: number
   primaryDriver: string
+  /** Forecast outlook band for the next-90-day column. */
+  next90Outlook: Next90Outlook
+  /** When true, show “needs attention” callout on the primary driver. */
+  driverNeedsAttention: boolean
+}
+
+/** Section chrome — matches Sales Forecast header pattern on Division Performance. */
+export const communityPerformanceIntro = {
+  headline: 'Community Performance',
+  subline: 'Past performance and next 90-day outlook by community',
 }
 
 export const communityPerformanceAlert =
-  '0 of 4 communities on track for next 90-day target. 3 communities need 1+ catch-up sales. 1 community pacing ahead but still below YTD target.'
+  '0 of 4 communities on track for the next 90 days; Catalina Foothills, Gladden Farms and 2 more at risk.'
+
+export const communityPerformanceTableFootnote =
+  '* Next 90-day plan, plus any YTD gap vs plan spread evenly over the rest of the year.'
 
 export const communityPerformanceRows: CommunityPerformanceRow[] = [
   {
@@ -293,6 +413,8 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Plan: 16,
     next90CatchUp: 1,
     primaryDriver: 'Web Traffic',
+    next90Outlook: 'off-track',
+    driverNeedsAttention: true,
   },
   {
     id: 'gladden-farms',
@@ -305,6 +427,8 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Plan: 10,
     next90CatchUp: 2,
     primaryDriver: 'Web Traffic',
+    next90Outlook: 'off-track',
+    driverNeedsAttention: true,
   },
   {
     id: 'saddlebrook',
@@ -317,6 +441,8 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Plan: 11,
     next90CatchUp: 1,
     primaryDriver: 'Web Traffic',
+    next90Outlook: 'off-track',
+    driverNeedsAttention: true,
   },
   {
     id: 'tanque-verde',
@@ -329,22 +455,46 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Plan: 6,
     next90CatchUp: 0,
     primaryDriver: 'First Visit → Sale Rate',
+    next90Outlook: 'off-track',
+    driverNeedsAttention: false,
   },
 ]
 
-export const outlookLegend = [
-  { label: 'Strong', tone: 'strong' as const },
-  { label: 'On Track', tone: 'on' as const },
-  { label: 'At Risk', tone: 'risk' as const },
-  { label: 'Off Track', tone: 'off' as const },
+export const outlookLegendItems = [
+  {
+    tone: 'strong' as const,
+    label: 'Strong',
+    range: '≥75% chance to hit target',
+    dotClass: 'bg-emerald-500',
+  },
+  {
+    tone: 'on-track' as const,
+    label: 'On Track',
+    range: '50–74%',
+    dotClass: 'bg-teal-500',
+  },
+  {
+    tone: 'at-risk' as const,
+    label: 'At Risk',
+    range: '25–49%',
+    dotClass: 'bg-orange-500',
+  },
+  {
+    tone: 'off-track' as const,
+    label: 'Off Track',
+    range: '<25%',
+    dotClass: 'bg-red-500',
+  },
 ]
 
 export const marginDriversIntro = {
-  headline: 'MARGIN DRIVERS',
+  headline: 'Margin Drivers',
+  subline: 'Options uptake by community',
   alert:
-    'Options uptake trailing benchmark in 3 of 4 communities. Structural margin pressure if loading does not improve.',
+    'Presale options uptake averaged 7.8% over the last 90 days, compared to 11.5% over 180 days (-3.8 pts).',
 }
 
+/** Legacy table-style margin rows (kept for reference; primary UI is options uptake chart). */
 export type MarginDriverRow = {
   communityId: string
   communityName: string
@@ -384,6 +534,65 @@ export const marginDriverRows: MarginDriverRow[] = [
   },
 ]
 
+export const optionsUptakeChartIntro = {
+  title: 'Options Uptake by Community',
+  subtitle:
+    'Presale options as % of sale price (180-day and 90-day periods). Spec options uptake unavailable (missing construction start dates).',
+  footnote:
+    'This section uses completed sales only — cancellations are excluded rather than netted by month as in other sections.',
+}
+
+export const optionsUptakeWeightedAvg = {
+  d180: '11.5%',
+  d90: '7.8%',
+}
+
+export type OptionsUptakeCommunityRow = {
+  communityId: string
+  communityName: string
+  /** Percent 0–100 scale (e.g. 12.2) */
+  pct180: number
+  sold180: number
+  pct90: number
+  sold90: number
+}
+
+/** Grouped bar chart mock — aligned to reference dashboard proportions. */
+export const optionsUptakeByCommunity: OptionsUptakeCommunityRow[] = [
+  {
+    communityId: 'catalina-foothills',
+    communityName: 'Catalina Foothills',
+    pct180: 12.2,
+    sold180: 22,
+    pct90: 9.4,
+    sold90: 11,
+  },
+  {
+    communityId: 'gladden-farms',
+    communityName: 'Gladden Farms',
+    pct180: 10.5,
+    sold180: 6,
+    pct90: 8.1,
+    sold90: 4,
+  },
+  {
+    communityId: 'saddlebrook',
+    communityName: 'Saddlebrook',
+    pct180: 12.3,
+    sold180: 12,
+    pct90: 9.0,
+    sold90: 5,
+  },
+  {
+    communityId: 'tanque-verde',
+    communityName: 'Tanque Verde',
+    pct180: 9.8,
+    sold180: 10,
+    pct90: 1.9,
+    sold90: 5,
+  },
+]
+
 export type RollupKpiCardModel = {
   id: string
   title: string
@@ -403,9 +612,9 @@ export type RollupKpiCardModel = {
 export const rollupKpiCards: RollupKpiCardModel[] = [
   {
     id: 'march-mtd',
-    title: 'MARCH MTD SALES',
+    title: 'March MTD Sales',
     tone: 'on_track',
-    badge: 'ON TRACK',
+    badge: 'On Track',
     currentValue: '8',
     midPhrase: ' sales / ',
     targetValue: '13',
@@ -413,13 +622,13 @@ export const rollupKpiCards: RollupKpiCardModel[] = [
     detailLine: null,
     fillPct: Math.round((8 / 13) * 100),
     markerPct: 80,
-    markerLabel: 'TARGET',
+    markerLabel: 'Target',
   },
   {
     id: 'ytd',
-    title: '2026 YTD SALES',
+    title: '2026 YTD Sales',
     tone: 'needs_attention',
-    badge: 'NEEDS ATTENTION',
+    badge: 'Needs Attention',
     currentValue: '20',
     midPhrase: ' sales / ',
     targetValue: '39',
@@ -427,13 +636,13 @@ export const rollupKpiCards: RollupKpiCardModel[] = [
     detailLine: '(incl. full Mar)',
     fillPct: Math.round((20 / 39) * 100),
     markerPct: 80,
-    markerLabel: 'TARGET',
+    markerLabel: 'Target',
   },
   {
     id: 'forecast-90',
-    title: '90-DAY FORECAST',
+    title: '90-Day Forecast',
     tone: 'needs_attention',
-    badge: 'NEEDS ATTENTION',
+    badge: 'Needs Attention',
     currentValue: '11',
     midPhrase: ' sales/mo / ',
     targetValue: '15',
@@ -441,11 +650,6 @@ export const rollupKpiCards: RollupKpiCardModel[] = [
     detailLine: null,
     fillPct: Math.round((11 / 15) * 100),
     markerPct: 90,
-    markerLabel: 'TARGET/MO',
+    markerLabel: 'Target/mo',
   },
 ]
-
-export const reportFootnotes = {
-  cancellations: '* Does not include cancellations or inventory adjustments.',
-  poweredBy: 'POWERED BY OPENPREDICT SALES FORECASTING',
-}

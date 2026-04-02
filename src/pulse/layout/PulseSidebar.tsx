@@ -43,8 +43,7 @@ const divisionNavGroups: DivisionNavGroup[] = [
         label: 'Community Triage',
         to: OPENHOMES_COMMUNITY_TRIAGE,
         isActive: (p) =>
-          p === OPENHOMES_COMMUNITY_TRIAGE ||
-          p.startsWith(`${OPENHOMES_COMMUNITY_TRIAGE}/community/`),
+          p === OPENHOMES_COMMUNITY_TRIAGE || p.startsWith(`${OPENHOMES_COMMUNITY_TRIAGE}/`),
       },
     ],
   },

@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import type { CumulativeSalesComparisonPoint } from '@/pulse/mock/divisionPerformanceReport'
+import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
 
 type CumulativeSalesComparisonChartProps = {
   data: CumulativeSalesComparisonPoint[]
@@ -129,10 +130,8 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
   return (
     <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
       <div className="border-b border-neutral-100 px-4 py-3 sm:px-5 sm:py-4">
-        <h3 className="text-sm font-bold uppercase tracking-wide text-neutral-800">
-          Cumulative sales comparison
-        </h3>
-        <p className="mt-1 text-xs text-neutral-500 sm:text-sm">
+        <h3 className={pulseChartTitle}>Cumulative Sales Comparison</h3>
+        <p className={pulseChartSubtitle}>
           Year-to-date performance vs prior years and target (2026).
         </p>
       </div>
