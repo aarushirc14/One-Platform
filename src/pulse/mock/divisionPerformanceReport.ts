@@ -69,26 +69,201 @@ export const salesForecastSummaryCards: SalesForecastSummaryCardModel[] = [
   },
 ]
 
-export type ForecastPeriodRow = {
+/** Horizontal track layout (0–100%) — tuned to match Forecast by period dashboard screenshot. */
+export type ForecastByPeriodRow = {
   id: string
   label: string
-  sales: number
+  forecastSales: number
+  rangeLow: number
+  rangeHigh: number
   target: number
   behind: number
+  rangeLeftPct: number
+  rangeWidthPct: number
+  forecastPct: number
+  targetPct: number
 }
 
-export const forecastByPeriod: ForecastPeriodRow[] = [
-  { id: '30', label: 'NEXT 30 DAYS', sales: 8, target: 14, behind: 6 },
-  { id: '3060', label: '30-60 DAYS', sales: 11, target: 15, behind: 4 },
-  { id: '6090', label: '60-90 DAYS', sales: 13, target: 15, behind: 2 },
+export const forecastByPeriod: ForecastByPeriodRow[] = [
+  {
+    id: '30',
+    label: 'NEXT 30 DAYS',
+    forecastSales: 8,
+    rangeLow: 7,
+    rangeHigh: 9,
+    target: 14,
+    behind: 6,
+    rangeLeftPct: 28,
+    rangeWidthPct: 14,
+    forecastPct: 35,
+    targetPct: 76,
+  },
+  {
+    id: '3060',
+    label: '30-60 DAYS',
+    forecastSales: 11,
+    rangeLow: 9,
+    rangeHigh: 13,
+    target: 15,
+    behind: 4,
+    rangeLeftPct: 38,
+    rangeWidthPct: 22,
+    forecastPct: 49,
+    targetPct: 82,
+  },
+  {
+    id: '6090',
+    label: '60-90 DAYS',
+    forecastSales: 13,
+    rangeLow: 11,
+    rangeHigh: 15,
+    target: 15,
+    behind: 2,
+    rangeLeftPct: 58,
+    rangeWidthPct: 25,
+    forecastPct: 70,
+    targetPct: 83,
+  },
 ]
 
-export const chartPlaceholders = [
-  { id: 'confidence', label: 'Forecast Confidence Range Target' },
-  { id: '90day', label: '90-DAY SALES FORECAST' },
-  { id: 'historical', label: 'HISTORICAL MONTHLY SALES' },
-  { id: 'cumulative', label: 'CUMULATIVE SALES COMPARISON' },
-] as const
+/** Stacked monthly bars + budget line for the Historical Monthly Sales chart (vector replica). */
+export type HistoricalMonthlySalesPoint = {
+  month: string
+  presale: number
+  spec: number
+  /** Forecast segment (hatched); 0 when none */
+  forecast: number
+  budget: number
+}
+
+export const historicalMonthlySales: HistoricalMonthlySalesPoint[] = [
+  { month: "Mar '25", presale: 17, spec: 3, forecast: 0, budget: 20 },
+  { month: "Apr '25", presale: 9, spec: 1, forecast: 0, budget: 24 },
+  { month: "May '25", presale: 2, spec: 0, forecast: 0, budget: 26 },
+  { month: "Jun '25", presale: 8, spec: 1, forecast: 0, budget: 27 },
+  { month: "Jul '25", presale: 3, spec: 3, forecast: 0, budget: 27 },
+  { month: "Aug '25", presale: 8, spec: 1, forecast: 0, budget: 29 },
+  { month: "Sep '25", presale: 10, spec: 2, forecast: 0, budget: 29 },
+  { month: "Oct '25", presale: 11, spec: 1, forecast: 0, budget: 30 },
+  { month: "Nov '25", presale: 3, spec: 2, forecast: 0, budget: 25 },
+  { month: "Dec '25", presale: 8, spec: 0, forecast: 0, budget: 25 },
+  { month: "Jan '26", presale: 5, spec: 1, forecast: 0, budget: 12 },
+  { month: "Feb '26", presale: 3, spec: 3, forecast: 0, budget: 14 },
+  { month: "Mar '26", presale: 8, spec: 0, forecast: 4, budget: 13 },
+  { month: "Apr '26", presale: 0, spec: 0, forecast: 9, budget: 16 },
+  { month: "May '26", presale: 0, spec: 0, forecast: 12, budget: 15 },
+]
+
+/** Jan–Dec cumulative sales lines for the Cumulative Sales Comparison chart. */
+export type CumulativeSalesComparisonPoint = {
+  month: string
+  target2026: number
+  /** YTD actual (null after last reported month) */
+  actual2026: number | null
+  /** Forecast continuation (null outside forecast window) */
+  forecast2026: number | null
+  cumulative2025: number
+  cumulative2024: number
+}
+
+export const cumulativeSalesComparison: CumulativeSalesComparisonPoint[] = [
+  {
+    month: 'Jan',
+    target2026: 12,
+    actual2026: 6,
+    forecast2026: null,
+    cumulative2025: 20,
+    cumulative2024: 10,
+  },
+  {
+    month: 'Feb',
+    target2026: 26,
+    actual2026: 12,
+    forecast2026: null,
+    cumulative2025: 29,
+    cumulative2024: 18,
+  },
+  {
+    month: 'Mar',
+    target2026: 39,
+    actual2026: null,
+    forecast2026: 24,
+    cumulative2025: 39,
+    cumulative2024: 26,
+  },
+  {
+    month: 'Apr',
+    target2026: 55,
+    actual2026: null,
+    forecast2026: 33,
+    cumulative2025: 49,
+    cumulative2024: 35,
+  },
+  {
+    month: 'May',
+    target2026: 70,
+    actual2026: null,
+    forecast2026: 45,
+    cumulative2025: 59,
+    cumulative2024: 43,
+  },
+  {
+    month: 'Jun',
+    target2026: 85,
+    actual2026: null,
+    forecast2026: null,
+    cumulative2025: 69,
+    cumulative2024: 51,
+  },
+  {
+    month: 'Jul',
+    target2026: 98,
+    actual2026: null,
+    forecast2026: null,
+    cumulative2025: 78,
+    cumulative2024: 60,
+  },
+  {
+    month: 'Aug',
+    target2026: 111,
+    actual2026: null,
+    forecast2026: null,
+    cumulative2025: 88,
+    cumulative2024: 68,
+  },
+  {
+    month: 'Sep',
+    target2026: 123,
+    actual2026: null,
+    forecast2026: null,
+    cumulative2025: 98,
+    cumulative2024: 76,
+  },
+  {
+    month: 'Oct',
+    target2026: 136,
+    actual2026: null,
+    forecast2026: null,
+    cumulative2025: 107,
+    cumulative2024: 85,
+  },
+  {
+    month: 'Nov',
+    target2026: 147,
+    actual2026: null,
+    forecast2026: null,
+    cumulative2025: 117,
+    cumulative2024: 93,
+  },
+  {
+    month: 'Dec',
+    target2026: 160,
+    actual2026: null,
+    forecast2026: null,
+    cumulative2025: 123,
+    cumulative2024: 100,
+  },
+]
 
 export type CommunityPerformanceRow = {
   id: string

@@ -3,8 +3,9 @@ import {
   DIVISION_PERFORMANCE_DATA_FRESHNESS_NOTE,
   DIVISION_PERFORMANCE_DATA_UNTIL_NOTE,
   DIVISION_PERFORMANCE_REPORT_TITLE,
-  chartPlaceholders,
   communityPerformanceAlert,
+  cumulativeSalesComparison,
+  historicalMonthlySales,
   communityPerformanceRows,
   forecastByPeriod,
   marginDriverRows,
@@ -16,6 +17,10 @@ import {
   salesForecastSummaryCards,
 } from '@/pulse/mock/divisionPerformanceReport'
 import { DivisionPerformanceRollupKpiCard } from '@/pulse/components/division-performance/DivisionPerformanceRollupKpiCard'
+import { CumulativeSalesComparisonChart } from '@/pulse/components/division-performance/CumulativeSalesComparisonChart'
+import { ForecastByPeriodChart } from '@/pulse/components/division-performance/ForecastByPeriodChart'
+import { HistoricalMonthlySalesChart } from '@/pulse/components/division-performance/HistoricalMonthlySalesChart'
+import { NinetyDaySalesForecastChart } from '@/pulse/components/division-performance/NinetyDaySalesForecastChart'
 import { SalesForecastSummaryCard } from '@/pulse/components/division-performance/SalesForecastSummaryCard'
 import { IconAlertCircleSolid, IconDownload, IconLineChart } from '@/pulse/components/icons'
 import { cn } from '@/lib/cn'
@@ -122,33 +127,13 @@ export function DivisionPerformanceReport() {
         </div>
 
         <div className="mt-8 border-t border-neutral-200 pt-6">
-          <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-neutral-600">
-            Forecast by period
-          </h3>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {forecastByPeriod.map((row) => (
-              <div
-                key={row.id}
-                className="rounded-lg border border-neutral-200 bg-neutral-50/50 p-4 shadow-sm"
-              >
-                <p className="text-xs font-semibold text-neutral-500">{row.label}</p>
-                <p className="mt-2 text-2xl font-bold tabular-nums text-neutral-900">{row.sales}</p>
-                <p className="text-xs text-neutral-600">sales</p>
-                <p className="mt-2 text-sm text-neutral-700">
-                  Target: <span className="font-semibold tabular-nums">{row.target}</span>
-                </p>
-                <p className="mt-1 text-sm font-medium text-red-700">
-                  {row.behind} sales behind
-                </p>
-              </div>
-            ))}
-          </div>
+          <ForecastByPeriodChart rows={forecastByPeriod} />
         </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-          {chartPlaceholders.map((c) => (
-            <ChartPlaceholder key={c.id} label={c.label} />
-          ))}
+        <div className="mt-6 space-y-6">
+          <NinetyDaySalesForecastChart />
+          <HistoricalMonthlySalesChart data={historicalMonthlySales} />
+          <CumulativeSalesComparisonChart data={cumulativeSalesComparison} />
         </div>
       </section>
 
