@@ -18,9 +18,9 @@ export function AppTopBar() {
       <div className="flex h-16 items-center justify-between gap-3 px-3 sm:gap-4 sm:px-4">
         <div className="flex min-w-0 items-center gap-2">
           <Link
-            to="/prototype"
+            to="/landing"
             className="shrink-0 text-sm font-semibold text-slate-900 lg:hidden"
-            aria-label="Prototype home"
+            aria-label="Landing"
           >
             One Platform
           </Link>

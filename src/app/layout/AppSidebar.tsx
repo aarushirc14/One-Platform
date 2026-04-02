@@ -16,7 +16,7 @@ export function AppSidebar() {
         </span>
         <div>
           <p className="text-sm font-semibold text-white">One Platform</p>
-          <p className="text-xs text-slate-400">Prototype</p>
+          <p className="text-xs text-slate-400">Workspace</p>
         </div>
       </div>
       <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="Primary">
@@ -39,7 +39,7 @@ export function AppSidebar() {
       </nav>
       <div className="border-t border-slate-800 p-4">
         <NavLink
-          to="/prototype"
+          to="/landing"
           className="text-xs font-medium text-slate-400 underline-offset-4 hover:text-white hover:underline"
         >
           ← Back to landing

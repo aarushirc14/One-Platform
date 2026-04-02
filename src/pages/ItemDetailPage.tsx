@@ -17,13 +17,12 @@ export function ItemDetailPage() {
   if (!item) {
     return (
       <>
-        <PageHeader title="Item not found" description="This id is not in the mock dataset." />
+        <PageHeader title="Item not found" description="This id is not in the current list." />
         <Card>
           <CardHeader>
             <CardTitle>Try another item</CardTitle>
             <CardDescription>
-              Use the list to pick a record, or extend <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">mock/items.ts</code>{' '}
-              with new entries.
+              Use the list to pick a record, or add entries in the items data module.
             </CardDescription>
           </CardHeader>
           <ButtonLink to="/items" variant="secondary" className="w-full justify-center sm:w-auto">
@@ -50,7 +49,7 @@ export function ItemDetailPage() {
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>Details</CardTitle>
-            <CardDescription>Full mock description for read-only demos.</CardDescription>
+            <CardDescription>Full description for this item.</CardDescription>
           </CardHeader>
           <p className="text-sm leading-relaxed text-slate-700">{item.description}</p>
           <div className="mt-6 flex flex-wrap gap-2">

@@ -7,8 +7,8 @@ import {
   communityPerformanceRows,
   communityPerformanceTableFootnote,
   outlookLegendItems,
-} from '@/pulse/mock/divisionPerformanceReport'
-import { IconAlertCircleSolid, IconExternalLink, IconSpreadsheet } from '@/pulse/components/icons'
+} from '@/pulse/data/divisionPerformanceReport'
+import { IconAlertCircleSolid, IconExternalLink } from '@/pulse/components/icons'
 import { openhomesCommunityPath } from '@/pulse/constants/routes'
 import { cn } from '@/lib/cn'
 import {
@@ -155,20 +155,15 @@ export function CommunityPerformanceSection() {
       className="scroll-mt-24 rounded-xl border border-neutral-300/90 bg-white p-5 shadow-sm sm:p-6"
       aria-labelledby="community-performance-heading"
     >
-      <div className="flex gap-3 sm:gap-4">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-neutral-800 text-white shadow-sm">
-          <IconSpreadsheet className="h-5 w-5" aria-hidden />
-        </div>
-        <div className="min-w-0 pt-0.5">
-          <h2 id="community-performance-heading" className={pulseSectionTitleOnCard}>
-            {communityPerformanceIntro.headline}
-          </h2>
-          <p className="mt-1 text-sm leading-relaxed text-neutral-600">{communityPerformanceIntro.subline}</p>
-          <p className="mt-2 max-w-3xl text-xs leading-relaxed text-neutral-500">
-            Priorities / triage bridge: rank by outlook and primary driver, then open Community Triage for funnel
-            stage detail and modeled impact.
-          </p>
-        </div>
+      <div className="min-w-0">
+        <h2 id="community-performance-heading" className={pulseSectionTitleOnCard}>
+          {communityPerformanceIntro.headline}
+        </h2>
+        <p className="mt-1 text-sm leading-relaxed text-neutral-600">{communityPerformanceIntro.subline}</p>
+        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-neutral-500">
+          Priorities / triage bridge: rank by outlook and primary driver, then open Community Triage for funnel
+          stage detail and modeled impact
+        </p>
       </div>
 
       <div className="mt-5 flex overflow-hidden rounded-lg border border-neutral-300 bg-neutral-100">

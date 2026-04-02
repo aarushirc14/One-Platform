@@ -9,15 +9,14 @@ import {
 /** Main heading on Division Performance (division name is the page sub-heading). */
 export const DIVISION_PERFORMANCE_PAGE_TITLE = 'Division Performance'
 
+/** Executive block title — same style as other card section headings (Sales Forecast, etc.). */
+export const DIVISION_PERFORMANCE_AT_A_GLANCE_HEADING = 'At a Glance'
+
 /** Fixed reporting boundary for the monthly Division Performance snapshot (no live filters). */
 export const DIVISION_PERFORMANCE_DATA_FRESHNESS_NOTE =
   'Division performance is updated monthly and shows only the most recent completed month.'
 
 export const DIVISION_PERFORMANCE_DATA_UNTIL_NOTE = 'Data Up To: March 31, 2026'
-
-/** Framing for the report hero — decision platform, not a static PDF. */
-export const DIVISION_PERFORMANCE_PAGE_THESIS =
-  'Executive overview: actuals, target, pace, and forecast in one place. Everything below connects to where you should drill next — triage, drivers, or export.'
 
 export type ExecutiveDecisionQa = {
   id: string
@@ -26,9 +25,8 @@ export type ExecutiveDecisionQa = {
   tone: 'default' | 'attention' | 'positive'
 }
 
-/** Answers the four decision questions in under a minute (mock narrative). */
+/** Answers the decision questions in under a minute. */
 export const divisionPerformanceExecutiveOverview = {
-  headlineStatus: 'Behind on YTD and 90-day pace; March month-to-date still on track.',
   qa: [
     {
       id: 'on-track',
@@ -42,20 +40,6 @@ export const divisionPerformanceExecutiveOverview = {
       question: 'Where should I focus?',
       answer:
         'Prioritize communities that are off-track or at-risk on the next 90-day outlook, using primary drivers as the first hypothesis.',
-      tone: 'default',
-    },
-    {
-      id: 'why',
-      question: 'Why is this happening?',
-      answer:
-        'Options uptake has cooled vs the prior 180 days; funnel-stage detail lives in Community Pulse. Forecast Drivers will add the business-readable explanation layer.',
-      tone: 'default',
-    },
-    {
-      id: 'next',
-      question: 'What should I do next?',
-      answer:
-        'Run triage on the ranked communities, review suggested discussion prompts at the bottom, then export the same snapshot for stakeholders who want paper.',
       tone: 'default',
     },
   ] as ExecutiveDecisionQa[],
@@ -87,7 +71,7 @@ export const divisionPerformanceNextSteps = {
     {
       id: 'drivers',
       label: 'Forecast & Drivers',
-      hint: 'Explanation layer — what changed, confidence, narrative (prototype)',
+      hint: 'Explanation layer — what changed, confidence, narrative',
       to: OPENHOMES_FORECAST_DRIVERS,
     },
     {
@@ -105,7 +89,7 @@ export const divisionPerformanceNextSteps = {
 }
 
 export const divisionPerformanceSectionNav = [
-  { href: '#executive-overview', label: 'At a Glance' },
+  { href: '#executive-overview', label: DIVISION_PERFORMANCE_AT_A_GLANCE_HEADING },
   { href: '#rollup-kpis', label: 'Actuals & Pace' },
   { href: '#sales-forecast', label: 'Forecast & Context' },
   { href: '#community-priorities', label: 'Community Priorities' },
@@ -538,8 +522,6 @@ export const optionsUptakeChartIntro = {
   title: 'Options Uptake by Community',
   subtitle:
     'Presale options as % of sale price (180-day and 90-day periods). Spec options uptake unavailable (missing construction start dates).',
-  footnote:
-    'This section uses completed sales only — cancellations are excluded rather than netted by month as in other sections.',
 }
 
 export const optionsUptakeWeightedAvg = {
@@ -557,7 +539,7 @@ export type OptionsUptakeCommunityRow = {
   sold90: number
 }
 
-/** Grouped bar chart mock — aligned to reference dashboard proportions. */
+/** Grouped bar chart — aligned to reference dashboard proportions. */
 export const optionsUptakeByCommunity: OptionsUptakeCommunityRow[] = [
   {
     communityId: 'catalina-foothills',

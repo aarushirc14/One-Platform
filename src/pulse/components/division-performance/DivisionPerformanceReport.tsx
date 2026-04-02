@@ -6,17 +6,15 @@ import {
   historicalMonthlySales,
   forecastByPeriod,
   marginDriversIntro,
-  rollupKpiCards,
   salesForecastIntro,
   salesForecastSummaryCards,
-} from '@/pulse/mock/divisionPerformanceReport'
+} from '@/pulse/data/divisionPerformanceReport'
 import { CommunityPerformanceSection } from '@/pulse/components/division-performance/CommunityPerformanceSection'
 import {
   ExecutiveOverviewPanel,
   ReportDecisionFooter,
   ReportSectionJumpNav,
 } from '@/pulse/components/division-performance/DivisionPerformanceDecisionChrome'
-import { DivisionPerformanceRollupKpiCard } from '@/pulse/components/division-performance/DivisionPerformanceRollupKpiCard'
 import { CumulativeSalesComparisonChart } from '@/pulse/components/division-performance/CumulativeSalesComparisonChart'
 import { ForecastByPeriodChart } from '@/pulse/components/division-performance/ForecastByPeriodChart'
 import { HistoricalMonthlySalesChart } from '@/pulse/components/division-performance/HistoricalMonthlySalesChart'
@@ -25,7 +23,7 @@ import { OptionsUptakeByCommunityChart } from '@/pulse/components/division-perfo
 import { SalesForecastSummaryCard } from '@/pulse/components/division-performance/SalesForecastSummaryCard'
 import { PulsePageHeading } from '@/pulse/components/PulsePageHeading'
 import { cn } from '@/lib/cn'
-import { IconAlertCircleSolid, IconDownload, IconLineChart } from '@/pulse/components/icons'
+import { IconAlertCircleSolid, IconDownload } from '@/pulse/components/icons'
 import { pulseDataValidUntil, pulseJumpNavOverline, pulseSectionTitleOnCard } from '@/pulse/ui/pulseTypography'
 
 export function DivisionPerformanceReport() {
@@ -63,43 +61,15 @@ export function DivisionPerformanceReport() {
       <ExecutiveOverviewPanel />
 
       <section
-        id="rollup-kpis"
-        className="scroll-mt-24"
-        aria-label="Division rollup: March MTD, YTD, 90-day forecast"
-      >
-        <div className="mb-3">
-          <h2 className="text-base font-semibold text-neutral-950">Actuals, Target, and Pace</h2>
-          <p className="mt-1 max-w-2xl text-sm text-neutral-600">
-            Snapshot of where closed sales sit against plan — the same status objects roll up into the executive
-            answers above.
-          </p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:items-stretch">
-          {rollupKpiCards.map((card) => (
-            <DivisionPerformanceRollupKpiCard key={card.id} {...card} />
-          ))}
-        </div>
-      </section>
-
-      <section
         id="sales-forecast"
         className="scroll-mt-24 rounded-xl border border-neutral-300/90 bg-white p-5 shadow-sm sm:p-6"
         aria-labelledby="sales-forecast-heading"
       >
-        <div className="flex gap-3 sm:gap-4">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-neutral-800 text-white shadow-sm">
-            <IconLineChart className="h-5 w-5" aria-hidden />
-          </div>
-          <div className="min-w-0 pt-0.5">
-            <h2 id="sales-forecast-heading" className={pulseSectionTitleOnCard}>
-              {salesForecastIntro.headline}
-            </h2>
-            <p className="mt-1 text-sm leading-relaxed text-neutral-600">{salesForecastIntro.subline}</p>
-            <p className="mt-2 max-w-3xl text-xs leading-relaxed text-neutral-500">
-              Evidence for the forecast story — use it after you have decided whether pace is acceptable. Charts
-              support &ldquo;why&rdquo; conversations; they do not replace the priorities table below.
-            </p>
-          </div>
+        <div className="min-w-0">
+          <h2 id="sales-forecast-heading" className={pulseSectionTitleOnCard}>
+            {salesForecastIntro.headline}
+          </h2>
+          <p className="mt-1 text-sm leading-relaxed text-neutral-600">{salesForecastIntro.subline}</p>
         </div>
 
         <div className="mt-5 flex overflow-hidden rounded-lg border border-neutral-300 bg-neutral-100">
@@ -134,20 +104,11 @@ export function DivisionPerformanceReport() {
         className="scroll-mt-24 rounded-xl border border-neutral-300/90 bg-white p-5 shadow-sm sm:p-6"
         aria-labelledby="margin-drivers-heading"
       >
-        <div className="flex gap-3 sm:gap-4">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-neutral-800 text-white shadow-sm">
-            <IconLineChart className="h-5 w-5" aria-hidden />
-          </div>
-          <div className="min-w-0 pt-0.5">
-            <h2 id="margin-drivers-heading" className={pulseSectionTitleOnCard}>
-              {marginDriversIntro.headline}
-            </h2>
-            <p className="mt-1 text-sm leading-relaxed text-neutral-600">{marginDriversIntro.subline}</p>
-            <p className="mt-2 max-w-3xl text-xs leading-relaxed text-neutral-500">
-              Diagnosis signal for margin — pair with Community Triage when a community shows weak options uptake
-              alongside funnel stress.
-            </p>
-          </div>
+        <div className="min-w-0">
+          <h2 id="margin-drivers-heading" className={pulseSectionTitleOnCard}>
+            {marginDriversIntro.headline}
+          </h2>
+          <p className="mt-1 text-sm leading-relaxed text-neutral-600">{marginDriversIntro.subline}</p>
         </div>
 
         <div className="mt-5 flex overflow-hidden rounded-lg border border-neutral-300 bg-neutral-100">

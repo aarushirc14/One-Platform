@@ -8,8 +8,8 @@ const highlights = [
     body: 'A single shell for demos: sidebar navigation, responsive top bar, and content max-width tuned for stakeholder reviews.',
   },
   {
-    title: 'Mock-first workflow',
-    body: 'Types and mock modules mirror how a real API would plug in later — swap `getMockItems` for `fetch` without rethinking components.',
+    title: 'API-ready structure',
+    body: 'Typed data loaders and components stay stable when you swap static lists for `fetch` — no layout rewrites.',
   },
   {
     title: 'Extend in place',
@@ -28,7 +28,7 @@ export function HomePage() {
             </span>
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold text-slate-900">One Platform</p>
-              <p className="text-xs text-slate-500">Frontend prototype</p>
+              <p className="text-xs text-slate-500">OpenPredict</p>
             </div>
           </div>
           <div className="flex w-full min-w-0 flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
@@ -56,7 +56,7 @@ export function HomePage() {
           </h1>
           <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
             This shell is intentionally small: React Router for navigation, Tailwind for a modern visual
-            layer, and colocated mock data so you can iterate on UX before wiring services.
+            layer, and colocated sample data so you can iterate on UX before wiring services.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <ButtonLink to={OPENHOMES_PULSE_ENTRY} className="w-full justify-center px-6 py-2.5 text-base sm:w-auto">
@@ -92,7 +92,7 @@ export function HomePage() {
       </main>
 
       <footer className="border-t border-slate-200/80 bg-white/60 px-4 py-8 text-center text-xs leading-relaxed text-slate-500">
-        Built for internal demos — replace mocks with API calls when you are ready.
+        Built for internal demos and stakeholder reviews.
       </footer>
     </div>
   )

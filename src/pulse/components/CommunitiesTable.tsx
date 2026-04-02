@@ -4,7 +4,7 @@ import { ImpactPill } from '@/pulse/components/ImpactPill'
 import { PerformanceLegend } from '@/pulse/components/PerformanceLegend'
 import { impactCellForMode } from '@/pulse/lib/communitiesMetricsDisplay'
 import { openhomesCommunityPath } from '@/pulse/constants/routes'
-import { divisionName } from '@/pulse/mock/division'
+import { divisionName } from '@/pulse/data/division'
 
 type CommunitiesTableProps = {
   rows: DivisionCommunityRow[]

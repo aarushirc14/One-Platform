@@ -20,7 +20,7 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to={OPENHOMES_PULSE_ENTRY} replace />} />
-      <Route path="/prototype" element={<HomePage />} />
+      <Route path="/landing" element={<HomePage />} />
       <Route path={OPENHOMES_DIVISION_BASE} element={<PulseLayout />}>
         <Route index element={<Navigate to="community-triage" replace />} />
         <Route path="division-performance" element={<DivisionPerformancePage />} />

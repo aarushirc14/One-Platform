@@ -1,6 +1,6 @@
 import type { Activity, DashboardStat } from '@/types'
 
-export const mockStats: DashboardStat[] = [
+export const sampleStats: DashboardStat[] = [
   {
     id: 'throughput',
     label: 'Throughput',
@@ -26,12 +26,12 @@ export const mockStats: DashboardStat[] = [
     id: 'satisfaction',
     label: 'Demo rating',
     value: '4.7',
-    hint: 'internal pilot (mock)',
+    hint: 'internal pilot',
     trend: 'up',
   },
 ]
 
-export const mockActivity: Activity[] = [
+export const sampleActivity: Activity[] = [
   {
     id: 'a1',
     title: 'Acme sync checklist marked active',
@@ -46,7 +46,7 @@ export const mockActivity: Activity[] = [
   },
   {
     id: 'a3',
-    title: 'Workspace theme preference saved (mock)',
+    title: 'Workspace theme preference saved',
     time: '2d ago',
     type: 'system',
   },

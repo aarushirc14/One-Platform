@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { HistoricalMonthlySalesPoint } from '@/pulse/mock/divisionPerformanceReport'
+import type { HistoricalMonthlySalesPoint } from '@/pulse/data/divisionPerformanceReport'
 import { cn } from '@/lib/cn'
 import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
 
@@ -48,7 +48,7 @@ export function HistoricalMonthlySalesChart({ data }: HistoricalMonthlySalesChar
     <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
       <div className="border-b border-neutral-100 px-4 py-3 sm:px-5 sm:py-4">
         <h3 className={pulseChartTitle}>Historical Monthly Sales</h3>
-        <p className={pulseChartSubtitle}>Monthly net sales by product type vs target.</p>
+        <p className={pulseChartSubtitle}>Monthly net sales by product type vs target</p>
       </div>
 
       <div className="px-1 pb-1 pt-2 sm:px-3">

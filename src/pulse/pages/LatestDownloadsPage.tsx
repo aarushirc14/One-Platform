@@ -1,4 +1,4 @@
-import { divisionName } from '@/pulse/mock/division'
+import { divisionName } from '@/pulse/data/division'
 import { usePulseDataValidUntilLabel } from '@/pulse/hooks/usePulseDataValidUntilLabel'
 import { PulsePageHeading } from '@/pulse/components/PulsePageHeading'
 import { IconDownload, IconPdfDoc, IconSpreadsheet } from '@/pulse/components/icons'

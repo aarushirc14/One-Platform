@@ -1,4 +1,4 @@
-import { divisionName } from '@/pulse/mock/division'
+import { divisionName } from '@/pulse/data/division'
 import { cn } from '@/lib/cn'
 import { pulsePageEyebrow, pulsePageTitle } from '@/pulse/ui/pulseTypography'
 

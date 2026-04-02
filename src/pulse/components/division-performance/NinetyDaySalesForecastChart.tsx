@@ -9,7 +9,7 @@ export function NinetyDaySalesForecastChart() {
       <div className="border-b border-neutral-100 px-4 py-3 sm:px-5 sm:py-4">
         <h3 className={pulseChartTitle}>90-Day Sales Forecast</h3>
         <p className={pulseChartSubtitle}>
-          Rolling 90-day actuals vs forecast with confidence interval.
+          Rolling 90-day actuals vs forecast with confidence interval
         </p>
       </div>
 

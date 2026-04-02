@@ -1,4 +1,4 @@
-import type { ForecastByPeriodRow } from '@/pulse/mock/divisionPerformanceReport'
+import type { ForecastByPeriodRow } from '@/pulse/data/divisionPerformanceReport'
 import { pulseChartTitle } from '@/pulse/ui/pulseTypography'
 
 type ForecastByPeriodChartProps = {

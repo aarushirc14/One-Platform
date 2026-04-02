@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { divisionCommunities, divisionCommunitiesSummary, divisionKpis } from '@/pulse/mock/division'
+import { divisionCommunities, divisionCommunitiesSummary, divisionKpis } from '@/pulse/data/division'
 import { usePulseDataValidUntilLabel } from '@/pulse/hooks/usePulseDataValidUntilLabel'
 import { CommunitiesTable } from '@/pulse/components/CommunitiesTable'
 import { DivisionCommunitiesSummaryTable } from '@/pulse/components/DivisionCommunitiesSummaryTable'

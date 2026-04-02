@@ -1,4 +1,4 @@
-import type { SalesForecastSummaryCardModel } from '@/pulse/mock/divisionPerformanceReport'
+import type { SalesForecastSummaryCardModel } from '@/pulse/data/divisionPerformanceReport'
 import { cn } from '@/lib/cn'
 import { pulseKpiCardOverline } from '@/pulse/ui/pulseTypography'
 

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import type { OptionsUptakeCommunityRow } from '@/pulse/mock/divisionPerformanceReport'
+import type { OptionsUptakeCommunityRow } from '@/pulse/data/divisionPerformanceReport'
 import {
   optionsUptakeByCommunity,
   optionsUptakeChartIntro,
   optionsUptakeWeightedAvg,
-} from '@/pulse/mock/divisionPerformanceReport'
+} from '@/pulse/data/divisionPerformanceReport'
 import { openhomesCommunityPath } from '@/pulse/constants/routes'
 import { cn } from '@/lib/cn'
 import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
@@ -213,10 +213,6 @@ export function OptionsUptakeByCommunityChart({
             <span className="tabular-nums">90d: {optionsUptakeWeightedAvg.d90}</span>
           </p>
         </div>
-
-        <p className="mt-3 border-t border-neutral-100 pt-3 text-[11px] leading-relaxed text-neutral-400">
-          {optionsUptakeChartIntro.footnote}
-        </p>
       </div>
     </div>
   )

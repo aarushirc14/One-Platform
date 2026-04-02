@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom'
 import { OPENHOMES_FORECAST_DRIVERS } from '@/pulse/constants/routes'
 import {
-  DIVISION_PERFORMANCE_PAGE_THESIS,
+  DIVISION_PERFORMANCE_AT_A_GLANCE_HEADING,
   divisionPerformanceExecutiveOverview,
   divisionPerformanceNextSteps,
   divisionPerformanceSectionNav,
-} from '@/pulse/mock/divisionPerformanceReport'
-import { divisionLeadingIndicatorsExecutiveSentence } from '@/pulse/mock/forecastLeadingIndicators'
+  rollupKpiCards,
+} from '@/pulse/data/divisionPerformanceReport'
+import { DivisionPerformanceRollupKpiCard } from '@/pulse/components/division-performance/DivisionPerformanceRollupKpiCard'
+import { divisionLeadingIndicatorsExecutiveSentence } from '@/pulse/data/forecastLeadingIndicators'
 import { cn } from '@/lib/cn'
 import {
   pulseFooterOverlineOnDark,
   pulseInsetSectionTitle,
   pulseQaCardQuestion,
   pulseRiskOpportunityLabel,
-  pulseSectionOverline,
+  pulseSectionTitleOnCard,
 } from '@/pulse/ui/pulseTypography'
 
 export function ReportSectionJumpNav() {
@@ -36,8 +38,7 @@ export function ReportSectionJumpNav() {
 }
 
 export function ExecutiveOverviewPanel() {
-  const { headlineStatus, qa, risk, riskLabel, opportunity, opportunityLabel } =
-    divisionPerformanceExecutiveOverview
+  const { qa, risk, riskLabel, opportunity, opportunityLabel } = divisionPerformanceExecutiveOverview
 
   return (
     <section
@@ -45,26 +46,28 @@ export function ExecutiveOverviewPanel() {
       className="scroll-mt-24 rounded-xl border border-neutral-300/90 bg-white p-4 shadow-sm sm:p-5"
       aria-labelledby="executive-overview-heading"
     >
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-        <div className="min-w-0">
-          <h2 id="executive-overview-heading" className={pulseSectionOverline}>
-            Executive Overview
-          </h2>
-          <p className="mt-2 text-sm font-semibold leading-snug text-neutral-950">{headlineStatus}</p>
-          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-600">
-            {DIVISION_PERFORMANCE_PAGE_THESIS}
-          </p>
-        </div>
+      <h2 id="executive-overview-heading" className={pulseSectionTitleOnCard}>
+        {DIVISION_PERFORMANCE_AT_A_GLANCE_HEADING}
+      </h2>
+
+      <div
+        id="rollup-kpis"
+        className="scroll-mt-24 mt-5 grid gap-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:items-stretch"
+        aria-label="March MTD, YTD, and 90-day forecast rollup"
+      >
+        {rollupKpiCards.map((card) => (
+          <DivisionPerformanceRollupKpiCard key={card.id} {...card} />
+        ))}
       </div>
 
-      <div className="mt-4 rounded-lg border border-neutral-300/90 bg-neutral-100 px-3 py-3 sm:px-4 sm:py-3.5">
+      <div className="mt-5 rounded-lg border border-neutral-300/90 bg-neutral-100 px-3 py-3 sm:px-4 sm:py-3.5">
         <p className={pulseInsetSectionTitle}>Early Signals</p>
         <p className="mt-1.5 text-sm font-medium leading-relaxed text-neutral-900">
           {divisionLeadingIndicatorsExecutiveSentence}
         </p>
         <Link
           to={OPENHOMES_FORECAST_DRIVERS}
-          className="mt-2 inline-flex text-sm font-semibold text-neutral-900 underline decoration-neutral-400 underline-offset-2 transition-colors hover:text-neutral-950 hover:decoration-neutral-600"
+          className="mt-2 inline-flex text-sm font-semibold text-blue-700 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800 hover:decoration-blue-500"
         >
           View full list on Forecast Drivers →
         </Link>

@@ -10,8 +10,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+    // Order matters: `@` must not absorb `@/sample` or `@/pulse/data`.
+    alias: [
+      { find: '@/sample', replacement: path.resolve(__dirname, './src/mock') },
+      { find: '@/pulse/data', replacement: path.resolve(__dirname, './src/pulse/mock') },
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+    ],
   },
 })

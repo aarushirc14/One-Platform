@@ -6,7 +6,7 @@ import {
   OPENHOMES_DOWNLOADS,
   OPENHOMES_FORECAST_DRIVERS,
 } from '@/pulse/constants/routes'
-import { divisionName } from '@/pulse/mock/division'
+import { divisionName } from '@/pulse/data/division'
 import { cn } from '@/lib/cn'
 
 type DivisionLink = {

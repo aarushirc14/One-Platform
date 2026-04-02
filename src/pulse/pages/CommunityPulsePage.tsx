@@ -7,7 +7,7 @@ import {
   funnelColumns,
   metricSections,
   webTrafficLeadTable,
-} from '@/pulse/mock/community'
+} from '@/pulse/data/community'
 import { OPENHOMES_COMMUNITY_TRIAGE } from '@/pulse/constants/routes'
 import { CommunityKpiCard } from '@/pulse/components/CommunityKpiCard'
 import { PulsePageHeading } from '@/pulse/components/PulsePageHeading'
