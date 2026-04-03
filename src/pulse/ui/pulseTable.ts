@@ -8,14 +8,14 @@ import { pulseTableHeadPrimary } from '@/pulse/ui/pulseTypography'
 
 /** Rounded shell around a title bar + table (outer border = table frame). */
 export const pulseTableCard =
-  'overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm'
+  'min-w-0 w-full max-w-full overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm'
 
 /** Title row above the grid (matches Communities / Metrics pattern). */
 export const pulseTableCardTitleBar =
   'border-b border-neutral-200 bg-neutral-50/80 px-4 py-3 sm:px-5 sm:py-3.5'
 
 /** Horizontal scroll for wide tables. */
-export const pulseTableScroll = 'overflow-x-auto'
+export const pulseTableScroll = 'min-w-0 w-full max-w-full overflow-x-auto overscroll-x-contain'
 
 /** Scroll with edge bleed compensation on small viewports (metrics-style tables). */
 export const pulseTableScrollWide =

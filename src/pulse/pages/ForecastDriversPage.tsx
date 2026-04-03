@@ -50,7 +50,7 @@ export function ForecastDriversPage() {
   }, [])
 
   return (
-    <div className="min-h-full w-full px-4 py-5 sm:px-6 sm:py-7 lg:px-10">
+    <div className="w-full px-3 pb-5 pt-1.5 sm:px-6 sm:py-7 lg:min-h-full lg:px-10">
       <div className="mx-auto w-full max-w-[1180px]">
         <header className="border-b border-neutral-300/90 pb-5 sm:pb-6">
           <PulsePageHeading title="Forecast Drivers" />

@@ -78,7 +78,7 @@ export function PulseSidebar({ id, className, onNavigate }: PulseSidebarProps) {
     <aside
       id={id}
       className={cn(
-        'relative flex h-full min-h-screen flex-col border-r border-neutral-200 bg-neutral-50 lg:min-h-0 lg:w-[240px] lg:shrink-0',
+        'flex h-full min-h-screen flex-col border-r border-neutral-200 bg-neutral-50 lg:relative lg:min-h-0 lg:w-[240px] lg:shrink-0',
         className,
       )}
     >

@@ -29,8 +29,8 @@ export function PulseLayout() {
 
   return (
     <div className="pulse-root flex min-h-[100dvh] min-h-screen flex-col overflow-x-hidden bg-neutral-100 text-neutral-900 lg:min-h-screen lg:flex-row">
-      <header className="fixed left-0 right-0 top-0 z-20 border-b border-neutral-200 bg-white/95 pt-[env(safe-area-inset-top,0px)] backdrop-blur-sm lg:hidden">
-        <div className="flex h-14 items-center gap-3 px-4">
+      <header className="sticky top-0 z-20 border-b border-neutral-200 bg-white/95 backdrop-blur-sm lg:hidden">
+        <div className="flex h-11 items-center gap-3 px-3 sm:h-14 sm:px-4">
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-800 shadow-sm transition-colors hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
@@ -42,7 +42,7 @@ export function PulseLayout() {
             <span className="sr-only">Open navigation</span>
           </button>
           <span className="min-w-0 flex-1 truncate text-sm font-semibold text-neutral-900">
-            Community Pulse
+            OpenPredict
           </span>
         </div>
       </header>
@@ -66,7 +66,7 @@ export function PulseLayout() {
         onNavigate={closeNav}
       />
 
-      <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col pt-[calc(3.5rem+env(safe-area-inset-top,0px))] lg:pt-0">
+      <div className="flex min-h-0 w-full min-w-0 flex-col lg:flex-1">
         <PulseFiltersProvider>
           <Outlet />
         </PulseFiltersProvider>
