@@ -1,2 +1,2 @@
-export { getItemById, getMockItems } from './items'
-export { mockActivity, mockStats } from './dashboard'
+export { getItemById, getSampleItems } from './items'
+export { sampleActivity, sampleStats } from './dashboard'

@@ -39,7 +39,7 @@ const items: Item[] = [
     title: 'API health dashboard',
     summary: 'Latency and error budget tiles',
     description:
-      'Prototype layout for p95 latency, 5xx rate, and saturated workers. Mock numbers only — swap with real telemetry when the gateway dashboard lands.',
+      'Layout for p95 latency, 5xx rate, and saturated workers — illustrative until gateway telemetry is wired in.',
     status: 'archived',
     updatedAt: '2026-02-10T11:00:00.000Z',
     tags: ['Engineering'],
@@ -69,7 +69,7 @@ const items: Item[] = [
   },
 ]
 
-export function getMockItems(): Item[] {
+export function getSampleItems(): Item[] {
   return items
 }
 

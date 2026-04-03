@@ -7,28 +7,31 @@ type CommunityKpiCardProps = {
   pct: string
   pctTone: 'negative' | 'positive'
   subline: string
+  infoTooltip: string
 }
 
-export function CommunityKpiCard({ title, headline, pct, pctTone, subline }: CommunityKpiCardProps) {
+/** Shell + type align with `DivisionKpiCard` / Division Performance KPI styling. */
+export function CommunityKpiCard({ title, headline, pct, pctTone, subline, infoTooltip }: CommunityKpiCardProps) {
+  const pctCls = pctTone === 'negative' ? 'text-red-600' : 'text-emerald-700'
+
   return (
-    <div className="relative rounded-lg border border-neutral-200 bg-white p-5 shadow-sm">
+    <div className="flex h-full min-h-[10rem] flex-col rounded-lg border border-neutral-200 bg-white p-4 sm:min-h-[10.5rem] sm:p-5">
       <div className="flex items-start justify-between gap-3">
-        <h3 className="pr-6 text-sm font-semibold text-neutral-900">{title}</h3>
+        <h3 className="min-w-0 flex-1 text-sm font-normal leading-snug text-neutral-600">{title}</h3>
         <button
           type="button"
-          className="absolute right-4 top-4 inline-flex h-7 w-7 items-center justify-center rounded-md text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
-          aria-label="KPI details"
+          className="shrink-0 text-neutral-400 transition-colors hover:text-neutral-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400"
+          title={infoTooltip}
+          aria-label={infoTooltip}
         >
-          <IconInfo />
+          <IconInfo className="h-4 w-4" />
         </button>
       </div>
-      <p className="mt-4 text-4xl font-bold tracking-tight text-neutral-900">
+      <p className="mt-3 text-3xl font-bold tabular-nums tracking-tight text-neutral-900 sm:text-4xl">
         {headline}{' '}
-        <span className={cn('text-lg font-semibold', pctTone === 'negative' ? 'text-red-600' : 'text-emerald-600')}>
-          ({pct})
-        </span>
+        <span className={cn('text-base font-semibold tabular-nums sm:text-lg', pctCls)}>({pct})</span>
       </p>
-      <p className="mt-2 text-sm text-neutral-600">{subline}</p>
+      <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">{subline}</p>
     </div>
   )
 }

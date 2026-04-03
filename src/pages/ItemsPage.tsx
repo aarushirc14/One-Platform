@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { getMockItems } from '@/mock'
+import { getSampleItems } from '@/sample'
 import type { ItemStatus } from '@/types'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { ItemRow } from '@/components/items/ItemRow'
@@ -14,7 +14,7 @@ const filters: Array<{ label: string; value: 'all' | ItemStatus }> = [
 
 export function ItemsPage() {
   const [filter, setFilter] = useState<'all' | ItemStatus>('all')
-  const items = useMemo(() => getMockItems(), [])
+  const items = useMemo(() => getSampleItems(), [])
   const filtered = useMemo(() => {
     if (filter === 'all') return items
     return items.filter((item) => item.status === filter)

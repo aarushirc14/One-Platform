@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { mockActivity, mockStats } from '@/mock'
+import { sampleActivity, sampleStats } from '@/sample'
 import { ButtonLink } from '@/components/ui/Button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import { PageHeader } from '@/components/ui/PageHeader'
@@ -10,16 +10,16 @@ export function DashboardPage() {
     <>
       <PageHeader
         title="Overview"
-        description="Snapshot of how work is moving — all numbers are static mock data for storytelling."
+        description="Snapshot of how work is moving — illustrative figures for reviews and walkthroughs."
         actions={
-          <ButtonLink to="/items" variant="secondary">
+          <ButtonLink to="/items" variant="secondary" className="w-full justify-center sm:w-auto">
             View all items
           </ButtonLink>
         }
       />
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {mockStats.map((stat) => (
+        {sampleStats.map((stat) => (
           <StatTile key={stat.id} stat={stat} />
         ))}
       </section>
@@ -55,7 +55,7 @@ export function DashboardPage() {
                 3
               </span>
               <span>
-                When you outgrow mocks, keep types and components — replace data loaders in one place.
+                When you connect live data, keep types and components — replace data loaders in one place.
               </span>
             </li>
           </ul>
@@ -64,10 +64,10 @@ export function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>Recent activity</CardTitle>
-            <CardDescription>Mock audit trail for realism.</CardDescription>
+            <CardDescription>Recent changes in this workspace.</CardDescription>
           </CardHeader>
           <ul className="divide-y divide-slate-100">
-            {mockActivity.map((event) => (
+            {sampleActivity.map((event) => (
               <li key={event.id} className="flex gap-3 py-3 first:pt-0 last:pb-0">
                 <span
                   className={

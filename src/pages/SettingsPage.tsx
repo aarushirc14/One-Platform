@@ -50,7 +50,7 @@ export function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Workspace</CardTitle>
-            <CardDescription>Used in mock copy only; swap for real tenant context later.</CardDescription>
+            <CardDescription>Shown in the shell header until tenant context is connected.</CardDescription>
           </CardHeader>
           <label className="block text-sm font-medium text-slate-700" htmlFor="workspace-name">
             Display name
@@ -73,7 +73,7 @@ export function SettingsPage() {
             <ToggleRow
               id="email-digest"
               label="Weekly email digest"
-              description="Mock preference; does not send email."
+              description="Stored locally only; no email is sent."
               checked={prefs.emailDigest}
               onChange={(emailDigest) => commit({ ...prefs, emailDigest })}
             />

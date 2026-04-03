@@ -16,9 +16,15 @@ export type ImpactBand =
   | 'u7'
 
 export type CommunityImpactCell = {
+  /** Sales-impact view, e.g. "+7.7 sales" */
   label: string
   band: ImpactBand
+  /** Conversion view, e.g. "161 (1.5%)" — same band colors as sales impact */
+  conversionLabel?: string
 }
+
+/** Division communities table: funnel columns show conversion % or sales impact */
+export type CommunitiesMetricsMode = 'conversion' | 'salesImpact'
 
 export type DivisionCommunityRow = {
   id: string
@@ -36,10 +42,16 @@ export type DivisionCommunityRow = {
 export type DivisionKpi = {
   id: string
   title: string
-  headline: string
+  headlineValue: string
+  /** e.g. "sales" or "YTD sales" — same color as value/pct */
+  headlineUnit: string
+  headlinePct: string
   headlineTone: 'negative' | 'positive'
-  subline: string
-  sublineTone: 'negative' | 'positive' | 'muted'
+  footerLead: string
+  footerMid: string
+  footerTarget: string
+  footerEnd: string
+  infoTooltip: string
 }
 
 export type FunnelStatus = 'behind' | 'ahead' | 'onPace'
@@ -47,10 +59,14 @@ export type FunnelStatus = 'behind' | 'ahead' | 'onPace'
 export type FunnelSegment = {
   title: string
   primaryLine: string
-  secondaryLine: string
-  benchmarkLine: string
-  benchmarkNote: string
-  benchmarkNoteTone: 'positive' | 'negative' | 'neutral'
+  /** Trend vs prior period (e.g. "↘ 2% from prev 3 months"). */
+  secondaryLine?: string
+  secondaryLineTone?: 'positive' | 'negative' | 'neutral'
+  /** Optional detail line above {@link targetNote} (divider above when set). */
+  targetLine?: string
+  /** e.g. "60% better vs target" — use "target", not "benchmark". */
+  targetNote?: string
+  targetNoteTone?: 'positive' | 'negative' | 'neutral'
 }
 
 export type FunnelColumn = {
@@ -72,7 +88,7 @@ export type MetricTableRow =
       countsTo: string
       countsToLabel: string
       communityRate: string
-      benchmarkRate: string
+      targetRate: string
       performance: string
       performanceTone: 'positive' | 'negative'
       change: string
@@ -84,4 +100,6 @@ export type MetricTableRow =
 export type MetricTableSection = {
   title: string | null
   rows: MetricTableRow[]
+  /** When set, this data row shows an expandable 12‑month trend chart (row click or Trends control). */
+  trendChartForMetric?: string
 }
