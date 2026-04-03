@@ -100,7 +100,7 @@ export function PulseSidebar({ id, className, onNavigate }: PulseSidebarProps) {
         >
           <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-neutral-100 ring-1 ring-neutral-200/80">
             <img
-              src="/openhouse-logo.png"
+              src={`${import.meta.env.BASE_URL}openhouse-logo.png`}
               alt=""
               width={44}
               height={44}
