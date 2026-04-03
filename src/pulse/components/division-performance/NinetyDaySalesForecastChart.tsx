@@ -24,9 +24,10 @@ export function NinetyDaySalesForecastChart() {
         />
 
         <p className="sr-only">
-          Chart spans April 2025 through June 2026. Orange line shows actual 90-day monthly average to the
-          report date. Blue line shows forecast with shaded confidence interval. A vertical line marks the
-          current date.
+          Chart spans April 2025 through June 2026. Orange line is the realized 90-day monthly average sales
+          pace; it lifts through March 2026 but remains under the implied monthly plan. Blue line is the forward
+          pace with a shaded confidence band still skewed below target. A vertical marker denotes the report
+          date.
         </p>
 
         <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-neutral-100 px-3 py-3 text-[11px] text-neutral-600 sm:px-4">

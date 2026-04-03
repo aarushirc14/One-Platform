@@ -188,8 +188,8 @@ export function CommunityPerformanceSection() {
         </h2>
         <p className="mt-1 text-sm leading-relaxed text-neutral-600">{communityPerformanceIntro.subline}</p>
         <p className="mt-2 max-w-3xl text-xs leading-relaxed text-neutral-500">
-          Priorities / triage bridge: rank by outlook and primary driver, then open Community Triage for funnel
-          stage detail and modeled impact
+          Use outlook to separate volume risk (Gladden) from mid-funnel drag (Catalina) and closing efficiency
+          (Tanque Verde), then open Community Triage for the same communities’ stage-level modeled impact.
         </p>
       </div>
 

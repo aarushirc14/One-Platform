@@ -55,8 +55,9 @@ export function ForecastDriversPage() {
         <header className="border-b border-neutral-300/90 pb-5 sm:pb-6">
           <PulsePageHeading title="Forecast Drivers" />
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600">
-            Using our AI models, we've identified the website and CRM metrics that most closely align with your
-            divisional sales trends.
+            Model-ranked website and CRM signals for Tucson, scored by how tightly they co-move with divisional
+            net sales. Use them to explain why traffic can look busier while the 90-day forecast still trails
+            plan.
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
             <Link to={OPENHOMES_DIVISION_PERFORMANCE} className={headerNavPillClass}>

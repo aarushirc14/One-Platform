@@ -72,7 +72,7 @@ export function ForecastDriverTrendChart({ metricLabel, points, chartId }: Forec
         {metricLabel}
       </p>
       <p id={descId} className="mt-0.5 text-xs text-neutral-500">
-        Monthly index by period — illustrative scale for this view.
+        Monthly index by period — normalized for comparison across metrics.
       </p>
       <div className="mt-3 overflow-x-auto">
         <svg

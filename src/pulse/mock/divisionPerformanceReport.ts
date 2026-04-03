@@ -4,7 +4,7 @@ import {
   OPENHOMES_FORECAST_DRIVERS,
 } from '@/pulse/constants/routes'
 
-/** Static copy and figures for the Division Performance report (PDF-aligned, Open Homes Tucson). */
+/** Division Performance report copy and figures — Tucson division snapshot. */
 
 /** Main heading on Division Performance (division name is the page sub-heading). */
 export const DIVISION_PERFORMANCE_PAGE_TITLE = 'Division Performance'
@@ -32,22 +32,22 @@ export const divisionPerformanceExecutiveOverview = {
       id: 'on-track',
       question: 'Are we on track?',
       answer:
-        'Partially. YTD sales and the rolling 90-day forecast sit under target; March MTD is meeting its prorated goal.',
+        'No — 2026 YTD is 20 net sales against a 39-sale YTD plan, and the 90-day run-rate still trails the monthly target even after a stronger March close. The gap is not a single miss: Gladden is starved for qualified demand, Catalina is losing tours after solid traffic, and Tanque Verde converts foot traffic poorly despite steady sessions.',
       tone: 'attention',
     },
     {
       id: 'focus',
       question: 'Where should I focus?',
       answer:
-        'Prioritize communities that are off-track or at-risk on the next 90-day outlook, using primary drivers as the first hypothesis.',
+        'Sequence matters. Stabilize Gladden’s upper funnel first (traffic + first contacts), then tighten Catalina’s appointment show and reschedule discipline while Tanque Verde gets a dedicated first-visit-to-contract playbook. Let Saddlebrook keep running — it is funding patience elsewhere.',
       tone: 'default',
     },
   ] as ExecutiveDecisionQa[],
   riskLabel: 'Largest risk to target',
-  risk: 'Q2 catch-up stalls if off-track communities do not recover visit-to-sale conversion within the next reporting window.',
+  risk: 'We treat division-wide session growth as “demand.” Sessions are up in pockets, but scheduled first tours and clean first-visit outcomes are not keeping pace — so Q2 closes stay soft unless mid-funnel execution moves in the next four to six weeks.',
   opportunityLabel: 'Largest upside',
   opportunity:
-    'On-track communities with spare capacity can absorb incremental demand without crowding presale inventory.',
+    'Saddlebrook is at plan with healthier lead-to-visit throughput; modest reallocation of media and onsite labor from over-served geographies could lift Gladden and Catalina without increasing total spend.',
 }
 
 export type ReportNextStepLink = {
@@ -64,13 +64,13 @@ export const divisionPerformanceNextSteps = {
     {
       id: 'triage',
       label: 'Community Triage',
-      hint: 'Priorities view — ranked communities, funnel impact',
+      hint: 'Ranked communities — volume vs conversion vs execution, with modeled funnel impact',
       to: OPENHOMES_COMMUNITY_TRIAGE,
     },
     {
       id: 'drivers',
       label: 'Forecast Drivers',
-      hint: 'Explanation layer — what changed, narrative',
+      hint: 'Leading indicators — where demand is real vs noisy',
       to: OPENHOMES_FORECAST_DRIVERS,
     },
     {
@@ -81,9 +81,9 @@ export const divisionPerformanceNextSteps = {
     },
   ] as ReportNextStepLink[],
   discussionPrompts: [
-    'Which two communities get executive attention this week?',
-    'Where does the funnel disagree with the forecast story?',
-    'What is one operational change we are testing before the next monthly close?',
+    'Which community gets incremental media this month without diluting Saddlebrook’s already-strong funnel?',
+    'Where is the breakdown: not enough appointments, or appointments that do not convert?',
+    'What single metric do we hold sales and marketing jointly accountable to before April’s monthly close?',
   ],
 }
 
@@ -100,7 +100,7 @@ export const salesForecastIntro = {
   subline: 'Forward-looking sales projection vs target',
   /** Shorter copy matches dashboard screenshot (red alert strip). */
   alert:
-    'Forecast averaging 4 sales/mo below target. YTD pacing behind target.',
+    'Rolling 90-day pace runs about 3.5 net sales per month under the monthly plan. March helped, but the forward book still reflects weak tour completion and uneven community-level conversion.',
 }
 
 export type SalesForecastSummaryCardModel = {
@@ -273,8 +273,8 @@ export const cumulativeSalesComparison: CumulativeSalesComparisonPoint[] = [
   {
     month: 'Mar',
     target2026: 39,
-    actual2026: null,
-    forecast2026: 24,
+    actual2026: 20,
+    forecast2026: null,
     cumulative2025: 39,
     cumulative2024: 26,
   },
@@ -282,7 +282,7 @@ export const cumulativeSalesComparison: CumulativeSalesComparisonPoint[] = [
     month: 'Apr',
     target2026: 55,
     actual2026: null,
-    forecast2026: 33,
+    forecast2026: 28,
     cumulative2025: 49,
     cumulative2024: 35,
   },
@@ -290,7 +290,7 @@ export const cumulativeSalesComparison: CumulativeSalesComparisonPoint[] = [
     month: 'May',
     target2026: 70,
     actual2026: null,
-    forecast2026: 45,
+    forecast2026: 37,
     cumulative2025: 59,
     cumulative2024: 43,
   },
@@ -378,7 +378,7 @@ export const communityPerformanceIntro = {
 }
 
 export const communityPerformanceAlert =
-  '0 of 4 communities on track for the next 90 days; Catalina Foothills, Gladden Farms and 2 more at risk.'
+  '1 of 4 communities on track for the next 90 days: Saddlebrook. Gladden Farms is off-track on volume; Catalina Foothills and Tanque Verde are at-risk on execution after traffic arrives.'
 
 export const communityPerformanceTableFootnote =
   '* Next 90-day plan, plus any YTD gap vs plan spread evenly over the rest of the year.'
@@ -387,57 +387,57 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
   {
     id: 'catalina-foothills',
     name: 'Catalina Foothills',
-    last30Actual: 4,
-    last30Target: 5,
-    ytdActual: 8,
+    last30Actual: 3,
+    last30Target: 4,
+    ytdActual: 6,
     ytdTarget: 13,
-    next90Target: 17,
-    next90Plan: 16,
+    next90Target: 15,
+    next90Plan: 14,
     next90CatchUp: 1,
-    primaryDriver: 'Web Traffic',
-    next90Outlook: 'off-track',
+    primaryDriver: 'Lead → first visit (tour scheduling)',
+    next90Outlook: 'at-risk',
     driverNeedsAttention: true,
   },
   {
     id: 'gladden-farms',
     name: 'Gladden Farms',
-    last30Actual: 2,
-    last30Target: 4,
-    ytdActual: 3,
+    last30Actual: 1,
+    last30Target: 3,
+    ytdActual: 4,
     ytdTarget: 12,
-    next90Target: 12,
-    next90Plan: 10,
-    next90CatchUp: 2,
-    primaryDriver: 'Web Traffic',
+    next90Target: 10,
+    next90Plan: 7,
+    next90CatchUp: 3,
+    primaryDriver: 'Web traffic & new lead volume',
     next90Outlook: 'off-track',
     driverNeedsAttention: true,
   },
   {
     id: 'saddlebrook',
     name: 'Saddlebrook',
-    last30Actual: 1,
+    last30Actual: 3,
     last30Target: 3,
-    ytdActual: 4,
-    ytdTarget: 9,
-    next90Target: 12,
-    next90Plan: 11,
-    next90CatchUp: 1,
-    primaryDriver: 'Web Traffic',
-    next90Outlook: 'off-track',
-    driverNeedsAttention: true,
+    ytdActual: 8,
+    ytdTarget: 8,
+    next90Target: 9,
+    next90Plan: 9,
+    next90CatchUp: 0,
+    primaryDriver: 'Lead → first visit throughput',
+    next90Outlook: 'on-track',
+    driverNeedsAttention: false,
   },
   {
     id: 'tanque-verde',
     name: 'Tanque Verde',
-    last30Actual: 5,
-    last30Target: 2,
-    ytdActual: 5,
-    ytdTarget: 5,
-    next90Target: 6,
-    next90Plan: 6,
+    last30Actual: 1,
+    last30Target: 3,
+    ytdActual: 2,
+    ytdTarget: 6,
+    next90Target: 5,
+    next90Plan: 5,
     next90CatchUp: 0,
-    primaryDriver: 'First Visit → Sale Rate',
-    next90Outlook: 'off-track',
+    primaryDriver: 'First visit → sale conversion',
+    next90Outlook: 'at-risk',
     driverNeedsAttention: true,
   },
 ]
@@ -473,7 +473,7 @@ export const marginDriversIntro = {
   headline: 'Margin Drivers',
   subline: 'Options uptake by community',
   alert:
-    'Presale options uptake averaged 7.8% over the last 90 days, compared to 11.5% over 180 days (-3.8 pts).',
+    'Presale options uptake averaged 6.9% over the last 90 days versus 10.8% over 180 days (−3.9 pts). Tanque Verde is holding attach; Catalina and Gladden are soft — consistent with longer decision cycles where tours slip or stall.',
 }
 
 /** Legacy table-style margin rows (kept for reference; primary UI is options uptake chart). */
@@ -489,30 +489,30 @@ export const marginDriverRows: MarginDriverRow[] = [
   {
     communityId: 'catalina-foothills',
     communityName: 'Catalina Foothills',
-    optionsLoadingPct: '32%',
+    optionsLoadingPct: '29%',
     status: 'Not Meeting',
-    vsTarget: '$92k vs $153k target',
+    vsTarget: '$86k vs $148k target',
   },
   {
     communityId: 'gladden-farms',
     communityName: 'Gladden Farms',
-    optionsLoadingPct: '28%',
+    optionsLoadingPct: '24%',
     status: 'Not Meeting',
-    vsTarget: '$81k vs $153k target',
+    vsTarget: '$71k vs $148k target',
   },
   {
     communityId: 'saddlebrook',
     communityName: 'Saddlebrook',
-    optionsLoadingPct: '35%',
+    optionsLoadingPct: '33%',
     status: 'Not Meeting',
-    vsTarget: '$101k vs $153k target',
+    vsTarget: '$96k vs $148k target',
   },
   {
     communityId: 'tanque-verde',
     communityName: 'Tanque Verde',
-    optionsLoadingPct: '41%',
+    optionsLoadingPct: '44%',
     status: 'Meeting',
-    vsTarget: '$118k vs $153k target',
+    vsTarget: '$121k vs $148k target',
   },
 ]
 
@@ -523,8 +523,8 @@ export const optionsUptakeChartIntro = {
 }
 
 export const optionsUptakeWeightedAvg = {
-  d180: '11.5%',
-  d90: '7.8%',
+  d180: '10.8%',
+  d90: '6.9%',
 }
 
 export type OptionsUptakeCommunityRow = {
@@ -542,34 +542,34 @@ export const optionsUptakeByCommunity: OptionsUptakeCommunityRow[] = [
   {
     communityId: 'catalina-foothills',
     communityName: 'Catalina Foothills',
-    pct180: 12.2,
-    sold180: 22,
-    pct90: 9.4,
-    sold90: 11,
+    pct180: 11.4,
+    sold180: 19,
+    pct90: 7.2,
+    sold90: 9,
   },
   {
     communityId: 'gladden-farms',
     communityName: 'Gladden Farms',
-    pct180: 10.5,
-    sold180: 6,
-    pct90: 8.1,
-    sold90: 4,
+    pct180: 8.9,
+    sold180: 5,
+    pct90: 6.1,
+    sold90: 3,
   },
   {
     communityId: 'saddlebrook',
     communityName: 'Saddlebrook',
-    pct180: 12.3,
-    sold180: 12,
-    pct90: 9.0,
-    sold90: 5,
+    pct180: 11.8,
+    sold180: 14,
+    pct90: 8.4,
+    sold90: 7,
   },
   {
     communityId: 'tanque-verde',
     communityName: 'Tanque Verde',
-    pct180: 9.8,
-    sold180: 10,
-    pct90: 1.9,
-    sold90: 5,
+    pct180: 10.2,
+    sold180: 8,
+    pct90: 11.6,
+    sold90: 4,
   },
 ]
 
