@@ -96,6 +96,21 @@ export function formatPulseDataValidUntil(ref: Date = new Date()): string {
   })
 }
 
+/** Latest Downloads page: always the last calendar day of the month before `ref` (local). */
+export function formatLatestDownloadsDataUpTo(ref: Date = new Date()): string {
+  const lastDayPrevMonth = endOfPreviousMonth(startOfLocalDay(ref))
+  return lastDayPrevMonth.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
+/** `YYYY-MM-DD` for Latest Downloads PDF filenames (same anchor as {@link formatLatestDownloadsDataUpTo}). */
+export function latestDownloadsPdfDateKey(ref: Date = new Date()): string {
+  return localDateKey(endOfPreviousMonth(startOfLocalDay(ref)))
+}
+
 /**
  * Dropdown labels for "Date Period" derived from a reference instant (defaults to now).
  * Option ids stay stable so UI state keys do not depend on calendar text.

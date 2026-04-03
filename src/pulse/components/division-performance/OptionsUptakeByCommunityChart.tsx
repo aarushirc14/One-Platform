@@ -8,12 +8,13 @@ import {
 import { openhomesCommunityPath } from '@/pulse/constants/routes'
 import { cn } from '@/lib/cn'
 import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
+import { chartPalette } from '@/pulse/styles/chartPalette'
 
 const Y_MAX = 16
 const BAR_W = 28
 const BAR_GAP = 10
-const COL_180 = '#8EBAE0'
-const COL_90 = '#1E70AB'
+const COL_180 = chartPalette.actualPrimary
+const COL_90 = chartPalette.forecastSoft
 
 /** Inner chart dimensions (viewBox space). */
 const W = 800
@@ -115,16 +116,16 @@ export function OptionsUptakeByCommunityChart({
             )
           })}
 
-          {/* Target (not provided) — decorative reference line */}
+          {/* Target — decorative reference line */}
           <line
             x1={PAD_L}
             y1={yForPct(12, plotH)}
             x2={PAD_L + plotW}
             y2={yForPct(12, plotH)}
-            className="stroke-neutral-400"
+            stroke={chartPalette.target}
             strokeWidth={1.2}
             strokeDasharray="5 4"
-            opacity={0.85}
+            opacity={0.9}
           />
 
           {rows.map((row, i) => {
@@ -203,8 +204,12 @@ export function OptionsUptakeByCommunityChart({
               90 Days
             </span>
             <span className="inline-flex items-center gap-2">
-              <span className="inline-block h-px w-6 border-t border-dashed border-neutral-500" aria-hidden />
-              Target (not provided)
+              <span
+                className="inline-block h-px w-6 border-t border-dashed"
+                style={{ borderColor: chartPalette.target }}
+                aria-hidden
+              />
+              Target
             </span>
           </div>
           <p className="shrink-0 text-xs text-neutral-700">

@@ -1,5 +1,6 @@
 import type { SalesForecastSummaryCardModel } from '@/pulse/data/divisionPerformanceReport'
 import { cn } from '@/lib/cn'
+import { chartPalette } from '@/pulse/styles/chartPalette'
 import { pulseKpiCardOverline } from '@/pulse/ui/pulseTypography'
 
 export function SalesForecastSummaryCard({
@@ -40,11 +41,15 @@ export function SalesForecastSummaryCard({
           <p className="mt-2 text-sm text-neutral-500">{detailLine}</p>
           {footerSmall ? <p className="mt-1 text-[11px] text-neutral-400">{footerSmall}</p> : null}
         </div>
-        <div className="min-w-0 flex-1 bg-sky-50/70 p-4 sm:p-5">
+        <div
+          className="min-w-0 flex-1 p-4 sm:p-5"
+          style={{ backgroundColor: `${chartPalette.actualPrimary}12` }}
+        >
           <ul className="space-y-2.5 text-sm text-neutral-600">
             <li className="flex items-baseline gap-2">
               <span
-                className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-500"
+                className="mt-1.5 h-2 w-2 shrink-0 rounded-full"
+                style={{ background: chartPalette.actualPrimary }}
                 aria-hidden
               />
               <span>
@@ -54,7 +59,8 @@ export function SalesForecastSummaryCard({
             </li>
             <li className="flex items-baseline gap-2">
               <span
-                className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-amber-400"
+                className="mt-1.5 h-2 w-2 shrink-0 rounded-full"
+                style={{ background: chartPalette.actualSecondary }}
                 aria-hidden
               />
               <span>

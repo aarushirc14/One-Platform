@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import type { CumulativeSalesComparisonPoint } from '@/pulse/data/divisionPerformanceReport'
 import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
+import { chartPalette } from '@/pulse/styles/chartPalette'
 
 type CumulativeSalesComparisonChartProps = {
   data: CumulativeSalesComparisonPoint[]
@@ -14,10 +15,10 @@ const PAD_R = 28
 const PAD_T = 56
 const PAD_B = 88
 
-const BLUE = '#2563eb'
-const ORANGE = '#ea580c'
-const PRIOR_GRAY = '#cbd5e1'
-const TARGET_STROKE = '#52525b'
+const SERIES_2026 = chartPalette.actualPrimary
+const SERIES_2025 = chartPalette.actualSecondary
+const SERIES_2024 = chartPalette.forecastSoft
+const TARGET_STROKE = chartPalette.target
 
 function sx(i: number, plotW: number, n: number) {
   return PAD_L + (i / Math.max(1, n - 1)) * plotW
@@ -186,7 +187,7 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
           <path
             d={path2024}
             fill="none"
-            stroke={PRIOR_GRAY}
+            stroke={SERIES_2024}
             strokeWidth="1.5"
             strokeLinejoin="round"
             strokeLinecap="round"
@@ -194,7 +195,7 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
           <path
             d={path2025}
             fill="none"
-            stroke={ORANGE}
+            stroke={SERIES_2025}
             strokeWidth="2.25"
             strokeLinejoin="round"
             strokeLinecap="round"
@@ -232,7 +233,7 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
             <path
               d={actualPath}
               fill="none"
-              stroke={BLUE}
+              stroke={SERIES_2026}
               strokeWidth="3"
               strokeLinejoin="round"
               strokeLinecap="round"
@@ -244,7 +245,7 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
             <path
               d={bridgePath}
               fill="none"
-              stroke={BLUE}
+              stroke={SERIES_2026}
               strokeWidth="3"
               strokeDasharray="7 5"
               strokeLinejoin="round"
@@ -256,7 +257,7 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
             <path
               d={forecastPath}
               fill="none"
-              stroke={BLUE}
+              stroke={SERIES_2026}
               strokeWidth="3"
               strokeDasharray="7 5"
               strokeLinejoin="round"
@@ -272,12 +273,13 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
             const cy = sy(v, plotH)
             return (
               <g key={`b26-${d.month}`}>
-                <circle cx={cx} cy={cy} r={5} fill="white" stroke={BLUE} strokeWidth="2" />
+                <circle cx={cx} cy={cy} r={5} fill="white" stroke={SERIES_2026} strokeWidth="2" />
                 <text
                   x={cx}
                   y={cy + 18}
                   textAnchor="middle"
-                  className="fill-blue-600 text-[10px] font-bold"
+                  className="text-[10px] font-bold"
+                  fill={SERIES_2026}
                 >
                   {v}
                 </text>
@@ -301,27 +303,42 @@ export function CumulativeSalesComparisonChart({ data }: CumulativeSalesComparis
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-neutral-100 px-3 py-3 text-[10px] text-neutral-600 sm:gap-x-6 sm:px-4 sm:text-[11px]">
           <span className="inline-flex items-center gap-2">
             <span className="inline-flex items-center">
-              <span className="h-0.5 w-5 rounded-full bg-blue-600" />
-              <span className="ml-1 inline-block h-2 w-2 rounded-full border-2 border-blue-600 bg-white" />
+              <span className="h-0.5 w-5 rounded-full" style={{ background: SERIES_2026 }} />
+              <span
+                className="ml-1 inline-block h-2 w-2 rounded-full border-2 bg-white"
+                style={{ borderColor: SERIES_2026 }}
+              />
             </span>
             2026 (Actuals)
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="inline-block h-0.5 w-6 border-t-[3px] border-dashed border-blue-600" />
-            <span className="inline-block h-2 w-2 rounded-full border-2 border-blue-600 bg-white" />
+            <span
+              className="inline-block h-0.5 w-6 border-t-[3px] border-dashed"
+              style={{ borderColor: SERIES_2026 }}
+            />
+            <span
+              className="inline-block h-2 w-2 rounded-full border-2 bg-white"
+              style={{ borderColor: SERIES_2026 }}
+            />
             2026 (Forecast)
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="inline-block h-0 w-5 border-t border-dashed border-neutral-600" />
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-neutral-600 ring-1 ring-white" />
+            <span
+              className="inline-block h-0 w-5 border-t border-dashed"
+              style={{ borderColor: TARGET_STROKE }}
+            />
+            <span
+              className="inline-block h-1.5 w-1.5 rounded-full ring-1 ring-white"
+              style={{ background: TARGET_STROKE }}
+            />
             2026 Target
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-[3px] w-6 rounded-full" style={{ background: ORANGE }} />
+            <span className="h-[3px] w-6 rounded-full" style={{ background: SERIES_2025 }} />
             2025
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-0.5 w-6 rounded-full bg-neutral-300" />
+            <span className="h-0.5 w-6 rounded-full" style={{ background: SERIES_2024 }} />
             2024
           </span>
         </div>

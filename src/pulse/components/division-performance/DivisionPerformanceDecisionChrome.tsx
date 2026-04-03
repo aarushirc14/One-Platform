@@ -61,7 +61,7 @@ export function ExecutiveOverviewPanel() {
       </div>
 
       <div className="mt-5 rounded-lg border border-neutral-300/90 bg-neutral-100 px-3 py-3 sm:px-4 sm:py-3.5">
-        <p className={pulseInsetSectionTitle}>Early Signals</p>
+        <p className={pulseInsetSectionTitle}>Leading Indicators</p>
         <p className="mt-1.5 text-sm font-medium leading-relaxed text-neutral-900">
           {divisionLeadingIndicatorsExecutiveSentence}
         </p>
@@ -107,7 +107,8 @@ export function ExecutiveOverviewPanel() {
 }
 
 export function ReportDecisionFooter() {
-  const { title, subtitle, links, discussionPrompts } = divisionPerformanceNextSteps
+  const { title, links, discussionPrompts } = divisionPerformanceNextSteps
+  const subtitle = (divisionPerformanceNextSteps as { subtitle?: string }).subtitle
 
   return (
     <section
@@ -118,7 +119,9 @@ export function ReportDecisionFooter() {
       <h2 id="next-steps-heading" className="text-base font-bold tracking-tight">
         {title}
       </h2>
-      <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-300">{subtitle}</p>
+      {subtitle ? (
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-300">{subtitle}</p>
+      ) : null}
 
       <ul className="mt-5 grid list-none gap-3 p-0 sm:grid-cols-3" role="list">
         {links.map((item) => (

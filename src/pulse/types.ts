@@ -59,10 +59,14 @@ export type FunnelStatus = 'behind' | 'ahead' | 'onPace'
 export type FunnelSegment = {
   title: string
   primaryLine: string
-  secondaryLine: string
-  benchmarkLine: string
-  benchmarkNote: string
-  benchmarkNoteTone: 'positive' | 'negative' | 'neutral'
+  /** Trend vs prior period (e.g. "↘ 2% from prev 3 months"). */
+  secondaryLine?: string
+  secondaryLineTone?: 'positive' | 'negative' | 'neutral'
+  /** Optional detail line above {@link targetNote} (divider above when set). */
+  targetLine?: string
+  /** e.g. "60% better vs target" — use "target", not "benchmark". */
+  targetNote?: string
+  targetNoteTone?: 'positive' | 'negative' | 'neutral'
 }
 
 export type FunnelColumn = {
@@ -84,7 +88,7 @@ export type MetricTableRow =
       countsTo: string
       countsToLabel: string
       communityRate: string
-      benchmarkRate: string
+      targetRate: string
       performance: string
       performanceTone: 'positive' | 'negative'
       change: string
@@ -96,4 +100,6 @@ export type MetricTableRow =
 export type MetricTableSection = {
   title: string | null
   rows: MetricTableRow[]
+  /** When set, this data row shows an expandable 12‑month trend chart (row click or Trends control). */
+  trendChartForMetric?: string
 }

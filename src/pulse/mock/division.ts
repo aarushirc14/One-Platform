@@ -117,7 +117,7 @@ export function buildDivisionCommunitiesSummary(rows: DivisionCommunityRow[]): D
 export const divisionKpis: DivisionKpi[] = [
   {
     id: 'k1',
-    title: 'Sales vs Target (Nov 2025 - Jan 2026)',
+    title: 'Sales vs Target',
     headlineValue: '29.0',
     headlineUnit: 'sales',
     headlinePct: '(-53.2%)',
@@ -130,7 +130,7 @@ export const divisionKpis: DivisionKpi[] = [
   },
   {
     id: 'k2',
-    title: 'Sales vs Target YTD (2026)',
+    title: 'Sales vs Target YTD',
     headlineValue: '8.0',
     headlineUnit: 'YTD sales',
     headlinePct: '(-33.3%)',

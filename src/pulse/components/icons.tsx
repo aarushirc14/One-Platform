@@ -64,6 +64,36 @@ export function IconLineChart({ className }: { className?: string }) {
   )
 }
 
+/** Jagged “spark” line for % change (up). */
+export function IconTrendSparkUp({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+      <path
+        d="m1.5 9.5 2.5-3 2 2 2.5-3.5L12.5 3"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+/** Jagged “spark” line for % change (down). */
+export function IconTrendSparkDown({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+      <path
+        d="m1.5 4.5 2.5 3 2-2 2.5 3.5L12.5 11"
+        stroke="currentColor"
+        strokeWidth="1.35"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 /** Filled circle + exclamation for Sales Forecast / alert strips. */
 export function IconAlertCircleSolid({ className }: { className?: string }) {
   return (

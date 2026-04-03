@@ -1,4 +1,5 @@
 import type { ForecastByPeriodRow } from '@/pulse/data/divisionPerformanceReport'
+import { chartPalette } from '@/pulse/styles/chartPalette'
 import { pulseChartTitle } from '@/pulse/ui/pulseTypography'
 
 type ForecastByPeriodChartProps = {
@@ -20,21 +21,22 @@ function ForecastTrack({
       <div className="absolute inset-x-0 top-1/2 h-2.5 w-full -translate-y-1/2 rounded-full bg-neutral-100" />
       {/* Confidence range */}
       <div
-        className="absolute top-1/2 h-2.5 -translate-y-1/2 rounded-full bg-amber-200/90 shadow-sm"
+        className="absolute top-1/2 h-2.5 -translate-y-1/2 rounded-full shadow-sm"
         style={{
           left: `${rangeLeftPct}%`,
           width: `${rangeWidthPct}%`,
+          backgroundColor: `${chartPalette.forecastSoft}cc`,
         }}
       />
       {/* Forecast point */}
       <div
-        className="absolute top-1/2 z-20 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-amber-500 bg-white shadow-sm"
-        style={{ left: `${forecastPct}%` }}
+        className="absolute top-1/2 z-20 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-white shadow-sm"
+        style={{ left: `${forecastPct}%`, borderColor: chartPalette.actualPrimary }}
       />
       {/* Target marker */}
       <div
-        className="pointer-events-none absolute top-1/2 z-10 h-5 w-0 -translate-x-1/2 -translate-y-1/2 border-l border-dashed border-neutral-600"
-        style={{ left: `${targetPct}%` }}
+        className="pointer-events-none absolute top-1/2 z-10 h-5 w-0 -translate-x-1/2 -translate-y-1/2 border-l border-dashed"
+        style={{ left: `${targetPct}%`, borderColor: chartPalette.target }}
       />
     </div>
   )
@@ -48,16 +50,25 @@ function Legend() {
     >
       <span className="inline-flex items-center gap-2">
         <span className="relative inline-flex h-3 w-3 items-center justify-center">
-          <span className="absolute h-2.5 w-2.5 rounded-full border-2 border-amber-500 bg-white" />
+          <span
+            className="absolute h-2.5 w-2.5 rounded-full border-2 bg-white"
+            style={{ borderColor: chartPalette.actualPrimary }}
+          />
         </span>
         Forecast
       </span>
       <span className="inline-flex items-center gap-2">
-        <span className="inline-block h-2 w-6 rounded-sm bg-amber-200/90" />
+        <span
+          className="inline-block h-2 w-6 rounded-sm"
+          style={{ backgroundColor: `${chartPalette.forecastSoft}cc` }}
+        />
         Confidence Range
       </span>
       <span className="inline-flex items-center gap-2">
-        <span className="inline-block h-4 w-0 border-l border-dashed border-neutral-600" />
+        <span
+          className="inline-block h-4 w-0 border-l border-dashed"
+          style={{ borderColor: chartPalette.target }}
+        />
         Target
       </span>
     </div>
@@ -88,7 +99,9 @@ export function ForecastByPeriodChart({ rows }: ForecastByPeriodChartProps) {
 
             <div className="text-left lg:text-right">
               <p className="tabular-nums">
-                <span className="text-xl font-bold text-amber-500">{row.forecastSales}</span>
+                <span className="text-xl font-bold" style={{ color: chartPalette.actualPrimary }}>
+                  {row.forecastSales}
+                </span>
                 <span className="ml-1 text-sm font-normal text-neutral-500">sales</span>
               </p>
               <p className="mt-0.5 text-xs text-neutral-500">
@@ -100,7 +113,10 @@ export function ForecastByPeriodChart({ rows }: ForecastByPeriodChartProps) {
               <p className="text-sm font-semibold tabular-nums text-neutral-800">
                 Target: {row.target}
               </p>
-              <p className="mt-0.5 text-xs font-medium text-amber-500">
+              <p
+                className="mt-0.5 text-xs font-medium"
+                style={{ color: chartPalette.actualSecondary }}
+              >
                 {row.behind} sales behind
               </p>
             </div>

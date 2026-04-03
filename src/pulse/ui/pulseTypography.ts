@@ -30,12 +30,15 @@ export const pulseKpiCardOverline = 'text-xs font-semibold text-neutral-500'
 export const pulseStatusBadge = 'text-[10px] font-semibold tabular-nums'
 
 export const pulseOutlookBadge =
-  'inline-flex items-center justify-center rounded border px-2.5 py-1 text-[10px] font-semibold tabular-nums'
+  'inline-flex min-h-[1.75rem] items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold tabular-nums shadow-sm'
 
 export const pulseMarkerLabel =
   'absolute top-0 whitespace-nowrap text-center text-[10px] font-semibold tabular-nums text-neutral-500'
 
 export const pulseDataValidUntil = 'text-sm text-neutral-600'
+
+/** Bold italic line under date period — data refresh anchor (prior week’s Sunday). */
+export const pulseDataLastRefreshed = 'text-sm font-bold italic text-neutral-600'
 
 export const pulseQaCardQuestion = 'text-xs font-semibold text-neutral-600'
 

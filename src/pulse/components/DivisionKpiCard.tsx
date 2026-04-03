@@ -2,8 +2,9 @@ import type { DivisionKpi } from '@/pulse/types'
 import { IconInfo } from '@/pulse/components/icons'
 import { cn } from '@/lib/cn'
 
-/** Screenshot: dark red primary metrics (~#b30000) */
-const metricRed = 'text-[#B30000]'
+/** Match Division Performance semantic reds/greens (e.g. Community Performance sales vs target). */
+const metricNegative = 'text-red-600'
+const metricPositive = 'text-emerald-700'
 const titleMuted = 'text-neutral-600'
 const footerMuted = 'text-neutral-600'
 
@@ -14,8 +15,8 @@ type DivisionKpiCardProps = {
 export function DivisionKpiCard({ kpi }: DivisionKpiCardProps) {
   const neg = kpi.headlineTone === 'negative'
   const pos = kpi.headlineTone === 'positive'
-  const mainCls = neg ? metricRed : 'text-emerald-700'
-  const footerLeadCls = neg ? metricRed : pos ? 'text-emerald-700' : 'text-neutral-900'
+  const mainCls = neg ? metricNegative : metricPositive
+  const footerLeadCls = neg ? metricNegative : pos ? metricPositive : 'text-neutral-900'
 
   return (
     <div className="flex h-full min-h-[10rem] flex-col rounded-lg border border-neutral-200 bg-white p-4 sm:min-h-[10.5rem] sm:p-5">

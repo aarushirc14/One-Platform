@@ -1,6 +1,16 @@
 import type { CommunitiesMetricsMode, DivisionCommunityRow } from '@/pulse/types'
 import { ImpactPill } from '@/pulse/components/ImpactPill'
 import { impactCellForMode } from '@/pulse/lib/communitiesMetricsDisplay'
+import {
+  pulseTableBase,
+  pulseTableCard,
+  pulseTableCardTitleBar,
+  pulseTableRowEven,
+  pulseTableScroll,
+  pulseTableTd,
+  pulseTableTdCompact,
+  pulseTableTh,
+} from '@/pulse/ui/pulseTable'
 import { cn } from '@/lib/cn'
 
 type DivisionCommunitiesSummaryTableProps = {
@@ -10,47 +20,45 @@ type DivisionCommunitiesSummaryTableProps = {
 
 export function DivisionCommunitiesSummaryTable({ row, metricsMode }: DivisionCommunitiesSummaryTableProps) {
   return (
-    <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
-      <div className="border-b border-neutral-200 bg-neutral-50/80 px-4 py-2.5 sm:px-5 sm:py-3">
+    <div className={pulseTableCard}>
+      <div className={pulseTableCardTitleBar}>
         <h2 id="division-summary-heading" className="text-base font-semibold text-neutral-900">
           {row.name}
         </h2>
-        <p className="mt-0.5 text-xs text-neutral-600">
-          Rolled up from all communities in the table below.
-        </p>
+        <p className="mt-0.5 text-xs text-neutral-600">Rolled up from all communities in the table below.</p>
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-[920px] w-full border-collapse text-sm">
+      <div className={pulseTableScroll}>
+        <table className={cn('min-w-[920px]', pulseTableBase)}>
           <thead>
-            <tr className="border-b border-neutral-200 bg-neutral-50 text-center text-xs font-semibold text-neutral-700">
-              <th className="whitespace-nowrap px-4 py-2.5 text-left sm:px-5">Community</th>
-              <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Sales Gap</th>
-              <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Sales</th>
-              <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Target</th>
-              <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Web Traffic</th>
-              <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Total Leads</th>
-              <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">First Visits</th>
-              <th className="whitespace-nowrap px-4 py-2.5 sm:px-5">Sales</th>
+            <tr>
+              <th className={pulseTableTh('left', 'whitespace-nowrap')}>Community</th>
+              <th className={pulseTableTh('center', 'whitespace-nowrap')}>Sales Gap</th>
+              <th className={pulseTableTh('center', 'whitespace-nowrap')}>Sales</th>
+              <th className={pulseTableTh('center', 'whitespace-nowrap')}>Target</th>
+              <th className={pulseTableTh('center', 'whitespace-nowrap')}>Web Traffic</th>
+              <th className={pulseTableTh('center', 'whitespace-nowrap')}>Total Leads</th>
+              <th className={pulseTableTh('center', 'whitespace-nowrap')}>First Visits</th>
+              <th className={pulseTableTh('center', 'whitespace-nowrap')}>Sales</th>
             </tr>
           </thead>
-          <tbody className="bg-neutral-50/60 text-neutral-900">
-            <tr className="border-b border-neutral-100">
-              <td className="px-4 py-2.5 text-left sm:px-5">
+          <tbody>
+            <tr className={pulseTableRowEven}>
+              <td className={pulseTableTd('left')}>
                 <span className="font-semibold text-neutral-950">{row.name}</span>
               </td>
               <td className={cnGap(row.gapTone)}>{row.salesGap}</td>
-              <td className="px-4 py-2.5 text-center tabular-nums sm:px-5">{row.sales}</td>
-              <td className="px-4 py-2.5 text-center tabular-nums sm:px-5">{row.target}</td>
-              <td className="px-3 py-1.5 align-middle sm:px-4">
+              <td className={pulseTableTd('center', 'tabular-nums')}>{row.sales}</td>
+              <td className={pulseTableTd('center', 'tabular-nums')}>{row.target}</td>
+              <td className={pulseTableTdCompact('center', 'align-middle')}>
                 <ImpactPill cell={impactCellForMode(row.webTraffic, metricsMode)} />
               </td>
-              <td className="px-3 py-1.5 align-middle sm:px-4">
+              <td className={pulseTableTdCompact('center', 'align-middle')}>
                 <ImpactPill cell={impactCellForMode(row.totalLeads, metricsMode)} />
               </td>
-              <td className="px-3 py-1.5 align-middle sm:px-4">
+              <td className={pulseTableTdCompact('center', 'align-middle')}>
                 <ImpactPill cell={impactCellForMode(row.firstVisits, metricsMode)} />
               </td>
-              <td className="px-3 py-1.5 align-middle sm:px-4">
+              <td className={pulseTableTdCompact('center', 'align-middle')}>
                 <ImpactPill cell={impactCellForMode(row.salesImpact, metricsMode)} />
               </td>
             </tr>
@@ -62,8 +70,8 @@ export function DivisionCommunitiesSummaryTable({ row, metricsMode }: DivisionCo
 }
 
 function cnGap(tone: DivisionCommunityRow['gapTone']) {
-  const base = 'px-4 py-2.5 text-center font-medium tabular-nums sm:px-5'
+  const base = pulseTableTd('center', 'font-medium tabular-nums')
   if (tone === 'negative') return cn(base, 'text-red-600')
-  if (tone === 'positive') return cn(base, 'text-emerald-600')
+  if (tone === 'positive') return cn(base, 'text-emerald-700')
   return cn(base, 'text-neutral-900')
 }

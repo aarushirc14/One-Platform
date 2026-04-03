@@ -16,8 +16,22 @@ import {
 import {
   pulseSectionHeadingLg,
   pulseSectionOverline,
-  pulseTableHeadPrimary,
 } from '@/pulse/ui/pulseTypography'
+import {
+  pulseTableBase,
+  pulseTableCard,
+  pulseTableExpandRowCell,
+  pulseTableRowEven,
+  pulseTableRowOdd,
+  pulseTableScroll,
+  pulseTableTd,
+  pulseTableTh,
+} from '@/pulse/ui/pulseTable'
+import {
+  trendsButtonClassName,
+  trendsChevronIconClassName,
+  trendsControlStyle,
+} from '@/pulse/styles/chartPalette'
 import { cn } from '@/lib/cn'
 
 const headerNavPillClass =
@@ -58,7 +72,7 @@ export function ForecastDriversPage() {
         </header>
 
         <section
-          className="mt-8 rounded-xl border border-neutral-300/90 bg-white p-4 shadow-sm sm:p-5"
+          className="mt-8 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm sm:p-5"
           aria-labelledby="drivers-exec-heading"
         >
           <h2 id="drivers-exec-heading" className={pulseSectionOverline}>
@@ -69,48 +83,36 @@ export function ForecastDriversPage() {
           </p>
         </section>
 
-        <section className="mt-6" aria-labelledby="top-features-heading">
-          <h2 id="top-features-heading" className={pulseSectionHeadingLg}>
-            Top Signals
+        <section className="mt-6" aria-labelledby="top-leading-indicators-heading">
+          <h2 id="top-leading-indicators-heading" className={pulseSectionHeadingLg}>
+            Top Leading Indicators
           </h2>
 
-          <div className="overflow-hidden rounded-xl border border-neutral-300/90 bg-white shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="min-w-[min(100%,520px)] w-full border-collapse text-sm">
+          <div className={pulseTableCard}>
+            <div className={pulseTableScroll}>
+              <table className={cn('min-w-[min(100%,520px)]', pulseTableBase)}>
                 <thead>
-                  <tr className="border-b border-neutral-300/80 bg-neutral-100 text-left">
-                    <th className={cn('whitespace-nowrap px-3 py-2.5 sm:px-4', pulseTableHeadPrimary)}>
-                      Rank
-                    </th>
-                    <th className={cn('px-3 py-2.5 sm:px-4', pulseTableHeadPrimary)}>Metric</th>
-                    <th className={cn('min-w-[14rem] px-3 py-2.5 sm:px-4', pulseTableHeadPrimary)}>
-                      Recent Changes
-                    </th>
-                    <th className={cn('whitespace-nowrap px-3 py-2.5 sm:px-4', pulseTableHeadPrimary)}>
-                      Trends
-                    </th>
+                  <tr>
+                    <th className={pulseTableTh('left', 'whitespace-nowrap')}>Rank</th>
+                    <th className={pulseTableTh('left')}>Metric</th>
+                    <th className={pulseTableTh('left', 'min-w-[14rem]')}>Recent Changes</th>
+                    <th className={pulseTableTh('left', 'whitespace-nowrap')} aria-hidden />
                   </tr>
                 </thead>
                 <tbody>
                   {forecastDriverTopMetrics.map((row, rowIndex) => {
                     const trendOpen = expandedRanks.has(row.rank)
-                    const isLastMetric = rowIndex === forecastDriverTopMetrics.length - 1
                     return (
                       <Fragment key={row.rank}>
-                        <tr
-                          className={cn(
-                            'border-b border-neutral-200/80 odd:bg-white even:bg-neutral-50/80',
-                            isLastMetric && !trendOpen && 'last:border-b-0',
-                          )}
-                        >
-                          <td className="whitespace-nowrap px-3 py-3 font-bold tabular-nums text-neutral-900 sm:px-4">
+                        <tr className={cn(rowIndex % 2 === 1 ? pulseTableRowOdd : pulseTableRowEven)}>
+                          <td className={pulseTableTd('left', 'whitespace-nowrap font-bold tabular-nums')}>
                             {row.rank}
                           </td>
-                          <td className="px-3 py-3 font-medium text-neutral-900 sm:px-4">{row.metric}</td>
-                          <td className="px-3 py-3 leading-relaxed text-neutral-600 sm:px-4">
+                          <td className={pulseTableTd('left', 'font-medium')}>{row.metric}</td>
+                          <td className={pulseTableTd('left', 'leading-relaxed text-neutral-600')}>
                             {row.recentChanges}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2 align-middle sm:px-4">
+                          <td className={pulseTableTd('left', 'whitespace-nowrap align-middle py-2')}>
                             <button
                               type="button"
                               id={`driver-trend-trigger-${row.rank}`}
@@ -119,25 +121,21 @@ export function ForecastDriversPage() {
                                 trendOpen ? `driver-trend-panel-${row.rank}` : undefined
                               }
                               onClick={() => toggleTrend(row.rank)}
-                              className="inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-neutral-800 shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-400"
+                              className={trendsButtonClassName}
+                              style={trendsControlStyle()}
                             >
                               Trends
                               {trendOpen ? (
-                                <IconChevronUp className="h-4 w-4 shrink-0 text-neutral-600" aria-hidden />
+                                <IconChevronUp className={trendsChevronIconClassName} aria-hidden />
                               ) : (
-                                <IconChevronDown className="h-4 w-4 shrink-0 text-neutral-600" aria-hidden />
+                                <IconChevronDown className={trendsChevronIconClassName} aria-hidden />
                               )}
                             </button>
                           </td>
                         </tr>
                         {trendOpen ? (
-                          <tr
-                            className={cn(
-                              'border-b border-neutral-200/80 bg-neutral-50/95',
-                              isLastMetric && 'last:border-b-0',
-                            )}
-                          >
-                            <td colSpan={4} className="px-3 py-4 sm:px-4">
+                          <tr className={pulseTableRowOdd}>
+                            <td colSpan={4} className={pulseTableExpandRowCell}>
                               <div
                                 id={`driver-trend-panel-${row.rank}`}
                                 role="region"

@@ -72,10 +72,10 @@ export function DivisionPerformanceReport() {
           <p className="mt-1 text-sm leading-relaxed text-neutral-600">{salesForecastIntro.subline}</p>
         </div>
 
-        <div className="mt-5 flex overflow-hidden rounded-lg border border-neutral-300 bg-neutral-100">
-          <div className="w-1 shrink-0 bg-neutral-600" aria-hidden />
+        <div className="mt-5 flex overflow-hidden rounded-lg border border-red-200 bg-red-50/60">
+          <div className="w-1 shrink-0 bg-red-600" aria-hidden />
           <div className="flex min-w-0 flex-1 items-start gap-3 px-4 py-3.5 sm:px-5">
-            <IconAlertCircleSolid className="mt-0.5 h-5 w-5 shrink-0 text-neutral-600" aria-hidden />
+            <IconAlertCircleSolid className="mt-0.5 h-5 w-5 shrink-0 text-red-600" aria-hidden />
             <p className="text-sm font-medium leading-relaxed text-neutral-800">{salesForecastIntro.alert}</p>
           </div>
         </div>
@@ -111,10 +111,10 @@ export function DivisionPerformanceReport() {
           <p className="mt-1 text-sm leading-relaxed text-neutral-600">{marginDriversIntro.subline}</p>
         </div>
 
-        <div className="mt-5 flex overflow-hidden rounded-lg border border-neutral-300 bg-neutral-100">
-          <div className="w-1 shrink-0 bg-neutral-600" aria-hidden />
+        <div className="mt-5 flex overflow-hidden rounded-lg border border-red-200 bg-red-50/60">
+          <div className="w-1 shrink-0 bg-red-600" aria-hidden />
           <div className="flex min-w-0 flex-1 items-start gap-3 px-4 py-3.5 sm:px-5">
-            <IconAlertCircleSolid className="mt-0.5 h-5 w-5 shrink-0 text-neutral-600" aria-hidden />
+            <IconAlertCircleSolid className="mt-0.5 h-5 w-5 shrink-0 text-red-600" aria-hidden />
             <p className="text-sm font-medium leading-relaxed text-neutral-800">{marginDriversIntro.alert}</p>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { chartPalette } from '@/pulse/styles/chartPalette'
 import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
 
 /**
@@ -30,15 +31,18 @@ export function NinetyDaySalesForecastChart() {
 
         <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-neutral-100 px-3 py-3 text-[11px] text-neutral-600 sm:px-4">
           <span className="inline-flex items-center gap-2">
-            <span className="h-0.5 w-6 rounded-full bg-blue-600" />
+            <span className="h-0.5 w-6 rounded-full" style={{ background: chartPalette.forecastAccent }} />
             Forecast (90-Day Monthly Avg)
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-0.5 w-6 rounded-full bg-amber-500" />
+            <span className="h-0.5 w-6 rounded-full" style={{ background: chartPalette.actualPrimary }} />
             Actual (90-Day Monthly Avg)
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="inline-block h-3 w-px bg-neutral-900" />
+            <span
+              className="inline-block h-3 w-px"
+              style={{ background: chartPalette.target }}
+            />
             Current Date
           </span>
         </div>

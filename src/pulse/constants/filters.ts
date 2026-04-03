@@ -22,7 +22,7 @@ export const TARGET_OPTIONS = [
   { id: 'builder', label: 'Builder Targets' },
   { id: 'division', label: 'Division Averages' },
   { id: 'all_division', label: 'All Division Averages' },
-  { id: 'industry', label: 'Industry Benchmark' },
+  { id: 'industry', label: 'Industry Target' },
 ] as const
 
 export type TargetId = (typeof TARGET_OPTIONS)[number]['id']

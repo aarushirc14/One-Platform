@@ -59,24 +59,23 @@ export type ReportNextStepLink = {
 
 /** Action layer — links into the rest of the unified platform. */
 export const divisionPerformanceNextSteps = {
-  title: 'Turn this into a decision',
-  subtitle: 'Suggested moves — same truth as the live product; PDF is an output, not a separate story.',
+  title: 'Turn This Into a Decision',
   links: [
     {
       id: 'triage',
-      label: 'Open Community Triage',
-      hint: 'Priorities view — ranked communities, funnel impact, operational drilldown',
+      label: 'Community Triage',
+      hint: 'Priorities view — ranked communities, funnel impact',
       to: OPENHOMES_COMMUNITY_TRIAGE,
     },
     {
       id: 'drivers',
-      label: 'Forecast & Drivers',
-      hint: 'Explanation layer — what changed, confidence, narrative',
+      label: 'Forecast Drivers',
+      hint: 'Explanation layer — what changed, narrative',
       to: OPENHOMES_FORECAST_DRIVERS,
     },
     {
       id: 'downloads',
-      label: 'Exports & handoffs',
+      label: 'Exports',
       hint: 'Spreadsheets and PDFs generated from this snapshot',
       to: OPENHOMES_DOWNLOADS,
     },
@@ -84,16 +83,15 @@ export const divisionPerformanceNextSteps = {
   discussionPrompts: [
     'Which two communities get executive attention this week?',
     'Where does the funnel disagree with the forecast story?',
-    'What one operational change is we testing before the next monthly close?',
+    'What is one operational change we are testing before the next monthly close?',
   ],
 }
 
 export const divisionPerformanceSectionNav = [
   { href: '#executive-overview', label: DIVISION_PERFORMANCE_AT_A_GLANCE_HEADING },
-  { href: '#rollup-kpis', label: 'Actuals & Pace' },
-  { href: '#sales-forecast', label: 'Forecast & Context' },
-  { href: '#community-priorities', label: 'Community Priorities' },
-  { href: '#margin-drivers', label: 'Margin / Options' },
+  { href: '#sales-forecast', label: 'Sales Forecast' },
+  { href: '#community-priorities', label: 'Community Performance' },
+  { href: '#margin-drivers', label: 'Margin Drivers' },
   { href: '#next-steps', label: 'Next Steps' },
 ] as const
 
@@ -440,7 +438,7 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90CatchUp: 0,
     primaryDriver: 'First Visit → Sale Rate',
     next90Outlook: 'off-track',
-    driverNeedsAttention: false,
+    driverNeedsAttention: true,
   },
 ]
 
@@ -448,7 +446,7 @@ export const outlookLegendItems = [
   {
     tone: 'strong' as const,
     label: 'Strong',
-    range: '≥75% chance to hit target',
+    range: '≥75%',
     dotClass: 'bg-emerald-500',
   },
   {
@@ -466,7 +464,7 @@ export const outlookLegendItems = [
   {
     tone: 'off-track' as const,
     label: 'Off Track',
-    range: '<25%',
+    range: '<25% chance to hit target',
     dotClass: 'bg-red-500',
   },
 ]
@@ -484,7 +482,7 @@ export type MarginDriverRow = {
   communityName: string
   optionsLoadingPct: string
   status: string
-  vsBenchmark: string
+  vsTarget: string
 }
 
 export const marginDriverRows: MarginDriverRow[] = [
@@ -493,28 +491,28 @@ export const marginDriverRows: MarginDriverRow[] = [
     communityName: 'Catalina Foothills',
     optionsLoadingPct: '32%',
     status: 'Not Meeting',
-    vsBenchmark: '$92k vs $153k benchmark',
+    vsTarget: '$92k vs $153k target',
   },
   {
     communityId: 'gladden-farms',
     communityName: 'Gladden Farms',
     optionsLoadingPct: '28%',
     status: 'Not Meeting',
-    vsBenchmark: '$81k vs $153k benchmark',
+    vsTarget: '$81k vs $153k target',
   },
   {
     communityId: 'saddlebrook',
     communityName: 'Saddlebrook',
     optionsLoadingPct: '35%',
     status: 'Not Meeting',
-    vsBenchmark: '$101k vs $153k benchmark',
+    vsTarget: '$101k vs $153k target',
   },
   {
     communityId: 'tanque-verde',
     communityName: 'Tanque Verde',
     optionsLoadingPct: '41%',
     status: 'Meeting',
-    vsBenchmark: '$118k vs $153k benchmark',
+    vsTarget: '$118k vs $153k target',
   },
 ]
 

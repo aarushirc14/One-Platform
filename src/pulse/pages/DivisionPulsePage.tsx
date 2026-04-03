@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { divisionCommunities, divisionCommunitiesSummary, divisionKpis } from '@/pulse/data/division'
+import { usePulseFilters } from '@/pulse/context/PulseFiltersContext'
 import { usePulseDataValidUntilLabel } from '@/pulse/hooks/usePulseDataValidUntilLabel'
 import { CommunitiesTable } from '@/pulse/components/CommunitiesTable'
 import { DivisionCommunitiesSummaryTable } from '@/pulse/components/DivisionCommunitiesSummaryTable'
@@ -9,12 +10,13 @@ import { IconDownload } from '@/pulse/components/icons'
 import { PulsePageHeading } from '@/pulse/components/PulsePageHeading'
 import { PulseToolbarFilters } from '@/pulse/components/PulseToolbarFilters'
 import type { CommunitiesMetricsMode } from '@/pulse/types'
-import { pulseDataValidUntil } from '@/pulse/ui/pulseTypography'
+import { pulseDataLastRefreshed, pulseDataValidUntil } from '@/pulse/ui/pulseTypography'
 import { cn } from '@/lib/cn'
 
 export function DivisionPulsePage() {
   const [metricsMode, setMetricsMode] = useState<CommunitiesMetricsMode>('conversion')
-  const dataValidUntilLabel = usePulseDataValidUntilLabel()
+  const { datePeriodLabel } = usePulseFilters()
+  const dataLastRefreshedLabel = usePulseDataValidUntilLabel()
 
   return (
     <div className="min-h-full w-full px-4 py-5 sm:px-6 sm:py-7 lg:px-10">
@@ -24,7 +26,11 @@ export function DivisionPulsePage() {
             <div className="min-w-0">
               <PulsePageHeading title="Community Triage" />
               <p className={cn('mt-2', pulseDataValidUntil)}>
-                Data Up To: {dataValidUntilLabel}
+                <span className="sr-only">Date period: </span>
+                {datePeriodLabel}
+              </p>
+              <p className={cn('mt-1', pulseDataLastRefreshed)}>
+                Data Last Refreshed: {dataLastRefreshedLabel}
               </p>
             </div>
 

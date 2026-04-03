@@ -1,4 +1,5 @@
 import type { ForecastDriverTrendPoint } from '@/pulse/data/forecastLeadingIndicators'
+import { chartPalette } from '@/pulse/styles/chartPalette'
 
 type ForecastDriverTrendChartProps = {
   metricLabel: string
@@ -66,7 +67,9 @@ export function ForecastDriverTrendChart({ metricLabel, points, chartId }: Forec
   return (
     <div className="rounded-lg border border-neutral-200/90 bg-white px-3 py-3 sm:px-4 sm:py-4">
       <p id={titleId} className="text-sm font-semibold text-neutral-900">
-        Trend — {metricLabel}
+        <span style={{ color: chartPalette.actualPrimary }}>Trend</span>
+        {' — '}
+        {metricLabel}
       </p>
       <p id={descId} className="mt-0.5 text-xs text-neutral-500">
         Monthly index by period — illustrative scale for this view.
@@ -83,8 +86,8 @@ export function ForecastDriverTrendChart({ metricLabel, points, chartId }: Forec
           <title>Trend for {metricLabel}</title>
           <defs>
             <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#2563eb" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#2563eb" stopOpacity="0.02" />
+              <stop offset="0%" stopColor={chartPalette.actualPrimary} stopOpacity="0.22" />
+              <stop offset="100%" stopColor={chartPalette.actualPrimary} stopOpacity="0.03" />
             </linearGradient>
           </defs>
           <g transform={`translate(${PAD_L},${PAD_T})`}>
@@ -100,13 +103,21 @@ export function ForecastDriverTrendChart({ metricLabel, points, chartId }: Forec
             <path
               d={line}
               fill="none"
-              stroke="#2563eb"
+              stroke={chartPalette.actualPrimary}
               strokeWidth={2}
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             {dots.map((d, i) => (
-              <circle key={i} cx={d.cx} cy={d.cy} r={3.5} className="fill-white stroke-blue-600" strokeWidth={2} />
+              <circle
+                key={i}
+                cx={d.cx}
+                cy={d.cy}
+                r={3.5}
+                className="fill-white"
+                stroke={chartPalette.actualPrimary}
+                strokeWidth={2}
+              />
             ))}
             {points.map((p, i) => {
               const x = n === 1 ? plotW / 2 : (i / Math.max(1, n - 1)) * plotW

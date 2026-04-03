@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { HistoricalMonthlySalesPoint } from '@/pulse/data/divisionPerformanceReport'
 import { cn } from '@/lib/cn'
 import { pulseChartSubtitle, pulseChartTitle } from '@/pulse/ui/pulseTypography'
+import { chartPalette } from '@/pulse/styles/chartPalette'
 
 type HistoricalMonthlySalesChartProps = {
   data: HistoricalMonthlySalesPoint[]
@@ -15,9 +16,9 @@ const PAD_R = 28
 const PAD_T = 52
 const PAD_B = 72
 
-const COLOR_PRESALE = '#2563eb'
-const COLOR_SPEC = '#ea580c'
-const COLOR_BUDGET = '#9ca3af'
+const COLOR_PRESALE = chartPalette.actualPrimary
+const COLOR_SPEC = chartPalette.actualSecondary
+const COLOR_BUDGET = chartPalette.target
 
 function sy(v: number, plotH: number) {
   return PAD_T + ((Y_MAX - v) / Y_MAX) * plotH
@@ -66,8 +67,8 @@ export function HistoricalMonthlySalesChart({ data }: HistoricalMonthlySalesChar
               patternUnits="userSpaceOnUse"
               patternTransform="rotate(45)"
             >
-              <rect width="6" height="6" fill="#dbeafe" />
-              <rect width="3" height="8" fill="#3b82f6" opacity="0.78" />
+              <rect width="6" height="6" fill={chartPalette.forecastSoft} fillOpacity={0.35} />
+              <rect width="3" height="8" fill={chartPalette.actualPrimary} opacity={0.72} />
             </pattern>
           </defs>
 
@@ -250,26 +251,33 @@ export function HistoricalMonthlySalesChart({ data }: HistoricalMonthlySalesChar
 
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-neutral-100 px-3 py-3 text-[10px] text-neutral-600 sm:gap-x-7 sm:px-4 sm:text-[11px]">
           <span className="inline-flex items-center gap-2">
-            <span className="inline-block h-0.5 w-7 border-t border-dashed border-neutral-400" />
+            <span
+              className="inline-block h-0.5 w-7 border-t border-dashed"
+              style={{ borderColor: COLOR_BUDGET }}
+            />
             Budget
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-2.5 w-5 rounded-sm bg-blue-600" />
+            <span className="h-2.5 w-5 rounded-sm" style={{ background: COLOR_PRESALE }} />
             Presale
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-2.5 w-5 rounded-sm bg-orange-600" />
+            <span className="h-2.5 w-5 rounded-sm" style={{ background: COLOR_SPEC }} />
             Spec
           </span>
           <span className="inline-flex items-center gap-2">
-            <span className="h-2.5 w-5 rounded-sm bg-violet-600 opacity-40" aria-hidden />
+            <span
+              className="h-2.5 w-5 rounded-sm opacity-50"
+              style={{ background: chartPalette.forecastAccent }}
+              aria-hidden
+            />
             <span className="text-neutral-400">Model</span>
           </span>
           <span className="inline-flex items-center gap-2">
             <span
               className="h-2.5 w-5 rounded-sm"
               style={{
-                background: 'repeating-linear-gradient(45deg, #3b82f6, #3b82f6 2px, #dbeafe 2px, #dbeafe 4px)',
+                background: `repeating-linear-gradient(45deg, ${chartPalette.actualPrimary}, ${chartPalette.actualPrimary} 2px, ${chartPalette.forecastSoft} 2px, ${chartPalette.forecastSoft} 4px)`,
               }}
             />
             Forecast

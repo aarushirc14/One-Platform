@@ -17,33 +17,58 @@ import {
   pulseSectionTitleOnCard,
   pulseTableHeadPrimary,
 } from '@/pulse/ui/pulseTypography'
+import {
+  pulseTableBase,
+  pulseTableCard,
+  pulseTableCellGrid,
+  pulseTableCellPadding,
+  pulseTableHeaderBg,
+  pulseTableRowEven,
+  pulseTableRowOdd,
+  pulseTableScroll,
+  pulseTableTd,
+} from '@/pulse/ui/pulseTable'
 
-function TableHeadCell({ title, subtitle }: { title: string; subtitle: string }) {
+const outlookLegendDisplayOrder: Next90Outlook[] = [
+  'off-track',
+  'at-risk',
+  'on-track',
+  'strong',
+]
+
+function TableHeadCell({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <th className="align-bottom px-3 py-3 text-left sm:px-4">
+    <th className={cn(pulseTableCellGrid, pulseTableHeaderBg, pulseTableCellPadding, 'align-bottom text-left')}>
       <div className={pulseTableHeadPrimary}>{title}</div>
-      <div className="mt-1 max-w-[11rem] text-[10px] font-normal leading-snug text-neutral-600">
-        {subtitle}
-      </div>
+      {subtitle ? (
+        <div className="mt-1 max-w-[11rem] text-[10px] font-normal leading-snug text-neutral-600">
+          {subtitle}
+        </div>
+      ) : null}
     </th>
   )
 }
 
 function SalesVsTargetBar({ actual, target }: { actual: number; target: number }) {
   const met = actual >= target
-  const pct = target > 0 ? Math.min(100, (actual / target) * 100) : 0
+  /** Bar spans 0 → max(actual, target) so the target marker moves when exceeding (e.g. 5/2 shows fill past the line). */
+  const scaleMax = Math.max(actual, target, 1)
+  const fillPct = (actual / scaleMax) * 100
+  const markerPct = target > 0 ? (target / scaleMax) * 100 : 0
   return (
     <div className="mt-2 w-full max-w-[148px]">
-      <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-neutral-200/90">
+      <div className="relative h-2.5 w-full overflow-visible rounded-full bg-slate-200">
         <div
           className={cn(
             'absolute inset-y-0 left-0 rounded-full transition-[width]',
-            met ? 'bg-emerald-600' : 'bg-red-500',
+            met ? 'bg-emerald-500' : 'bg-red-500',
           )}
-          style={{ width: met ? '100%' : `${pct}%` }}
+          style={{ width: `${fillPct}%` }}
         />
+        {/* Target position on the same scale as fill (not always the right edge of the track). */}
         <div
-          className="pointer-events-none absolute inset-y-0 right-0 w-px bg-neutral-600/70"
+          className="pointer-events-none absolute top-1/2 z-10 h-4 w-px -translate-y-1/2 bg-neutral-400"
+          style={{ left: `${markerPct}%`, marginLeft: '-0.5px' }}
           aria-hidden
           title="Target"
         />
@@ -78,16 +103,14 @@ const outlookBadgeCopy: Record<Next90Outlook, string> = {
 
 function OutlookBadge({ outlook }: { outlook: Next90Outlook }) {
   const copy = outlookBadgeCopy[outlook]
-  const isOff = outlook === 'off-track'
-  const isRisk = outlook === 'at-risk'
-  const isOn = outlook === 'on-track' || outlook === 'strong'
   return (
     <span
       className={cn(
         pulseOutlookBadge,
-        isOff && 'border-red-500 bg-white text-red-600',
-        isRisk && 'border-amber-500 bg-white text-amber-900',
-        isOn && 'border-emerald-600 bg-white text-emerald-900',
+        outlook === 'off-track' && 'border-red-500 bg-red-50 text-red-600',
+        outlook === 'at-risk' && 'border-amber-400 bg-amber-100 text-amber-900',
+        outlook === 'on-track' && 'border-emerald-400 bg-emerald-50 text-emerald-800',
+        outlook === 'strong' && 'border-emerald-500 bg-emerald-100 text-emerald-900',
       )}
     >
       {copy}
@@ -95,10 +118,10 @@ function OutlookBadge({ outlook }: { outlook: Next90Outlook }) {
   )
 }
 
-function Next90OutlookCell({ row }: { row: CommunityPerformanceRow }) {
+function Next90TargetCell({ row }: { row: CommunityPerformanceRow }) {
   const catchUp = row.next90CatchUp
   return (
-    <div className="min-w-[10.5rem] space-y-2 py-1">
+    <div className="min-w-[8.5rem] space-y-2 py-1">
       <p className="text-sm font-semibold text-neutral-900">
         <span className="tabular-nums">{row.next90Target}</span> sales target
       </p>
@@ -111,17 +134,21 @@ function Next90OutlookCell({ row }: { row: CommunityPerformanceRow }) {
           </>
         ) : null}
       </p>
-      <div className="flex flex-col items-start gap-1">
-        <OutlookBadge outlook={row.next90Outlook} />
-        <span className="text-[10px] font-semibold text-neutral-400">Forecast</span>
-      </div>
+    </div>
+  )
+}
+
+function Next90ForecastCell({ row }: { row: CommunityPerformanceRow }) {
+  return (
+    <div className="min-w-[6.5rem] py-1">
+      <OutlookBadge outlook={row.next90Outlook} />
     </div>
   )
 }
 
 function PrimaryDriverCell({ row }: { row: CommunityPerformanceRow }) {
   return (
-    <div className="flex min-w-[12rem] flex-col gap-3 py-1 sm:min-w-[14rem]">
+    <div className="flex min-w-[10.5rem] flex-col gap-3 py-1 sm:min-w-[12rem]">
       <div>
         <p className="text-sm font-semibold text-neutral-900">{row.primaryDriver}</p>
         {row.driverNeedsAttention ? (
@@ -136,13 +163,13 @@ function PrimaryDriverCell({ row }: { row: CommunityPerformanceRow }) {
       <Link
         to={openhomesCommunityPath(row.id)}
         className={cn(
-          'inline-flex w-full max-w-[15rem] items-center justify-center gap-2 rounded-lg px-4 py-3 text-center text-sm font-semibold shadow-md transition-colors',
+          'inline-flex w-full max-w-[11.5rem] items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-center text-sm font-semibold shadow-md transition-colors',
           'border-2 border-neutral-900 bg-neutral-900 text-white',
           'hover:border-neutral-950 hover:bg-neutral-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900',
         )}
       >
-        Community Triage
-        <IconExternalLink className="h-4 w-4 shrink-0 opacity-95" />
+        Triage Community
+        <IconExternalLink className="h-3.5 w-3.5 shrink-0 opacity-95" />
       </Link>
     </div>
   )
@@ -152,7 +179,7 @@ export function CommunityPerformanceSection() {
   return (
     <section
       id="community-priorities"
-      className="scroll-mt-24 rounded-xl border border-neutral-300/90 bg-white p-5 shadow-sm sm:p-6"
+      className="scroll-mt-24 rounded-lg border border-neutral-200 bg-white p-5 shadow-sm sm:p-6"
       aria-labelledby="community-performance-heading"
     >
       <div className="min-w-0">
@@ -166,42 +193,55 @@ export function CommunityPerformanceSection() {
         </p>
       </div>
 
-      <div className="mt-5 flex overflow-hidden rounded-lg border border-neutral-300 bg-neutral-100">
-        <div className="w-1 shrink-0 bg-neutral-600" aria-hidden />
+      <div className="mt-5 flex overflow-hidden rounded-lg border border-red-200 bg-red-50/60">
+        <div className="w-1 shrink-0 bg-red-600" aria-hidden />
         <div className="flex min-w-0 flex-1 items-start gap-3 px-4 py-3.5 sm:px-5">
-          <IconAlertCircleSolid className="mt-0.5 h-6 w-6 shrink-0 text-neutral-600 sm:h-7 sm:w-7" aria-hidden />
+          <IconAlertCircleSolid className="mt-0.5 h-6 w-6 shrink-0 text-red-600 sm:h-7 sm:w-7" aria-hidden />
           <p className="text-sm font-semibold leading-relaxed text-neutral-800">{communityPerformanceAlert}</p>
         </div>
       </div>
 
-      <div className="mt-5 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="min-w-[1020px] w-full border-collapse text-sm">
+      <div className={cn('mt-5', pulseTableCard)}>
+        <div className={pulseTableScroll}>
+          <table className={cn('min-w-[1080px]', pulseTableBase)}>
             <thead>
-              <tr className="border-b border-neutral-200 bg-neutral-50/90">
-                <th className="px-3 py-3 text-left sm:px-4">
+              <tr>
+                <th
+                  className={cn(pulseTableCellGrid, pulseTableHeaderBg, pulseTableCellPadding, 'text-left align-bottom')}
+                >
                   <div className={pulseTableHeadPrimary}>Community</div>
                 </th>
                 <TableHeadCell title="Last 30 Day Sales" subtitle="Actual vs prorated target" />
                 <TableHeadCell title="YTD Sales" subtitle="Actual vs target (incl. full Mar)" />
-                <TableHeadCell title="Next 90-Day Target Outlook" subtitle="Adjusted target* — forecasted outlook" />
+                <TableHeadCell title="Next 90-Day Target" subtitle="Adjusted target*" />
+                <TableHeadCell title="Forecasted Outlook" subtitle="AI predicted" />
                 <TableHeadCell title="Primary Driver — Past 90 Days" subtitle="Key metric driving the forecast" />
               </tr>
             </thead>
-            <tbody className="bg-white">
-              {communityPerformanceRows.map((row) => (
-                <tr key={row.id} className="border-b border-neutral-100 last:border-b-0">
-                  <td className="px-3 py-4 align-top font-bold text-neutral-950 sm:px-4">{row.name}</td>
-                  <td className="px-3 py-4 align-top sm:px-4">
+            <tbody>
+              {communityPerformanceRows.map((row, rowIndex) => (
+                <tr key={row.id} className={cn(rowIndex % 2 === 1 ? pulseTableRowOdd : pulseTableRowEven)}>
+                  <td className={pulseTableTd('left', 'align-top')}>
+                    <Link
+                      to={openhomesCommunityPath(row.id)}
+                      className="font-bold text-blue-700 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800 hover:decoration-blue-500"
+                    >
+                      {row.name}
+                    </Link>
+                  </td>
+                  <td className={pulseTableTd('left', 'align-top')}>
                     <SalesVsTargetCell actual={row.last30Actual} target={row.last30Target} />
                   </td>
-                  <td className="px-3 py-4 align-top sm:px-4">
+                  <td className={pulseTableTd('left', 'align-top')}>
                     <SalesVsTargetCell actual={row.ytdActual} target={row.ytdTarget} />
                   </td>
-                  <td className="px-3 py-4 align-top sm:px-4">
-                    <Next90OutlookCell row={row} />
+                  <td className={pulseTableTd('left', 'align-top')}>
+                    <Next90TargetCell row={row} />
                   </td>
-                  <td className="px-3 py-4 align-top sm:px-4">
+                  <td className={pulseTableTd('left', 'align-top')}>
+                    <Next90ForecastCell row={row} />
+                  </td>
+                  <td className={pulseTableTd('left', 'align-top')}>
                     <PrimaryDriverCell row={row} />
                   </td>
                 </tr>
@@ -219,19 +259,23 @@ export function CommunityPerformanceSection() {
           aria-label="Outlook legend"
         >
           <span className={pulseInsetSectionTitle}>Outlook</span>
-          {outlookLegendItems.map((item) => (
-            <span
-              key={item.tone}
-              role="listitem"
-              className="inline-flex max-w-[min(100%,20rem)] items-center gap-1.5 text-[11px] leading-snug text-neutral-600 sm:max-w-none sm:text-xs"
-            >
-              <span className={cn('h-2 w-2 shrink-0 rounded-full', item.dotClass)} aria-hidden />
-              <span className="min-w-0">
-                <span className="font-semibold text-neutral-800">{item.label}</span>
-                <span className="text-neutral-500"> — {item.range}</span>
+          {outlookLegendDisplayOrder.map((tone) => {
+            const item = outlookLegendItems.find((i) => i.tone === tone)
+            if (!item) throw new Error(`Missing outlook legend: ${tone}`)
+            return (
+              <span
+                key={item.tone}
+                role="listitem"
+                className="inline-flex max-w-[min(100%,20rem)] items-center gap-1.5 text-[11px] leading-snug text-neutral-600 sm:max-w-none sm:text-xs"
+              >
+                <span className={cn('h-2 w-2 shrink-0 rounded-full', item.dotClass)} aria-hidden />
+                <span className="min-w-0">
+                  <span className="font-semibold text-neutral-800">{item.label}</span>
+                  <span className="text-neutral-500"> — {item.range}</span>
+                </span>
               </span>
-            </span>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
