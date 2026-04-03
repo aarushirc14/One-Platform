@@ -89,7 +89,66 @@ export function ForecastDriversPage() {
             Top Leading Indicators
           </h2>
 
-          <div className={pulseTableCard}>
+          {/* ── Mobile stacked list (below sm) ── */}
+          <ul className={cn('sm:hidden', pulseTableCard)} role="list">
+            {forecastDriverTopMetrics.map((row, rowIndex) => {
+              const trendOpen = expandedRanks.has(row.rank)
+              return (
+                <li
+                  key={row.rank}
+                  className={cn(
+                    'border-b border-neutral-200 last:border-b-0',
+                    rowIndex % 2 === 1 ? 'bg-neutral-50/40' : 'bg-white',
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-3 px-4 py-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="shrink-0 text-xs font-bold tabular-nums text-neutral-400">
+                          #{row.rank}
+                        </span>
+                        <p className="text-sm font-semibold text-neutral-900">{row.metric}</p>
+                      </div>
+                      <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">{row.recentChanges}</p>
+                    </div>
+                    <button
+                      type="button"
+                      id={`driver-trend-trigger-m-${row.rank}`}
+                      aria-expanded={trendOpen}
+                      aria-controls={trendOpen ? `driver-trend-panel-m-${row.rank}` : undefined}
+                      onClick={() => toggleTrend(row.rank)}
+                      className={cn(trendsButtonClassName, 'mt-0.5 shrink-0')}
+                      style={trendsControlStyle()}
+                    >
+                      Trends
+                      {trendOpen ? (
+                        <IconChevronUp className={trendsChevronIconClassName} aria-hidden />
+                      ) : (
+                        <IconChevronDown className={trendsChevronIconClassName} aria-hidden />
+                      )}
+                    </button>
+                  </div>
+                  {trendOpen ? (
+                    <div
+                      id={`driver-trend-panel-m-${row.rank}`}
+                      role="region"
+                      aria-labelledby={`driver-trend-trigger-m-${row.rank}`}
+                      className="border-t border-neutral-100 bg-neutral-50/95 px-4 py-4"
+                    >
+                      <ForecastDriverTrendChart
+                        chartId={`fd-m-${row.rank}`}
+                        metricLabel={row.metric}
+                        points={row.trend}
+                      />
+                    </div>
+                  ) : null}
+                </li>
+              )
+            })}
+          </ul>
+
+          {/* ── Desktop table (sm+) ── */}
+          <div className={cn('hidden sm:block', pulseTableCard)}>
             <div className={pulseTableScroll}>
               <table className={cn('min-w-[min(100%,520px)]', pulseTableBase)}>
                 <thead>

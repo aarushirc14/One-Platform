@@ -63,7 +63,141 @@ export function MetricsTable({ section }: MetricsTableProps) {
           <h3 className="text-base font-semibold text-neutral-900">{section.title}</h3>
         </div>
       ) : null}
-      <div className="min-w-0">
+
+      {/* ── Mobile card list (below sm) ── */}
+      <ul className="divide-y divide-neutral-200 sm:hidden" role="list">
+        {section.rows.map((row, idx) => {
+          const isTrendRow =
+            row.kind === 'data' &&
+            Boolean(section.trendChartForMetric) &&
+            row.metric === section.trendChartForMetric
+
+          if (row.kind === 'placeholder') {
+            return (
+              <li key={`${row.metric}-${idx}`} className="px-4 py-5 text-center text-sm italic text-neutral-500">
+                Data coming soon
+              </li>
+            )
+          }
+
+          return (
+            <li
+              key={`${row.metric}-${idx}`}
+              className={idx % 2 === 1 ? 'bg-neutral-50/40' : 'bg-white'}
+            >
+              {/* Metric name row + optional trends toggle */}
+              <div className="flex items-start justify-between gap-3 px-4 pt-3">
+                <p className="text-sm font-semibold leading-snug text-neutral-950">{row.metric}</p>
+                {isTrendRow ? (
+                  <button
+                    type="button"
+                    className={cn(metricsTrendsButtonClassName, 'shrink-0')}
+                    onClick={toggleTrend}
+                    aria-expanded={trendExpanded}
+                    aria-controls={trendExpanded ? `metric-trend-m-${idx}` : undefined}
+                    aria-label="Toggle rate trend chart"
+                  >
+                    Trends
+                    <IconChevronDown
+                      className={cn(metricsTrendsChevronClassName, trendExpanded && 'rotate-180')}
+                      aria-hidden
+                    />
+                  </button>
+                ) : null}
+              </div>
+
+              {/* Counts: label From → label To */}
+              <div
+                className="mt-2 flex items-center gap-2 px-4 text-xs"
+                title={`${row.countsLabel} ${row.countsFrom} → ${row.countsToLabel} ${row.countsTo}`}
+              >
+                <span className="text-neutral-500">{row.countsLabel}</span>
+                <span className="font-semibold tabular-nums text-neutral-900">{row.countsFrom}</span>
+                <svg
+                  className="h-3.5 w-5 shrink-0 text-neutral-400"
+                  viewBox="0 0 28 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden
+                >
+                  <path
+                    d="M2 6h14M16 2.75 24 6 16 9.25"
+                    stroke="currentColor"
+                    strokeWidth="1.65"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span className="text-neutral-500">{row.countsToLabel}</span>
+                <span className="font-semibold tabular-nums text-neutral-900">{row.countsTo}</span>
+              </div>
+
+              {/* Stats: 2×2 labeled grid */}
+              <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 px-4 pb-3">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+                    Community Rate
+                  </p>
+                  <p className="mt-0.5 text-sm font-medium tabular-nums text-neutral-950">
+                    {row.communityRate}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+                    Target Rate
+                  </p>
+                  <p className="mt-0.5 text-sm font-medium tabular-nums text-neutral-950">
+                    {row.targetRate}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+                    Performance
+                  </p>
+                  <p
+                    className={cn(
+                      'mt-0.5 text-sm font-semibold tabular-nums',
+                      row.performanceTone === 'positive' ? 'text-emerald-700' : 'text-red-600',
+                    )}
+                  >
+                    {row.performance}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+                    % Change
+                  </p>
+                  <p
+                    className={cn(
+                      'mt-0.5 inline-flex items-center gap-1 text-sm font-semibold tabular-nums',
+                      row.changeTone === 'positive' ? 'text-emerald-700' : 'text-red-600',
+                    )}
+                  >
+                    {row.changeUp ? (
+                      <IconTrendSparkUp className="h-3.5 w-3.5 shrink-0" />
+                    ) : (
+                      <IconTrendSparkDown className="h-3.5 w-3.5 shrink-0" />
+                    )}
+                    {row.change}
+                  </p>
+                </div>
+              </div>
+
+              {isTrendRow && trendExpanded ? (
+                <div
+                  id={`metric-trend-m-${idx}`}
+                  className="border-t border-neutral-200 bg-white px-2 py-3"
+                >
+                  <MetricRowTrendChart />
+                </div>
+              ) : null}
+            </li>
+          )
+        })}
+      </ul>
+
+      {/* ── Desktop table (sm+) ── */}
+      <div className="hidden sm:block">
         <table className={pulseMetricsTableTableClass}>
           <colgroup>
             {PULSE_METRICS_TABLE_COL_WIDTHS.map((w, i) => (

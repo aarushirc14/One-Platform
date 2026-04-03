@@ -51,7 +51,6 @@ function TableHeadCell({ title, subtitle }: { title: string; subtitle?: string }
 
 function SalesVsTargetBar({ actual, target }: { actual: number; target: number }) {
   const met = actual >= target
-  /** Bar spans 0 → max(actual, target) so the target marker moves when exceeding (e.g. 5/2 shows fill past the line). */
   const scaleMax = Math.max(actual, target, 1)
   const fillPct = (actual / scaleMax) * 100
   const markerPct = target > 0 ? (target / scaleMax) * 100 : 0
@@ -65,7 +64,6 @@ function SalesVsTargetBar({ actual, target }: { actual: number; target: number }
           )}
           style={{ width: `${fillPct}%` }}
         />
-        {/* Target position on the same scale as fill (not always the right edge of the track). */}
         <div
           className="pointer-events-none absolute top-1/2 z-10 h-4 w-px -translate-y-1/2 bg-neutral-400"
           style={{ left: `${markerPct}%`, marginLeft: '-0.5px' }}
@@ -80,13 +78,8 @@ function SalesVsTargetBar({ actual, target }: { actual: number; target: number }
 function SalesVsTargetCell({ actual, target }: { actual: number; target: number }) {
   const met = actual >= target
   return (
-    <div className="min-w-[8.5rem] py-1">
-      <p
-        className={cn(
-          'text-sm font-semibold tabular-nums',
-          met ? 'text-emerald-700' : 'text-red-600',
-        )}
-      >
+    <div className="py-1">
+      <p className={cn('text-sm font-semibold tabular-nums', met ? 'text-emerald-700' : 'text-red-600')}>
         {actual} sales / {target} target
       </p>
       <SalesVsTargetBar actual={actual} target={target} />
@@ -121,7 +114,7 @@ function OutlookBadge({ outlook }: { outlook: Next90Outlook }) {
 function Next90TargetCell({ row }: { row: CommunityPerformanceRow }) {
   const catchUp = row.next90CatchUp
   return (
-    <div className="min-w-[8.5rem] space-y-2 py-1">
+    <div className="space-y-2 py-1">
       <p className="text-sm font-semibold text-neutral-900">
         <span className="tabular-nums">{row.next90Target}</span> sales target
       </p>
@@ -138,17 +131,9 @@ function Next90TargetCell({ row }: { row: CommunityPerformanceRow }) {
   )
 }
 
-function Next90ForecastCell({ row }: { row: CommunityPerformanceRow }) {
-  return (
-    <div className="min-w-[6.5rem] py-1">
-      <OutlookBadge outlook={row.next90Outlook} />
-    </div>
-  )
-}
-
 function PrimaryDriverCell({ row }: { row: CommunityPerformanceRow }) {
   return (
-    <div className="flex min-w-[10.5rem] flex-col gap-3 py-1 sm:min-w-[12rem]">
+    <div className="flex flex-col gap-3 py-1">
       <div>
         <p className="text-sm font-semibold text-neutral-900">{row.primaryDriver}</p>
         {row.driverNeedsAttention ? (
@@ -172,6 +157,62 @@ function PrimaryDriverCell({ row }: { row: CommunityPerformanceRow }) {
         <IconExternalLink className="h-3.5 w-3.5 shrink-0 opacity-95" />
       </Link>
     </div>
+  )
+}
+
+/** Mobile card for a single community performance row */
+function CommunityPerformanceMobileCard({
+  row,
+  zebra,
+}: {
+  row: CommunityPerformanceRow
+  zebra: boolean
+}) {
+  return (
+    <li className={cn('rounded-lg border border-neutral-200 bg-white shadow-sm', zebra && 'bg-neutral-50/40')}>
+      {/* Card header: name + outlook */}
+      <div className="flex items-center justify-between gap-3 border-b border-neutral-100 px-4 py-3">
+        <Link
+          to={openhomesCommunityPath(row.id)}
+          className="font-bold text-blue-700 underline decoration-blue-300 underline-offset-2 transition-colors hover:text-blue-800 hover:decoration-blue-500"
+        >
+          {row.name}
+        </Link>
+        <OutlookBadge outlook={row.next90Outlook} />
+      </div>
+
+      {/* Sales metrics: 2-column grid */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-4 px-4 py-3">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+            Last 30 Day Sales
+          </p>
+          <p className="text-[10px] text-neutral-400">vs prorated target</p>
+          <SalesVsTargetCell actual={row.last30Actual} target={row.last30Target} />
+        </div>
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">YTD Sales</p>
+          <p className="text-[10px] text-neutral-400">vs target (incl. full Mar)</p>
+          <SalesVsTargetCell actual={row.ytdActual} target={row.ytdTarget} />
+        </div>
+      </div>
+
+      {/* Next 90-Day + Primary Driver */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-3 border-t border-neutral-100 px-4 py-3">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+            Next 90-Day Target
+          </p>
+          <Next90TargetCell row={row} />
+        </div>
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-neutral-500">
+            Primary Driver
+          </p>
+          <PrimaryDriverCell row={row} />
+        </div>
+      </div>
+    </li>
   )
 }
 
@@ -202,9 +243,17 @@ export function CommunityPerformanceSection() {
         </div>
       </div>
 
-      <div className={cn('mt-5', pulseTableCard)}>
+      {/* ── Mobile card list (below lg) ── */}
+      <ul className="mt-5 space-y-3 lg:hidden" role="list">
+        {communityPerformanceRows.map((row, i) => (
+          <CommunityPerformanceMobileCard key={row.id} row={row} zebra={i % 2 === 1} />
+        ))}
+      </ul>
+
+      {/* ── Desktop table (lg+) ── */}
+      <div className={cn('mt-5 hidden lg:block', pulseTableCard)}>
         <div className={pulseTableScroll}>
-          <table className={cn('min-w-[1080px]', pulseTableBase)}>
+          <table className={pulseTableBase}>
             <thead>
               <tr>
                 <th
@@ -240,7 +289,9 @@ export function CommunityPerformanceSection() {
                     <Next90TargetCell row={row} />
                   </td>
                   <td className={pulseTableTd('left', 'align-top')}>
-                    <Next90ForecastCell row={row} />
+                    <div className="py-1">
+                      <OutlookBadge outlook={row.next90Outlook} />
+                    </div>
                   </td>
                   <td className={pulseTableTd('left', 'align-top')}>
                     <PrimaryDriverCell row={row} />
