@@ -5,7 +5,7 @@ export const OPENHOMES_DIVISION_PERFORMANCE = `${OPENHOMES_DIVISION_BASE}/divisi
 
 export const OPENHOMES_FORECAST_DRIVERS = `${OPENHOMES_DIVISION_BASE}/forecast-drivers`
 
-/** Community triage grid and KPIs (default app entry). */
+/** Community triage grid and KPIs. */
 export const OPENHOMES_COMMUNITY_TRIAGE = `${OPENHOMES_DIVISION_BASE}/community-triage`
 
 /** Community detail under triage. */
@@ -16,4 +16,4 @@ export function openhomesCommunityPath(communityId: string) {
 export const OPENHOMES_DOWNLOADS = `${OPENHOMES_DIVISION_BASE}/downloads`
 
 /** Default redirect target for `/` and unknown routes. */
-export const OPENHOMES_PULSE_ENTRY = OPENHOMES_COMMUNITY_TRIAGE
+export const OPENHOMES_PULSE_ENTRY = OPENHOMES_DIVISION_PERFORMANCE
