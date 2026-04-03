@@ -174,13 +174,21 @@ export function OptionsUptakeByCommunityChart({
           />
         </svg>
 
-        <div className="-mt-1 flex justify-between gap-1 px-1 sm:px-2">
+        {/* Match SVG plot inset (PAD_L / PAD_R vs W) so each label centers under its bar pair. */}
+        <div
+          className="-mt-1 grid gap-1 sm:gap-2"
+          style={{
+            paddingLeft: `${(PAD_L / W) * 100}%`,
+            paddingRight: `${(PAD_R / W) * 100}%`,
+            gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))`,
+          }}
+        >
           {rows.map((row) => (
-            <div key={row.communityId} className="flex min-w-0 flex-1 justify-center px-0.5 text-center">
+            <div key={row.communityId} className="flex min-w-0 justify-center text-center">
               <Link
                 to={openhomesCommunityPath(row.communityId)}
                 className={cn(
-                  'line-clamp-2 text-[11px] font-semibold leading-snug text-blue-700 underline decoration-blue-300',
+                  'line-clamp-2 max-w-full text-[11px] font-semibold leading-snug text-blue-700 underline decoration-blue-300',
                   'underline-offset-2 transition-colors hover:text-blue-800 hover:decoration-blue-500',
                 )}
               >

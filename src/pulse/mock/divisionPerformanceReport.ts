@@ -76,7 +76,7 @@ export const divisionPerformanceNextSteps = {
     {
       id: 'downloads',
       label: 'Exports',
-      hint: 'Spreadsheets and PDFs generated from this snapshot',
+      hint: 'Generate PDFs from this snapshot',
       to: OPENHOMES_DOWNLOADS,
     },
   ] as ReportNextStepLink[],
@@ -212,6 +212,60 @@ export const forecastByPeriod: ForecastByPeriodRow[] = [
     targetPct: 83,
   },
 ]
+
+/**
+ * Monthly points for the 90-day rolling average sales pace chart.
+ * Forecast mid, low, and high are set for every month — historical band is narrow (retrospective fit); forward band uses the same width scale.
+ * The 15/mo target applies only from the report month forward (see chart clipping).
+ */
+export type NinetyDayForecastMonthPoint = {
+  axisLabel: string
+  /** Realized 90-day monthly average; null after the report month. */
+  actual: number | null
+  /** Model forecast (mid) — present historically (near actual, not identical) and forward. */
+  forecastMid: number | null
+  forecastLow: number | null
+  forecastHigh: number | null
+}
+
+/** Next-90-days monthly target pace — drawn only from the report month onward in the chart. */
+export const NINETY_DAY_MONTHLY_TARGET_PACE = 15
+
+/** Half-width of confidence band around forecastMid (narrower than the prior forward-only band). */
+const NINETY_DAY_BAND_HALF = 0.52
+
+function ninetyDayBand(m: number): { forecastLow: number; forecastHigh: number } {
+  return { forecastLow: m - NINETY_DAY_BAND_HALF, forecastHigh: m + NINETY_DAY_BAND_HALF }
+}
+
+const ninetyDaySalesForecastSeriesBase: Array<
+  Pick<NinetyDayForecastMonthPoint, 'axisLabel' | 'actual' | 'forecastMid'>
+> = [
+  { axisLabel: "Apr '25", actual: 12.5, forecastMid: 12.35 },
+  { axisLabel: 'May', actual: 12.15, forecastMid: 12.48 },
+  { axisLabel: 'Jun', actual: 12.45, forecastMid: 11.95 },
+  { axisLabel: 'Jul', actual: 10.85, forecastMid: 11.05 },
+  { axisLabel: 'Aug', actual: 12.05, forecastMid: 11.65 },
+  { axisLabel: 'Sep', actual: 11.75, forecastMid: 12.25 },
+  { axisLabel: 'Oct', actual: 13.05, forecastMid: 12.55 },
+  { axisLabel: 'Nov', actual: 9.55, forecastMid: 9.95 },
+  { axisLabel: 'Dec', actual: 10.25, forecastMid: 9.75 },
+  { axisLabel: "Jan '26", actual: 9.65, forecastMid: 10.2 },
+  { axisLabel: 'Feb', actual: 11.05, forecastMid: 10.45 },
+  { axisLabel: 'Mar', actual: 12.15, forecastMid: 11.85 },
+  { axisLabel: "Apr '26", actual: null, forecastMid: 11.95 },
+  { axisLabel: 'May', actual: null, forecastMid: 12.15 },
+  { axisLabel: 'Jun', actual: null, forecastMid: 12.35 },
+]
+
+export const ninetyDaySalesForecastSeries: NinetyDayForecastMonthPoint[] =
+  ninetyDaySalesForecastSeriesBase.map((r) => ({
+    ...r,
+    ...ninetyDayBand(r.forecastMid!),
+  }))
+
+/** Report month (Mar 2026) — vertical “current date” marker and start of 15/mo target line. */
+export const ninetyDayForecastReportMonthIndex = 11
 
 /** Stacked monthly bars + budget line for the Historical Monthly Sales chart (vector replica). */
 export type HistoricalMonthlySalesPoint = {

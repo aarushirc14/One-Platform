@@ -1,6 +1,7 @@
 import type { ForecastByPeriodRow } from '@/pulse/data/divisionPerformanceReport'
 import { chartPalette } from '@/pulse/styles/chartPalette'
 import { pulseChartTitle } from '@/pulse/ui/pulseTypography'
+import { cn } from '@/lib/cn'
 
 type ForecastByPeriodChartProps = {
   rows: ForecastByPeriodRow[]
@@ -114,10 +115,18 @@ export function ForecastByPeriodChart({ rows }: ForecastByPeriodChartProps) {
                 Target: {row.target}
               </p>
               <p
-                className="mt-0.5 text-xs font-medium"
-                style={{ color: chartPalette.actualSecondary }}
+                className={cn(
+                  'mt-0.5 text-xs font-medium tabular-nums',
+                  row.behind > 0 && 'text-red-600',
+                  row.behind === 0 && 'text-emerald-700',
+                  row.behind < 0 && 'text-emerald-700',
+                )}
               >
-                {row.behind} sales behind
+                {row.behind > 0
+                  ? `${row.behind} sales behind`
+                  : row.behind < 0
+                    ? `${Math.abs(row.behind)} sales ahead`
+                    : 'At target'}
               </p>
             </div>
           </div>
