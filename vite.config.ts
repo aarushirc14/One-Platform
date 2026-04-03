@@ -9,6 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: '/One-Platform/',
   resolve: {
     // Order matters: `@` must not absorb `@/sample` or `@/pulse/data`.
     alias: [
@@ -18,3 +19,4 @@ export default defineConfig({
     ],
   },
 })
+
