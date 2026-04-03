@@ -32,22 +32,22 @@ export const divisionPerformanceExecutiveOverview = {
       id: 'on-track',
       question: 'Are we on track?',
       answer:
-        'No — 2026 YTD is 20 net sales against a 39-sale YTD plan, and the 90-day run-rate still trails the monthly target even after a stronger March close. The gap is not a single miss: Gladden is starved for qualified demand, Catalina is losing tours after solid traffic, and Tanque Verde converts foot traffic poorly despite steady sessions.',
+        'Still behind. YTD is 20 net sales vs a 39-sale plan. The 90-day forecast has firmed a little after March, but it remains under the monthly target because stronger top-of-funnel traffic — especially paid, display, and email — is not turning into enough scheduled tours, completed appointments, or contracts.',
       tone: 'attention',
     },
     {
       id: 'focus',
       question: 'Where should I focus?',
       answer:
-        'Sequence matters. Stabilize Gladden’s upper funnel first (traffic + first contacts), then tighten Catalina’s appointment show and reschedule discipline while Tanque Verde gets a dedicated first-visit-to-contract playbook. Let Saddlebrook keep running — it is funding patience elsewhere.',
+        'Split the work by root cause: Gladden needs more qualified traffic to support pace. Tanque is seeing better repeat engagement without enough net-new leads. Catalina is closer on traffic but leaks after shoppers arrive. Saddlebrook is the cleanest story; tighten visit-to-sale there first and redeploy what works toward the other three.',
       tone: 'default',
     },
   ] as ExecutiveDecisionQa[],
   riskLabel: 'Largest risk to target',
-  risk: 'We treat division-wide session growth as “demand.” Sessions are up in pockets, but scheduled first tours and clean first-visit outcomes are not keeping pace — so Q2 closes stay soft unless mid-funnel execution moves in the next four to six weeks.',
+  risk: 'We celebrate session growth while lead counts stay flat and tour scheduling weakens. If March’s lift is treated as “fixed,” Q2 still misses because the funnel is not converting interest into dated, completed buyer appointments.',
   opportunityLabel: 'Largest upside',
   opportunity:
-    'Saddlebrook is at plan with healthier lead-to-visit throughput; modest reallocation of media and onsite labor from over-served geographies could lift Gladden and Catalina without increasing total spend.',
+    'Channel mix is learnable: paid and email are working well enough to copy audience and creative into Gladden and Tanque, while Saddlebrook proves the division can still close when visits are clean.',
 }
 
 export type ReportNextStepLink = {
@@ -81,9 +81,9 @@ export const divisionPerformanceNextSteps = {
     },
   ] as ReportNextStepLink[],
   discussionPrompts: [
-    'Which community gets incremental media this month without diluting Saddlebrook’s already-strong funnel?',
-    'Where is the breakdown: not enough appointments, or appointments that do not convert?',
-    'What single metric do we hold sales and marketing jointly accountable to before April’s monthly close?',
+    'Which two communities get paid and email budget first — Gladden for raw volume, or Tanque to turn engagement into net-new leads?',
+    'For Catalina, is the next lever pricing and offer, or sales follow-up after the first visit?',
+    'What is Saddlebrook doing on visit-to-sale that we standardize division-wide in 30 days?',
   ],
 }
 
@@ -100,7 +100,7 @@ export const salesForecastIntro = {
   subline: 'Forward-looking sales projection vs target',
   /** Shorter copy matches dashboard screenshot (red alert strip). */
   alert:
-    'Rolling 90-day pace runs about 3.5 net sales per month under the monthly plan. March helped, but the forward book still reflects weak tour completion and uneven community-level conversion.',
+    'The 90-day outlook improved modestly with March, but the monthly pace still sits about three sales under plan. Traffic is up in several channels; tours and appointments have not kept up, so the forecast stays soft.',
 }
 
 export type SalesForecastSummaryCardModel = {
@@ -146,13 +146,13 @@ export const salesForecastSummaryCards: SalesForecastSummaryCardModel[] = [
     id: 'sf-90',
     edgeTone: 'negative',
     label: '90-Day Forecast',
-    primaryStat: '4 sales/mo behind',
+    primaryStat: '3 sales/mo behind',
     primaryStatTone: 'negative',
-    detailLine: '11 sales/mo vs 15 target',
+    detailLine: '12 sales/mo vs 15 target',
     footerSmall: null,
-    presoldValue: '9 sales/mo',
+    presoldValue: '10 sales/mo',
     specValue: '2 sales/mo',
-    specRatioLabel: 'Spec Ratio: 18%',
+    specRatioLabel: 'Spec Ratio: 17%',
   },
 ]
 
@@ -175,40 +175,40 @@ export const forecastByPeriod: ForecastByPeriodRow[] = [
   {
     id: '30',
     label: 'Next 30 Days',
-    forecastSales: 8,
-    rangeLow: 7,
-    rangeHigh: 9,
+    forecastSales: 9,
+    rangeLow: 8,
+    rangeHigh: 10,
     target: 14,
-    behind: 6,
+    behind: 5,
     rangeLeftPct: 28,
     rangeWidthPct: 14,
-    forecastPct: 35,
+    forecastPct: 38,
     targetPct: 76,
   },
   {
     id: '3060',
     label: '30–60 Days',
-    forecastSales: 11,
-    rangeLow: 9,
-    rangeHigh: 13,
+    forecastSales: 12,
+    rangeLow: 10,
+    rangeHigh: 14,
     target: 15,
-    behind: 4,
+    behind: 3,
     rangeLeftPct: 38,
     rangeWidthPct: 22,
-    forecastPct: 49,
+    forecastPct: 52,
     targetPct: 82,
   },
   {
     id: '6090',
     label: '60–90 Days',
-    forecastSales: 13,
-    rangeLow: 11,
-    rangeHigh: 15,
+    forecastSales: 14,
+    rangeLow: 12,
+    rangeHigh: 16,
     target: 15,
-    behind: 2,
+    behind: 1,
     rangeLeftPct: 58,
     rangeWidthPct: 25,
-    forecastPct: 70,
+    forecastPct: 72,
     targetPct: 83,
   },
 ]
@@ -378,7 +378,7 @@ export const communityPerformanceIntro = {
 }
 
 export const communityPerformanceAlert =
-  '1 of 4 communities on track for the next 90 days: Saddlebrook. Gladden Farms is off-track on volume; Catalina Foothills and Tanque Verde are at-risk on execution after traffic arrives.'
+  '1 of 4 communities on track for the next 90 days: Saddlebrook. Gladden Farms is off-track on qualified traffic. Tanque Verde is at-risk: engagement is up, net-new leads are not. Catalina Foothills is at-risk on conversion after traffic arrives.'
 
 export const communityPerformanceTableFootnote =
   '* Next 90-day plan, plus any YTD gap vs plan spread evenly over the rest of the year.'
@@ -394,7 +394,7 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Target: 15,
     next90Plan: 14,
     next90CatchUp: 1,
-    primaryDriver: 'Lead → first visit (tour scheduling)',
+    primaryDriver: 'First visit → sale conversion',
     next90Outlook: 'at-risk',
     driverNeedsAttention: true,
   },
@@ -408,7 +408,7 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Target: 10,
     next90Plan: 7,
     next90CatchUp: 3,
-    primaryDriver: 'Web traffic & new lead volume',
+    primaryDriver: 'Qualified traffic & new lead volume',
     next90Outlook: 'off-track',
     driverNeedsAttention: true,
   },
@@ -422,9 +422,9 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Target: 9,
     next90Plan: 9,
     next90CatchUp: 0,
-    primaryDriver: 'Lead → first visit throughput',
+    primaryDriver: 'Visit → sale efficiency (lower funnel)',
     next90Outlook: 'on-track',
-    driverNeedsAttention: false,
+    driverNeedsAttention: true,
   },
   {
     id: 'tanque-verde',
@@ -436,7 +436,7 @@ export const communityPerformanceRows: CommunityPerformanceRow[] = [
     next90Target: 5,
     next90Plan: 5,
     next90CatchUp: 0,
-    primaryDriver: 'First visit → sale conversion',
+    primaryDriver: 'Net-new leads vs site engagement',
     next90Outlook: 'at-risk',
     driverNeedsAttention: true,
   },
@@ -473,7 +473,7 @@ export const marginDriversIntro = {
   headline: 'Margin Drivers',
   subline: 'Options uptake by community',
   alert:
-    'Presale options uptake averaged 6.9% over the last 90 days versus 10.8% over 180 days (−3.9 pts). Tanque Verde is holding attach; Catalina and Gladden are soft — consistent with longer decision cycles where tours slip or stall.',
+    'Presale options uptake averaged 6.9% over the last 90 days versus 10.8% over 180 days (−3.9 pts). Softer attach at Catalina and Gladden lines up with buyers who are still browsing; Saddlebrook and Tanque are relatively stronger on paper even though closings are uneven.',
 }
 
 /** Legacy table-style margin rows (kept for reference; primary UI is options uptake chart). */
@@ -623,12 +623,12 @@ export const rollupKpiCards: RollupKpiCardModel[] = [
     title: '90-Day Forecast',
     tone: 'needs_attention',
     badge: 'Needs Attention',
-    currentValue: '11',
+    currentValue: '12',
     midPhrase: ' sales/mo / ',
     targetValue: '15',
     targetWord: 'target/mo',
     detailLine: null,
-    fillPct: Math.round((11 / 15) * 100),
+    fillPct: Math.round((12 / 15) * 100),
     markerPct: 90,
     markerLabel: 'Target/mo',
   },

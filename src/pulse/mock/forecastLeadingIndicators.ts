@@ -1,7 +1,7 @@
 /** Division-level leading indicators tied to Tucson sales (model-ranked). */
 
 export const divisionLeadingIndicatorsExecutiveSentence =
-  'Tucson’s site is pulling more raw sessions again, but the model weights “tour scheduled per qualified lead” and “first-visit completion” lower than it did in Q4 — the same gap Gladden shows as missing volume and Catalina shows as missed appointments. Paid traffic is filling part of the funnel while branded return visits fade, which lifts top-of-funnel counts without restoring clean downstream intent.'
+  'Paid, display, and email are lifting sessions, and repeat visits are stickier than they were in January — but net-new leads are barely moving, scheduled tours per lead are down, and completed appointments sit below last quarter’s peak. That combination is exactly why the 90-day forecast only improved a little while the monthly plan is still out of reach.'
 
 /** One point per period; values use an index scale for the chart. */
 export type ForecastDriverTrendPoint = {
@@ -19,77 +19,77 @@ export type ForecastDriverTopMetric = {
 export const forecastDriverTopMetrics: ForecastDriverTopMetric[] = [
   {
     rank: 1,
-    metric: 'First appointments scheduled per 100 qualified leads',
+    metric: 'Sessions from paid, display, and email (indexed)',
     recentChanges:
-      'Down from the October–November peak; March ticked up but remains below the six-month average — the pattern matches communities where traffic exists but tours do not reliably land.',
+      'Up three months in a row — the clearest bright spot. The catch: those channels are not yet producing enough first tours or contracts on their own, especially where communities were already light on organic demand.',
     trend: [
-      { period: 'Sep', value: 38 },
-      { period: 'Oct', value: 42 },
-      { period: 'Nov', value: 40 },
-      { period: 'Dec', value: 34 },
-      { period: 'Jan', value: 29 },
-      { period: 'Feb', value: 31 },
-      { period: 'Mar', value: 35 },
+      { period: 'Sep', value: 82 },
+      { period: 'Oct', value: 84 },
+      { period: 'Nov', value: 86 },
+      { period: 'Dec', value: 88 },
+      { period: 'Jan', value: 91 },
+      { period: 'Feb', value: 94 },
+      { period: 'Mar', value: 98 },
     ],
   },
   {
     rank: 2,
-    metric: 'Net-new leads (first-time CRM contacts)',
+    metric: 'Repeat sessions per returning visitor (stickiness)',
     recentChanges:
-      'Four consecutive prints at or under the rolling six-month mean — concentrated in communities where paid geos compensate only partially for weak organic pull.',
+      'Higher than the fall average — shoppers are coming back. Without a matching lift in net-new leads, the division is mostly re-working the same pool instead of adding fresh pipeline.',
     trend: [
-      { period: 'Sep', value: 46 },
-      { period: 'Oct', value: 45 },
-      { period: 'Nov', value: 44 },
-      { period: 'Dec', value: 43 },
-      { period: 'Jan', value: 40 },
-      { period: 'Feb', value: 38 },
-      { period: 'Mar', value: 37 },
+      { period: 'Sep', value: 58 },
+      { period: 'Oct', value: 59 },
+      { period: 'Nov', value: 60 },
+      { period: 'Dec', value: 61 },
+      { period: 'Jan', value: 64 },
+      { period: 'Feb', value: 67 },
+      { period: 'Mar', value: 69 },
     ],
   },
   {
     rank: 3,
-    metric: 'Branded / direct sessions (share of total web traffic)',
+    metric: 'Net-new leads (first-time CRM contacts)',
     recentChanges:
-      'Steady erosion since late fall; paid and prospecting channels now carry a larger share of sessions — helpful for Gladden’s top line, noisy for Catalina where repeat intent used to convert faster.',
+      'Essentially flat since December — this is the bridge that paid traffic has not fully built yet, and it shows up hardest in communities that need raw volume, not just another click.',
     trend: [
-      { period: 'Sep', value: 72 },
-      { period: 'Oct', value: 68 },
-      { period: 'Nov', value: 62 },
-      { period: 'Dec', value: 59 },
-      { period: 'Jan', value: 55 },
-      { period: 'Feb', value: 52 },
-      { period: 'Mar', value: 50 },
+      { period: 'Sep', value: 44 },
+      { period: 'Oct', value: 43 },
+      { period: 'Nov', value: 42 },
+      { period: 'Dec', value: 41 },
+      { period: 'Jan', value: 41 },
+      { period: 'Feb', value: 40 },
+      { period: 'Mar', value: 41 },
     ],
   },
   {
     rank: 4,
-    metric: 'High-intent listing views per engaged session',
+    metric: 'Scheduled first tours per 100 qualified leads',
     recentChanges:
-      'Rebounded February–March after a January dip — engagement is improving, but it is concentrated in inventory that is not carrying Gladden’s volume shortfall.',
+      'Down from the October high; March only partly recovered. This is the handoff point where interest stops turning into a dated, onsite conversation — the dominant drag on the forward forecast.',
     trend: [
-      { period: 'Sep', value: 88 },
-      { period: 'Oct', value: 91 },
-      { period: 'Nov', value: 94 },
-      { period: 'Dec', value: 87 },
-      { period: 'Jan', value: 82 },
-      { period: 'Feb', value: 90 },
-      { period: 'Mar', value: 93 },
+      { period: 'Sep', value: 40 },
+      { period: 'Oct', value: 44 },
+      { period: 'Nov', value: 41 },
+      { period: 'Dec', value: 36 },
+      { period: 'Jan', value: 31 },
+      { period: 'Feb', value: 32 },
+      { period: 'Mar', value: 34 },
     ],
   },
   {
     rank: 5,
-    metric: 'Completed first visits following a scheduled tour',
+    metric: 'Completed buyer appointments vs appointments scheduled',
     recentChanges:
-      'Soft through January with only a partial March recovery — aligns with Tanque Verde’s closing efficiency issue more than with Saddlebrook, where the same metric held steadier.',
+      'Below the recent peak — even when tours get booked, completion rates are softer than last quarter. That shows up as a closing problem in communities that already move traffic reasonably well.',
     trend: [
-      { period: 'Sep', value: 40 },
-      { period: 'Oct', value: 41 },
-      { period: 'Nov', value: 39 },
-      { period: 'Dec', value: 35 },
-      { period: 'Jan', value: 30 },
-      { period: 'Feb', value: 33 },
-      { period: 'Mar', value: 36 },
+      { period: 'Sep', value: 42 },
+      { period: 'Oct', value: 43 },
+      { period: 'Nov', value: 41 },
+      { period: 'Dec', value: 37 },
+      { period: 'Jan', value: 33 },
+      { period: 'Feb', value: 34 },
+      { period: 'Mar', value: 35 },
     ],
   },
 ]

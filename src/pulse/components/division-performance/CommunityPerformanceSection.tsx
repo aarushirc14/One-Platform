@@ -188,8 +188,9 @@ export function CommunityPerformanceSection() {
         </h2>
         <p className="mt-1 text-sm leading-relaxed text-neutral-600">{communityPerformanceIntro.subline}</p>
         <p className="mt-2 max-w-3xl text-xs leading-relaxed text-neutral-500">
-          Use outlook to separate volume risk (Gladden) from mid-funnel drag (Catalina) and closing efficiency
-          (Tanque Verde), then open Community Triage for the same communities’ stage-level modeled impact.
+          Gladden is a pure volume problem; Tanque shows engagement without enough net-new leads; Catalina is
+          getting traffic closer to plan but not enough sales after visits. Saddlebrook is the relative
+          outperformer — use triage to compare modeled impact side by side.
         </p>
       </div>
 
