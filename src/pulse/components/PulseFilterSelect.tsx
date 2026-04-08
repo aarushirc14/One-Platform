@@ -29,18 +29,18 @@ export function PulseFilterSelect({ label, value, options, onChange, className }
   const showTriggerLift = !open && (pointerOver || triggerFocused)
 
   useEffect(() => {
-    if (!open) setOptionHoverValue(null)
-  }, [open])
-
-  useEffect(() => {
     if (!open) return
     function onDocMouseDown(e: MouseEvent) {
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
         setOpen(false)
+        setOptionHoverValue(null)
       }
     }
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Escape') {
+        setOpen(false)
+        setOptionHoverValue(null)
+      }
     }
     document.addEventListener('mousedown', onDocMouseDown)
     document.addEventListener('keydown', onKey)
@@ -125,6 +125,7 @@ export function PulseFilterSelect({ label, value, options, onChange, className }
                   onClick={() => {
                     onChange(o.value)
                     setOpen(false)
+                    setOptionHoverValue(null)
                   }}
                   onPointerEnter={() => setOptionHoverValue(o.value)}
                   onPointerLeave={() =>

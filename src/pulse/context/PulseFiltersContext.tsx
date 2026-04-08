@@ -2,7 +2,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -34,28 +33,27 @@ const PulseFiltersContext = createContext<PulseFiltersContextValue | null>(null)
 
 export function PulseFiltersProvider({ children }: { children: ReactNode }) {
   const calendarDayKey = useLocalCalendarDayKey()
+  const referenceDate = useMemo(() => new Date(`${calendarDayKey}T00:00:00`), [calendarDayKey])
   const [aggregationId, setAggregationIdState] = useState<AggregationId>(DEFAULT_AGGREGATION_ID)
   const [datePeriodId, setDatePeriodIdState] = useState(() => defaultDatePeriodId(DEFAULT_AGGREGATION_ID))
   const [targetId, setTargetIdState] = useState<TargetId>(DEFAULT_TARGET_ID)
 
   const datePeriodOptions = useMemo(
-    () => buildDatePeriodOptions(aggregationId, new Date()),
-    [aggregationId, calendarDayKey],
+    () => buildDatePeriodOptions(aggregationId, referenceDate),
+    [aggregationId, referenceDate],
   )
 
-  useEffect(() => {
-    setDatePeriodIdState((prev) =>
-      datePeriodOptions.some((o) => o.id === prev) ? prev : datePeriodOptions[0].id,
-    )
-  }, [datePeriodOptions])
+  const resolvedDatePeriodId = datePeriodOptions.some((o) => o.id === datePeriodId)
+    ? datePeriodId
+    : datePeriodOptions[0].id
 
   const setAggregationId = useCallback((id: AggregationId) => {
     setAggregationIdState(id)
     setDatePeriodIdState((prev) => {
-      const opts = buildDatePeriodOptions(id, new Date())
+      const opts = buildDatePeriodOptions(id, referenceDate)
       return opts.some((o) => o.id === prev) ? prev : opts[0].id
     })
-  }, [])
+  }, [referenceDate])
 
   const setDatePeriodId = useCallback((id: string) => {
     setDatePeriodIdState(id)
@@ -66,14 +64,16 @@ export function PulseFiltersProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const datePeriodLabel = useMemo(() => {
-    return datePeriodOptions.find((o) => o.id === datePeriodId)?.label ?? datePeriodOptions[0].label
-  }, [datePeriodOptions, datePeriodId])
+    return (
+      datePeriodOptions.find((o) => o.id === resolvedDatePeriodId)?.label ?? datePeriodOptions[0].label
+    )
+  }, [datePeriodOptions, resolvedDatePeriodId])
 
   const value = useMemo(
     () => ({
       aggregationId,
       setAggregationId,
-      datePeriodId,
+      datePeriodId: resolvedDatePeriodId,
       setDatePeriodId,
       targetId,
       setTargetId,
@@ -83,7 +83,7 @@ export function PulseFiltersProvider({ children }: { children: ReactNode }) {
     [
       aggregationId,
       setAggregationId,
-      datePeriodId,
+      resolvedDatePeriodId,
       setDatePeriodId,
       targetId,
       setTargetId,

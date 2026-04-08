@@ -1,19 +1,26 @@
-/** Tuscon division shell — all Community Pulse routes live under this path. */
+/** Legacy Tucson shell path retained for compatibility with existing links. */
 export const OPENHOMES_DIVISION_BASE = '/openhomes/tuscon'
 
-export const OPENHOMES_DIVISION_PERFORMANCE = `${OPENHOMES_DIVISION_BASE}/division-performance`
+export const OPENHOMES_OVERVIEW = `${OPENHOMES_DIVISION_BASE}/overview`
 
-export const OPENHOMES_FORECAST_DRIVERS = `${OPENHOMES_DIVISION_BASE}/forecast-drivers`
+export const OPENHOMES_PRIORITIES = `${OPENHOMES_DIVISION_BASE}/priorities`
 
-/** Community triage grid and KPIs. */
-export const OPENHOMES_COMMUNITY_TRIAGE = `${OPENHOMES_DIVISION_BASE}/community-triage`
+export const OPENHOMES_DRIVERS = `${OPENHOMES_DIVISION_BASE}/drivers`
 
-/** Community detail under triage. */
+export const OPENHOMES_BRIEFING = `${OPENHOMES_DIVISION_BASE}/briefing`
+
+export const OPENHOMES_COMMUNITIES_BASE = `${OPENHOMES_DIVISION_BASE}/communities`
+export const OPENHOMES_COMMUNITIES = OPENHOMES_COMMUNITIES_BASE
+
 export function openhomesCommunityPath(communityId: string) {
-  return `${OPENHOMES_DIVISION_BASE}/community-triage/${communityId}`
+  return `${OPENHOMES_COMMUNITIES_BASE}/${communityId}`
 }
 
-export const OPENHOMES_DOWNLOADS = `${OPENHOMES_DIVISION_BASE}/downloads`
+/** Backwards-compatible aliases for the older product structure. */
+export const OPENHOMES_DIVISION_PERFORMANCE = OPENHOMES_OVERVIEW
+export const OPENHOMES_COMMUNITY_TRIAGE = OPENHOMES_PRIORITIES
+export const OPENHOMES_FORECAST_DRIVERS = OPENHOMES_DRIVERS
+export const OPENHOMES_DOWNLOADS = OPENHOMES_BRIEFING
 
 /** Default redirect target for `/` and unknown routes. */
-export const OPENHOMES_PULSE_ENTRY = OPENHOMES_DIVISION_PERFORMANCE
+export const OPENHOMES_PULSE_ENTRY = OPENHOMES_OVERVIEW
