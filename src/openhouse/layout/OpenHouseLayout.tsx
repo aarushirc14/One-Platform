@@ -221,7 +221,7 @@ function LayoutFrame() {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 border-b border-neutral-200/80 bg-white/88 backdrop-blur-xl print:hidden">
+          <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white shadow-sm print:hidden">
             <div className="flex min-h-16 items-center gap-3 px-3 py-3 sm:px-5 lg:px-8">
               <button
                 type="button"

@@ -20,7 +20,7 @@ export function SurfaceCard({
   return (
     <section
       className={cn(
-        'rounded-[24px] border border-neutral-200/80 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04),0_16px_40px_rgba(0,0,0,0.04)]',
+        'rounded-[24px] border border-neutral-300/80 bg-white shadow-lg',
         className,
       )}
     >
@@ -83,21 +83,38 @@ export function SectionHeading({
 }
 
 export function StatusMetricCard({ metric }: { metric: StatusMetric }) {
+  const isPositive = metric.tone === 'positive'
+  const isNegative = metric.tone === 'negative'
+
   return (
-    <SurfaceCard className="min-w-0 p-4 sm:p-5">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-500">{metric.label}</p>
+    <div
+      className={cn(
+        'min-w-0 rounded-[14px] border-l-[3px] p-3.5',
+        isPositive && 'border-l-emerald-500 bg-emerald-50/60',
+        isNegative && 'border-l-red-400 bg-red-50/50',
+        !isPositive && !isNegative && 'border-l-neutral-300 bg-[#eef0f6]',
+      )}
+    >
       <p
         className={cn(
-          'mt-3 break-words text-[1.65rem] font-semibold tracking-tight sm:text-2xl',
-          metric.tone === 'positive' && 'text-emerald-700',
-          metric.tone === 'negative' && 'text-red-700',
-          (!metric.tone || metric.tone === 'neutral') && 'text-neutral-950',
+          'text-[10px] font-semibold uppercase tracking-[0.16em]',
+          isPositive ? 'text-emerald-700' : isNegative ? 'text-red-700/70' : 'text-neutral-500',
+        )}
+      >
+        {metric.label}
+      </p>
+      <p
+        className={cn(
+          'mt-1.5 break-words text-lg font-bold tracking-tight',
+          isPositive && 'text-emerald-800',
+          isNegative && 'text-red-700',
+          !isPositive && !isNegative && 'text-neutral-950',
         )}
       >
         {metric.value}
       </p>
-      <p className="mt-2 text-sm leading-relaxed text-neutral-600">{metric.detail}</p>
-    </SurfaceCard>
+      <p className="mt-1 text-xs leading-relaxed text-neutral-500">{metric.detail}</p>
+    </div>
   )
 }
 

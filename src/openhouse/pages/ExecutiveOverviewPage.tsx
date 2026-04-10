@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import {
   PageHeader,
   QuickAccessLinks,
-  SectionHeading,
   StatusMetricCard,
   SurfaceCard,
   ToneBadge,
@@ -15,106 +14,34 @@ import { ForecastByPeriodChart } from '@/pulse/components/division-performance/F
 import { forecastByPeriod } from '@/pulse/data/divisionPerformanceReport'
 import { cn } from '@/lib/cn'
 
-const descriptions = {
-  executive:
-    'Get the answer first: current outlook, biggest risks, where to focus, and a direct path to a printable executive brief.',
-  operator:
-    'See which communities need action, what stage is failing, and where to drill next without paging through report sections.',
-  analyst:
-    'Understand the current business story, then move directly into the drivers and communities that best explain the forecast.',
+const descriptions: Record<OpenHouseRole, string> = {
+  executive: 'Current outlook, biggest risks, where to focus, and a direct path to a printable executive brief.',
+  operator: 'Which communities need action, what stage is failing, and where to drill next.',
+  analyst: 'The current business story, then directly into the drivers and communities that explain the forecast.',
 }
 
-const workflowContent: Record<
-  OpenHouseRole,
-  {
-    title: string
-    description: string
-    steps: { id: string; title: string; detail: string; to?: string; cta?: string }[]
-    actionTitle: string
-    actionDescription: string
-  }
-> = {
-  executive: {
-    title: 'Executive workflow',
-    description: 'Start with the division answer, confirm where leadership attention should go, then leave with a briefing-ready summary.',
-    steps: [
-      {
-        id: 'exec-overview',
-        title: 'Confirm division status',
-        detail: 'Use this page to understand whether the division is on track and what changed most recently.',
-      },
-      {
-        id: 'exec-focus',
-        title: 'Choose the few communities that matter most',
-        detail: 'Move directly into the ranked focus queue when you need to decide where leadership time belongs.',
-        to: OPENHOMES_PRIORITIES,
-        cta: 'Open focus queue',
-      },
-      {
-        id: 'exec-briefing',
-        title: 'Take a printable summary into the next review',
-        detail: 'Use the briefing as the output artifact for leadership syncs and printed handoffs.',
-        to: OPENHOMES_BRIEFING,
-        cta: 'Open briefing',
-      },
-    ],
-    actionTitle: 'Immediate action stack',
-    actionDescription: 'This turns the forecast into a set of accountable leadership decisions rather than a slide review.',
-  },
-  operator: {
-    title: 'Operator workflow',
-    description: 'Use the overview to orient, then move quickly into the queue and community workspaces where execution actually changes the outcome.',
-    steps: [
-      {
-        id: 'op-orient',
-        title: 'Orient to the division story',
-        detail: 'Get the high-level status and understand which failure mode is hurting pace the most.',
-      },
-      {
-        id: 'op-focus',
-        title: 'Jump to the highest-priority work',
-        detail: 'Use the focus queue to decide which community or bottleneck deserves attention first.',
-        to: OPENHOMES_PRIORITIES,
-        cta: 'Open focus queue',
-      },
-      {
-        id: 'op-communities',
-        title: 'Move into community execution',
-        detail: 'From there, open community workspaces to review the bottleneck, owner, and next move.',
-        to: openhomesCommunityPath(decisionPlatformModel.priorities[0]?.communityId ?? 'catalina-foothills'),
-        cta: 'Open top workspace',
-      },
-    ],
-    actionTitle: 'Today’s operating moves',
-    actionDescription: 'These are the execution decisions that need owner follow-through right now.',
-  },
-  analyst: {
-    title: 'Analyst workflow',
-    description: 'Start with the business story, validate the signals shaping the forecast, then carry that explanation into the right communities.',
-    steps: [
-      {
-        id: 'an-story',
-        title: 'Read the current business narrative',
-        detail: 'Use the top section to understand the plain-language explanation leadership will see first.',
-      },
-      {
-        id: 'an-drivers',
-        title: 'Validate the signal layer',
-        detail: 'Go to drivers when you need to confirm which signals are truly shaping the forecast and why.',
-        to: OPENHOMES_DRIVERS,
-        cta: 'Open drivers',
-      },
-      {
-        id: 'an-community',
-        title: 'Connect signals back to real communities',
-        detail: 'Use community workspaces to translate model behavior into a credible operating narrative.',
-        to: openhomesCommunityPath(decisionPlatformModel.priorities[0]?.communityId ?? 'catalina-foothills'),
-        cta: 'Open top workspace',
-      },
-    ],
-    actionTitle: 'Narrative and explanation workflow',
-    actionDescription: 'These actions help turn model output into a business-readable story with clear next steps.',
-  },
+const workflowSteps: Record<OpenHouseRole, { id: string; title: string; detail: string; to?: string; cta?: string }[]> = {
+  executive: [
+    { id: 'exec-overview', title: 'Confirm division status', detail: '' },
+    { id: 'exec-focus', title: 'Focus on critical communities', detail: '', to: OPENHOMES_PRIORITIES, cta: 'Open focus queue' },
+    { id: 'exec-briefing', title: 'Get a printable summary', detail: '', to: OPENHOMES_BRIEFING, cta: 'Open briefing' },
+  ],
+  operator: [
+    { id: 'op-orient', title: 'Orient to division status', detail: '' },
+    { id: 'op-focus', title: 'Jump to priority work', detail: '', to: OPENHOMES_PRIORITIES, cta: 'Open focus queue' },
+    { id: 'op-communities', title: 'Enter community workspace', detail: '', to: openhomesCommunityPath(decisionPlatformModel.priorities[0]?.communityId ?? 'catalina-foothills'), cta: 'Open top workspace' },
+  ],
+  analyst: [
+    { id: 'an-story', title: 'Read the narrative', detail: '' },
+    { id: 'an-drivers', title: 'Validate signal layer', detail: '', to: OPENHOMES_DRIVERS, cta: 'Open drivers' },
+    { id: 'an-community', title: 'Connect to communities', detail: '', to: openhomesCommunityPath(decisionPlatformModel.priorities[0]?.communityId ?? 'catalina-foothills'), cta: 'Open top workspace' },
+  ],
+}
+
+const actionTitles: Record<OpenHouseRole, string> = {
+  executive: 'Immediate action stack',
+  operator: 'Today\u2019s operating moves',
+  analyst: 'Narrative and explanation actions',
 }
 
 export function ExecutiveOverviewPage() {
@@ -122,7 +49,6 @@ export function ExecutiveOverviewPage() {
   const { overview, priorities } = decisionPlatformModel
   const topPriorities = priorities.slice(0, 3)
   const topDrivers = decisionPlatformModel.drivers.slice(0, 3)
-  const roleContent = workflowContent[role]
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -147,14 +73,14 @@ export function ExecutiveOverviewPage() {
         }
       />
 
-      <QuickAccessLinks steps={roleContent.steps} />
+      <QuickAccessLinks steps={workflowSteps[role]} />
 
+      {/* Snapshot + Actions */}
       <SurfaceCard className="overflow-hidden">
         <div className="grid gap-0 xl:grid-cols-[1.3fr_0.9fr]">
-          <div className="border-b border-neutral-200/80 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="border-b border-neutral-200 p-5 sm:p-6 xl:border-b-0 xl:border-r">
             <div className="flex flex-wrap items-center gap-3">
               <ToneBadge tone={overview.overallOutlook}>At risk</ToneBadge>
-              <span className="text-sm font-medium text-neutral-500">Decision-first snapshot</span>
             </div>
             <h2 className="mt-4 max-w-4xl text-balance text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl">
               Are we on track? Not yet. The fix is now clearer by community and by funnel stage.
@@ -163,7 +89,7 @@ export function ExecutiveOverviewPage() {
               {overview.narrative}
             </p>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
+            <div className="mt-6 grid grid-cols-2 gap-3 xl:grid-cols-4">
               {overview.statusMetrics.map((metric) => (
                 <StatusMetricCard key={metric.id} metric={metric} />
               ))}
@@ -171,24 +97,20 @@ export function ExecutiveOverviewPage() {
           </div>
 
           <div className="p-5 sm:p-6">
-            <SectionHeading
-              overline="What leadership should do"
-              title={roleContent.actionTitle}
-              description={roleContent.actionDescription}
-            />
-            <div className="mt-5 space-y-3">
+            <h3 className="text-lg font-semibold tracking-tight text-neutral-950">{actionTitles[role]}</h3>
+            <div className="mt-4 space-y-3">
               {overview.actionRecommendations.map((action) => (
-                <div key={action.id} className="rounded-[20px] border border-neutral-200 bg-neutral-50 p-4">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-sm font-semibold text-neutral-950">{action.title}</span>
+                <div key={action.id} className="rounded-[16px] border border-neutral-200 bg-[#eef0f6] p-4">
+                  <p className="text-sm font-semibold text-neutral-950">{action.title}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">{action.detail}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
                     <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
                       {action.owner}
                     </span>
+                    <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-500">
+                      {action.timeframe}
+                    </span>
                   </div>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">{action.detail}</p>
-                  <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-                    {action.timeframe}
-                  </p>
                 </div>
               ))}
             </div>
@@ -196,116 +118,70 @@ export function ExecutiveOverviewPage() {
         </div>
       </SurfaceCard>
 
+      {/* Priority Communities + Signal Summary */}
       <div
         className={cn(
           'grid gap-6 xl:grid-cols-2',
-          role === 'operator' && 'xl:[&>*:first-child]:order-2 xl:[&>*:last-child]:order-1',
-          role === 'analyst' && 'xl:[&>*:first-child]:order-2 xl:[&>*:last-child]:order-1',
+          role !== 'executive' && 'xl:[&>*:first-child]:order-2 xl:[&>*:last-child]:order-1',
         )}
       >
         <SurfaceCard className="p-5 sm:p-6">
-          <SectionHeading
-            overline="Where to focus"
-            title="Priority communities"
-            description="The platform ranks where leadership attention creates the most leverage right now."
-          />
-          <div className="mt-5 space-y-3">
+          <h3 className="text-lg font-semibold tracking-tight text-neutral-950">Priority communities</h3>
+          <div className="mt-4 space-y-3">
             {topPriorities.map((priority) => (
               <Link
                 key={priority.id}
                 to={openhomesCommunityPath(priority.communityId)}
-                className="block min-w-0 rounded-[20px] border border-neutral-200 bg-neutral-50 p-4 transition-colors hover:border-neutral-300 hover:bg-white"
+                className="block rounded-[16px] border border-neutral-200 bg-[#eef0f6] p-4 transition-colors hover:border-neutral-300 hover:bg-white"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
-                      Priority {priority.rank}
-                    </p>
-                    <p className="mt-1 break-words text-lg font-semibold tracking-tight text-neutral-950">
-                      {priority.communityName}
-                    </p>
-                  </div>
+                  <p className="text-base font-semibold tracking-tight text-neutral-950">
+                    {priority.communityName}
+                  </p>
                   <ToneBadge tone={priority.priorityTone}>
                     {priority.priorityTone === 'critical' ? 'Critical' : priority.priorityTone}
                   </ToneBadge>
                 </div>
-                <p className="mt-3 text-sm font-medium text-neutral-900">{priority.salesGapLabel}</p>
-                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{priority.summary}</p>
-                <p className="mt-3 text-sm font-semibold text-neutral-900">{priority.recommendedAction}</p>
+                <p className="mt-2 text-sm text-neutral-600">{priority.salesGapLabel}</p>
+                <p className="mt-2 text-sm font-medium text-neutral-900">{priority.recommendedAction}</p>
               </Link>
             ))}
           </div>
         </SurfaceCard>
 
         <SurfaceCard className="p-5 sm:p-6">
-          <SectionHeading
-            overline="Why this is happening"
-            title="Signal summary"
-            description="Instead of raw feature lists, these are the business-readable drivers shaping the forecast."
-          />
-          <div className="mt-5 space-y-3">
+          <h3 className="text-lg font-semibold tracking-tight text-neutral-950">Signal summary</h3>
+          <div className="mt-4 space-y-3">
             {topDrivers.map((driver) => (
               <Link
                 key={driver.id}
                 to={OPENHOMES_DRIVERS}
-                className="block min-w-0 rounded-[20px] border border-neutral-200 bg-neutral-50 p-4 transition-colors hover:border-neutral-300 hover:bg-white"
+                className="block rounded-[16px] border border-neutral-200 bg-[#eef0f6] p-4 transition-colors hover:border-neutral-300 hover:bg-white"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="break-words text-base font-semibold tracking-tight text-neutral-950">
-                    {driver.title}
-                  </p>
+                  <p className="text-base font-semibold tracking-tight text-neutral-950">{driver.title}</p>
                   <ToneBadge tone={driver.credibility}>
-                    {driver.credibility === 'high' ? 'High credibility' : 'Medium credibility'}
+                    {driver.credibility === 'high' ? 'High' : 'Medium'}
                   </ToneBadge>
                 </div>
-                <p className="mt-3 text-sm leading-relaxed text-neutral-600">{driver.implication}</p>
-                <p className="mt-3 text-sm font-medium text-neutral-900">{driver.actionPrompt}</p>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600">{driver.implication}</p>
               </Link>
             ))}
           </div>
         </SurfaceCard>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+      {/* Risk / Opportunity + Decision Prompts */}
+      <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
         <SurfaceCard className="p-5 sm:p-6">
-          <SectionHeading
-            overline="Decision prompts"
-            title="Leadership questions"
-            description="The product now answers these directly instead of hiding them inside a long report."
-          />
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {overview.decisionCards.map((card) => (
-              <div
-                key={card.id}
-                className={cn(
-                  'rounded-[20px] border p-4',
-                  card.tone === 'attention' && 'border-amber-200 bg-amber-50/80',
-                  card.tone === 'positive' && 'border-emerald-200 bg-emerald-50/80',
-                  card.tone === 'default' && 'border-neutral-200 bg-neutral-50',
-                )}
-              >
-                <p className="text-sm font-semibold text-neutral-950">{card.question}</p>
-                <p className="mt-2 text-sm leading-relaxed text-neutral-700">{card.answer}</p>
-              </div>
-            ))}
-          </div>
-        </SurfaceCard>
-
-        <SurfaceCard className="p-5 sm:p-6">
-          <SectionHeading
-            overline="Balance the story"
-            title="Risk and upside"
-            description="The same surface highlights what could break the plan and what can still be leveraged."
-          />
-          <div className="mt-5 space-y-3">
-            <div className="rounded-[20px] border border-red-200 bg-red-50/80 p-4">
+          <h3 className="text-lg font-semibold tracking-tight text-neutral-950">Risk and upside</h3>
+          <div className="mt-4 space-y-3">
+            <div className="rounded-[16px] border border-red-200 bg-red-50/80 p-4">
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-red-800">Largest risk</p>
               <p className="mt-2 text-sm leading-relaxed text-red-950">{overview.risk}</p>
             </div>
-            <div className="rounded-[20px] border border-emerald-200 bg-emerald-50/80 p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800">
-                Largest upside
-              </p>
+            <div className="rounded-[16px] border border-emerald-200 bg-emerald-50/80 p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-800">Largest upside</p>
               <p className="mt-2 text-sm leading-relaxed text-emerald-950">{overview.opportunity}</p>
             </div>
             {getDriverById(topPriorities[0]?.linkedDriverIds[0] ?? '') ? (
@@ -318,15 +194,32 @@ export function ExecutiveOverviewPage() {
             ) : null}
           </div>
         </SurfaceCard>
+
+        <SurfaceCard className="p-5 sm:p-6">
+          <h3 className="text-lg font-semibold tracking-tight text-neutral-950">Leadership questions</h3>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {overview.decisionCards.map((card) => (
+              <div
+                key={card.id}
+                className={cn(
+                  'rounded-[16px] border p-4',
+                  card.tone === 'attention' && 'border-amber-200 bg-amber-50/80',
+                  card.tone === 'positive' && 'border-emerald-200 bg-emerald-50/80',
+                  card.tone === 'default' && 'border-neutral-200 bg-[#eef0f6]',
+                )}
+              >
+                <p className="text-sm font-semibold text-neutral-950">{card.question}</p>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-700">{card.answer}</p>
+              </div>
+            ))}
+          </div>
+        </SurfaceCard>
       </div>
 
+      {/* Forecast Chart */}
       <SurfaceCard className="p-5 sm:p-6">
-        <SectionHeading
-          overline="Forward view"
-          title="Forecast shape"
-          description="Charts now support the decision, instead of acting as the decision."
-        />
-        <div className="mt-5">
+        <h3 className="text-lg font-semibold tracking-tight text-neutral-950">Forecast shape</h3>
+        <div className="mt-4">
           <ForecastByPeriodChart rows={forecastByPeriod} />
         </div>
       </SurfaceCard>
