@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { divisionName } from '@/pulse/data/division'
 import { useLocalCalendarDayKey } from '@/pulse/hooks/useLocalCalendarDayKey'
 import { formatLatestDownloadsDataUpTo, latestDownloadsPdfDateKey } from '@/pulse/lib/pulseDatePeriods'
@@ -17,14 +16,10 @@ const divisionExports = [
 ] as const
 
 export function LatestDownloadsPage() {
-  const dayKey = useLocalCalendarDayKey()
-  const { dataValidUntilLabel, pdfDateKey } = useMemo(() => {
-    const ref = new Date()
-    return {
-      dataValidUntilLabel: formatLatestDownloadsDataUpTo(ref),
-      pdfDateKey: latestDownloadsPdfDateKey(ref),
-    }
-  }, [dayKey])
+  useLocalCalendarDayKey()
+  const ref = new Date()
+  const dataValidUntilLabel = formatLatestDownloadsDataUpTo(ref)
+  const pdfDateKey = latestDownloadsPdfDateKey(ref)
 
   return (
     <div className="w-full px-3 pb-5 pt-1.5 sm:px-6 sm:py-7 lg:min-h-full lg:px-10">
